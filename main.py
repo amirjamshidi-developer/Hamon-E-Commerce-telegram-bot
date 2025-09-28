@@ -37,9 +37,9 @@ async def handle_message(data, chat_id):
                 [{"text": "پیگیری فروش", "callback_data": "sales"}],
             ]
         }
-        await send_message(chat_id, "وضعیت خود را مشخص کنید: ", reply_markup=keyboard)
+        await send_message(chat_id, "با سلام!\nلطفا وضعیت خود را مشخص کنید: ", reply_markup=keyboard)
     elif text == "/support":
-        await send_message(chat_id, f"برای ارتباط با ما لطفا موضوع خود را مطرح کرده و شماره تماس خود را بنویسید. همچنین می‌توانید با پشتیبانی تماس بگیرید: {SUPPORT_PHONE}")
+        await send_message(chat_id, f"برای ارتباط با ما لطفا موضوع خود را مطرح کرده و شماره تماس خود را بنویسید. همچنین می‌توانید با پشتیبانی تماس بگیرید: \n{SUPPORT_PHONE}")
 
 async def handle_callback_query(data, chat_id):
     data_choice = data["callback_query"]["data"]
