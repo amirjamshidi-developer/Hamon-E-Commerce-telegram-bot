@@ -1,338 +1,144 @@
-import os
-import requests, time, logging
-from fastapi import FastAPI, Request
-from datetime import datetime, timedelta
-from dotenv import load_dotenv
-from apscheduler.schedulers.asyncio import AsyncIOScheduler
+"""
+HamoonBot - Production Entry Point 
+"""
+import asyncio
+import logging
+from telegram import Update
+from telegram.ext import (
+    Application, CommandHandler, MessageHandler as TgMessageHandler,
+    CallbackQueryHandler, filters, ContextTypes
+)
 
-# =====================================================
-# FastAPI + Scheduler setup
-# =====================================================
-app = FastAPI(title="HamoonPay Telegram Bot API")
+from modules.CoreConfig import initialize_core
+from modules.SessionManager import RedisSessionManager
+from modules.DataProvider import DataProvider
+from modules.MessageHandler import MessageHandler
+from modules.CallbackHandler import CallbackHandler
 
-scheduler = AsyncIOScheduler()
-scheduler.configure(job_defaults={"coalesce": False, "max_instances": 5})
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
+logger = logging.getLogger(__name__)
 
-# =====================================================
-# Telegram + Backend API Configuration
-# =====================================================
-load_dotenv()
+# Global handlers
+msg_handler = None
+callback_handler = None
+sessions = None
 
-TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
-AUTH_TOKEN = os.getenv("AUTH_TOKEN")
+# Command Handlers
+async def cmd_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Handle /start command"""
+    await msg_handler.handle_start(update.effective_chat.id)
 
-SERVER_URLS = {
-    "number": os.getenv("SERVER_URL_NUMBER"),
-    "serial": os.getenv("SERVER_URL_SERIAL"),
-}
-
-TELEGRAM_API_URL = f"https://api.telegram.org/bot{TOKEN}"
-
-
-
-# Track user conversation states → { chat_id: {"state": ..., "expires": ...} }
-user_states = {}
-
-# =====================================================
-# FastAPI Endpoints
-# =====================================================
-@app.get("/")
-def root():
-    """Root endpoint for server check."""
-    return {
-        "message": "Hamoon Electronic Commerce - visit us at https://hamoonpay.com/"
-    }
-
-
-@app.post("/webhook")
-async def telegram_webhook(request: Request):
-    """
-    Handle incoming updates from Telegram Webhook.
-    Routes requests to message handler or callback handler.
-    """
+async def on_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Handle text messages"""
     try:
-        update = await request.json()
-    except Exception:
-        return {"ok": False}
+        chat_id = update.effective_chat.id
+        text = update.message.text
+        # Fix: Use correct method name
+        await msg_handler.process_message(chat_id, text, update.message)
+    except Exception as e:
+        logger.error(f"Error: {e}")
+        await update.message.reply_text("❌ خطایی رخ داد. لطفا دوباره تلاش کنید.")
 
-    if "message" in update:
-        await handle_message(update["message"])
-    elif "callback_query" in update:
-        await handle_callback(update["callback_query"])
-
-    return {"ok": True}
-
-
-# =====================================================
-# Telegram Message Handlers
-# =====================================================
-async def handle_message(message: dict):
-    """Main message handler for incoming text messages."""
-    chat_id = message["chat"]["id"]
-    text = message.get("text", "").strip()
-
-    state_data = user_states.get(chat_id, {})
-    state = state_data.get("state")
-
-    if text == "/start":
-        show_main_menu(chat_id)
-
-    elif text == "/support":
-        send_support_info(chat_id)
-
-    elif state == "waiting_for_subject":
-        # If expired → reset state
-        if time.time() > state_data.get("expires", 0):
-            user_states.pop(chat_id, None)
-            show_main_menu(chat_id)
-        else:
-            # Save message (currently only logs)
-            save_subject(chat_id, text)
-            send_message(chat_id, "✅ موضوع شما با موفقیت ثبت شد.")
-            user_states.pop(chat_id, None)
-            show_main_menu(chat_id)
-        return
-
-    elif state == "waiting_for_number":
-        handle_order_number(chat_id, text)
-
-    elif state == "waiting_for_serial":
-        handle_serial(chat_id, text)
-
-    else:
-        show_main_menu(chat_id, error=True)
-
-
-async def handle_callback(query: dict):
-    """Handle inline keyboard button callbacks."""
-    chat_id = query["message"]["chat"]["id"]
-    message_id = query["message"]["message_id"]
-    choice = query["data"]
-
-    if choice == "order_number":
-        user_states[chat_id] = {"state": "waiting_for_number", "expires": time.time() + 300}
-        schedule_timeout(chat_id, 300)
-        edit_message(chat_id, message_id, "لطفا شماره پذیرش خود را وارد کنید (فقط عدد)")
-
-    elif choice == "order_serial":
-        user_states[chat_id] = {"state": "waiting_for_serial", "expires": time.time() + 300}
-        schedule_timeout(chat_id, 300)
-        edit_message(chat_id, message_id, "لطفا شماره سریال دستگاه خود را وارد کنید (کامل یا ۶ رقم آخر):\nمثال: 12HEC345678")
-
-    elif choice == "support":
-        send_support_info(chat_id, message_id=message_id)
-
-    elif choice == "send_subject":
-        user_states[chat_id] = {"state": "waiting_for_subject", "expires": time.time() + 300}
-        schedule_timeout(chat_id, 300)
-        edit_message(chat_id, message_id, "❔ لطفا متن خود را با رعایت نکات اخلاقی بنویسید:")
-
-    elif choice == "main_menu":
-        user_states.pop(chat_id, None)
-        show_main_menu(chat_id, message_id=message_id)
-
-
-# =====================================================
-# Order Handlers
-# =====================================================
-def handle_order_number(chat_id: int, text: str):
-    """Process order lookup by number."""
-    if text.isdigit() and len(text) < 10:
-        result = request_server("number", {"number": text})
-        send_result(chat_id, result, "سفارش")
-        user_states.pop(chat_id, None)
-    else:
-        user_states.pop(chat_id, None)
-        edit_message(chat_id, None, "❌ شماره پذیرش نامعتبر", reply_markup=get_back_keyboard())
-
-
-def handle_serial(chat_id: int, text: str):
-    """Process order lookup by serial number."""
-    if len(text) >= 6:
-        result = request_server("serial", {"serial": text})
-        send_result(chat_id, result, "دستگاه")
-        user_states.pop(chat_id, None)
-    else:
-        user_states.pop(chat_id, None)
-        edit_message(chat_id, None, "❌ شماره سریال معتبر نیست. حداقل ۶ کاراکتر وارد کنید.", reply_markup=get_back_keyboard())
-
-
-# =====================================================
-# External API Requests
-# =====================================================
-def request_server(mode: str, payload: dict):
-    """Send request to backend server and return JSON response."""
-    url = SERVER_URLS[mode]
-    headers = {"auth-token": AUTH_TOKEN, "Content-Type": "application/json"}
-
+async def on_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Handle callback queries"""
     try:
-        response = requests.post(url, json=payload, headers=headers, timeout=10)
-        return response.json() if response.status_code == 200 else None
-    except requests.exceptions.RequestException as e:
-        logging.error(f"[ERROR] Request failed: {e}")
-        return None
+        query = update.callback_query
+        await query.answer()
+        await callback_handler.handle_callback(
+            query.from_user.id, 
+            query.data, 
+            query.message.message_id
+        )
+    except Exception as e:
+        logger.error(f"Callback error: {e}")
 
-
-# =====================================================
-# Response Formatting
-# =====================================================
-def send_result(chat_id: int, result: dict, label: str):
-    """Format and send backend API results to Telegram user."""
-    if not result:
-        edit_message(chat_id, None, "⚠️ خطا در دریافت اطلاعات از سرور", reply_markup=get_back_keyboard())
-        return
-
-    if result.get("success") is False:
-        edit_message(chat_id, None, f"❌ {label} شما در سیستم یافت نشد. لطفا دوباره تلاش کنید یا با پشتیبانی تماس بگیرید.", reply_markup=get_back_keyboard())
-        return
-
-    data = result.get("data", {})
-    status = data.get("$$_steps", "نامشخص")
-
-    msg = f"✅ وضعیت {label} شما:\n\n📌 وضعیت کلی: {status}\n"
-
-    # Optional fields
-    if data.get("warehouseIssueId_referenceNumber"):
-        msg += f"🚚 کد رهگیری پستی: {data['warehouseIssueId_referenceNumber']}\n"
-    if data.get("warehouseRecieptId_createdOn"):
-        msg += f"📦 تاریخ رسید انبار: {data['warehouseRecieptId_createdOn'].split(' ')[0]}\n"
-    if data.get("factorId_number"):
-        msg += f"🧾 شماره فاکتور: {data['factorId_number']}\n"
-    if data.get("factorId_totalPriceWithTax"):
+async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Handle errors"""
+    logger.error(f"Error: {context.error}")
+    if update and update.effective_chat:
         try:
-            price_int = int(float(data['factorId_totalPriceWithTax']))
-            msg += f"💰 مبلغ فاکتور (با مالیات): {price_int:,} ریال\n"
-        except Exception:
-            msg += f"💰 مبلغ فاکتور (با مالیات): {data['factorId_totalPriceWithTax']} ریال\n"
-        if data.get("factorId_paymentLink"):
-            msg += f"💳 لینک پرداخت صورتحساب: \n{data['factorId_paymentLink']} \n"
-
-    # Items list
-    items = data.get("items", [])
-    if items:
-        msg += f"\n📱 تعداد دستگاه‌ها: {len(items)}\n"
-        for i, item in enumerate(items[:8], start=1):
-            msg += (
-                f"\n🔹 دستگاه {i}:\n"
-                f"   • مدل: {item.get('$$_deviceId', 'نامشخص')}\n"
-                f"   • شماره سریال: {item.get('serialNumber', 'ثبت نشده')}\n"
-                f"   • وضعیت: {item.get('$$_status', 'نامشخص')}\n"
+            await context.bot.send_message(
+                update.effective_chat.id,
+                "❌ خطایی رخ داد. لطفا دوباره تلاش کنید."
             )
+        except:
+            pass
 
-    # If more than 8 items → show external link
-    more_url = "https://hamoonpay.com/" if len(items) > 8 else None
-    keyboard = get_back_keyboard(view_more_url=more_url)
-    edit_message(chat_id, None, msg, reply_markup=keyboard)
-
-
-# =====================================================
-# UI Helpers
-# =====================================================
-def show_main_menu(chat_id: int, message_id: int = None, error=False):
-    """Show the main menu with options."""
-    keyboard = {
-        "inline_keyboard": [
-            [{"text": "🔢 پیگیری سفارش با شماره پذیرش", "callback_data": "order_number"}],
-            [{"text": "#️⃣ پیگیری سفارش با سریال پذیرش", "callback_data": "order_serial"}],
-            [{"text": "👥 ارتباط با پشتیبانی", "callback_data": "support"}],
-        ]
-    }
-    msg = "❌ لطفا فقط از منوی زیر استفاده کنید ❌" if error else "خوش آمدید 🙌\nلطفا یکی از گزینه‌ها را انتخاب کنید:"
-    edit_message(chat_id, message_id, msg, reply_markup=keyboard)
-
-
-def send_support_info(chat_id: int, message_id: int = None):
-    """Show support contact options."""
-    keyboard = get_back_keyboard()
-    keyboard["inline_keyboard"].insert(
-        0,
-        [
-            {"text": "👥 ارتباط با ما", "url": "https://hamoonpay.com/contact-us/"},
-            {"text": "❔ ارسال موضوع", "callback_data": "send_subject"},
-        ],
-    )
-
-    text = (
-        "برای ارتباط با پشتیبانی لطفا موضوع خود را مطرح کرده و شماره تماس خود را بنویسید.\n"
-        "همکاران ما در اسرع وقت موضوع شما را پیگیری خواهند کرد.\n"
-        "همچنین می‌توانید به صورت تلفنی با ما در ارتباط باشید:\n"
-        "📞 03133127 (08:00 - 17:00)"
-    )
-
-    edit_message(chat_id, message_id, text, reply_markup=keyboard)
-
-
-def get_back_keyboard(view_more_url: str = None):
-    """Create 'Back to Menu' inline keyboard with optional link."""
-    keyboard = {"inline_keyboard": []}
-    if view_more_url:
-        keyboard["inline_keyboard"].append([{"text": "📂 مشاهده موارد بیشتر", "url": view_more_url}])
-    keyboard["inline_keyboard"].append([{"text": "🔙 بازگشت به منو", "callback_data": "main_menu"}])
-    return keyboard
-
-
-# =====================================================
-# Data Persistence
-# =====================================================
-def save_subject(chat_id: int, text: str):
-    """Save support subject (currently only logs)."""
-    # url = "http://192.168.41.41:8010/api/v1/support/save"
-    # payload = {"chat_id": chat_id, "message": text}
-    # headers = {"auth-token": AUTH_TOKEN, "Content-Type": "application/json"}
-    # try:
-    #     requests.post(url, json=payload, headers=headers, timeout=10)
-    # except requests.exceptions.RequestException as e:
-    #     logging.error(f"[ERROR] Failed to save subject: {e}")
-    print(f"[SUPPORT] Subject received from {chat_id}: {text}")
-
-
-# =====================================================
-# Telegram API Helpers
-# =====================================================
-def send_message(chat_id: int, text: str, reply_markup=None):
-    """Send a fresh Telegram message."""
-    payload = {"chat_id": chat_id, "text": text}
-    if reply_markup:
-        payload["reply_markup"] = reply_markup
+# Lifecycle
+async def post_init(app: Application):
+    """Initialize after application build"""
+    global msg_handler, callback_handler, sessions
+    
     try:
-        requests.post(f"{TELEGRAM_API_URL}/sendMessage", json=payload, timeout=8)
-    except requests.exceptions.RequestException as e:
-        logging.error(f"[ERROR] Failed to send message: {e}")
+        # Initialize components
+        config, validators, metrics = initialize_core()
+        
+        # Create session manager
+        sessions = RedisSessionManager(config, metrics)
+        await sessions.connect()
+        
+        # Create data provider
+        provider = DataProvider(config, sessions.redis)
+        await provider.ensure_session()
+        
+        # Create handlers
+        msg_handler = MessageHandler(app.bot, config, sessions, provider)
+        callback_handler = CallbackHandler(msg_handler, sessions, provider)
+        
+        logger.info("✅ Bot initialized successfully")
+        
+    except Exception as e:
+        logger.exception(f"Initialization failed: {e}")
+        raise
 
-
-def edit_message(chat_id: int, message_id: int, text: str, reply_markup=None):
-    """Edit an existing Telegram message, or send new if no message_id."""
-    payload = {"chat_id": chat_id, "text": text}
-    if reply_markup:
-        payload["reply_markup"] = reply_markup
-    if message_id:
-        payload["message_id"] = message_id
-        method = "editMessageText"
-    else:
-        method = "sendMessage"
+async def post_shutdown(app: Application):
+    """Cleanup on shutdown"""
+    global sessions
+    
     try:
-        requests.post(f"{TELEGRAM_API_URL}/{method}", json=payload, timeout=8)
-    except requests.exceptions.RequestException as e:
-        logging.error(f"[ERROR] Failed to edit/send message: {e}")
+        if sessions:
+            await sessions.disconnect()
+        logger.info("✅ Cleanup complete")
+    except Exception as e:
+        logger.error(f"Shutdown error: {e}")
 
+# Main
+def main():
+    """Main entry point"""
+    # Get config
+    config, _, _ = initialize_core()
+    if not config.telegram_token:
+        raise RuntimeError("TELEGRAM_BOT_TOKEN not configured")
+    
+    # Build application
+    app = (
+        Application.builder()
+        .token(config.telegram_token)
+        .post_init(post_init)
+        .post_shutdown(post_shutdown)
+        .build()
+    )
+    
+    # Register handlers
+    app.add_handler(CommandHandler("start", cmd_start))
+    app.add_handler(TgMessageHandler(filters.TEXT & ~filters.COMMAND, on_text))
+    app.add_handler(CallbackQueryHandler(on_callback))
+    app.add_error_handler(error_handler)
+    
+    # Run bot
+    try:
+        logger.info("🚀 Starting bot...")
+        app.run_polling(
+            allowed_updates=Update.ALL_TYPES,
+            drop_pending_updates=True
+        )
+    except KeyboardInterrupt:
+        logger.info("⏹ Shutdown signal received")
+    finally:
+        logger.info("🔚 Bot stopped")
 
-# =====================================================
-# Scheduler
-# =====================================================
-@app.on_event("startup")
-async def start_scheduler():
-    """Start APScheduler on FastAPI startup."""
-    scheduler.start()
-
-
-def schedule_timeout(chat_id: int, delay: int = 10):
-    """Schedule a timeout to reset user state."""
-    def timeout_job():
-        state = user_states.get(chat_id)
-        if state and time.time() > state.get("expires", 0):
-            user_states.pop(chat_id, None)
-            send_message(chat_id, "⏰ زمان شما به پایان رسید. لطفا دوباره تلاش کنید.")
-            show_main_menu(chat_id)
-
-    run_time = datetime.now() + timedelta(seconds=delay)
-    scheduler.add_job(timeout_job, "date", run_date=run_time)
+if __name__ == "__main__":
+    main()
