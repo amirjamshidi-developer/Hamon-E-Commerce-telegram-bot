@@ -25,6 +25,7 @@ logger = logging.getLogger(__name__)
 msg_handler = None
 callback_handler = None
 sessions = None
+provider = None
 
 # Command Handlers
 async def cmd_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -45,15 +46,11 @@ async def on_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def on_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle callback queries"""
     try:
-        query = update.callback_query
-        await query.answer()
-        await callback_handler.handle_callback(
-            query.from_user.id, 
-            query.data, 
-            query.message.message_id
-        )
+        await callback_handler.handle_callback(update)
     except Exception as e:
         logger.error(f"Callback error: {e}")
+        if update.callback_query:
+            await update.callback_query.answer("❌ خطایی رخ داد")
 
 async def error_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Handle errors"""
@@ -96,12 +93,24 @@ async def post_init(app: Application):
 
 async def post_shutdown(app: Application):
     """Cleanup on shutdown"""
-    global sessions
+    global sessions, provider
     
     try:
+        # Close DataProvider session first
+        if provider and hasattr(provider, 'session'):
+            await provider.close()
+            logger.info("DataProvider session closed")
+        
+        # Disconnect Redis
         if sessions:
             await sessions.disconnect()
+            logger.info("Redis disconnected cleanly")
+            
+        # Small delay to ensure all async tasks complete
+        await asyncio.sleep(0.1)
+        
         logger.info("✅ Cleanup complete")
+        
     except Exception as e:
         logger.error(f"Shutdown error: {e}")
 
@@ -113,7 +122,7 @@ def main():
     if not config.telegram_token:
         raise RuntimeError("TELEGRAM_BOT_TOKEN not configured")
     
-    # Build application
+    # Build application with lifecycle hooks
     app = (
         Application.builder()
         .token(config.telegram_token)
@@ -133,7 +142,8 @@ def main():
         logger.info("🚀 Starting bot...")
         app.run_polling(
             allowed_updates=Update.ALL_TYPES,
-            drop_pending_updates=True
+            drop_pending_updates=True,
+            close_loop=False
         )
     except KeyboardInterrupt:
         logger.info("⏹ Shutdown signal received")

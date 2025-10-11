@@ -11,7 +11,7 @@ import redis.asyncio as aioredis
 from contextlib import asynccontextmanager
 
 # Import from core config
-from CoreConfig import UserState, BotConfig, BotMetrics
+from .CoreConfig import UserState, BotConfig, BotMetrics
 
 logger = logging.getLogger(__name__)
 

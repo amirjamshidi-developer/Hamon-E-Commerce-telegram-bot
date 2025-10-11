@@ -10,12 +10,13 @@ from telegram import Bot, Message, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.constants import ParseMode
 from datetime import datetime
 
-from CoreConfig import (
+from .CoreConfig import (
     UserState, BotConfig, BotMetrics, Validators,
-    MESSAGES, STATUS_TEXT, COMPLAINT_TYPE_MAP, ComplaintType
+    MESSAGES, STATUS_TEXT, COMPLAINT_TYPE_MAP, ComplaintType,
+    WORKFLOW_STEPS, STEP_ICONS
 )
-from SessionManager import RedisSessionManager
-from DataProvider import DataProvider
+from .SessionManager import RedisSessionManager
+from .DataProvider import DataProvider
 
 logger = logging.getLogger(__name__)
 
@@ -66,7 +67,7 @@ class MessageHandler:
                     session.state = UserState.IDLE
 
                 # Update activity
-                session.message_count += 1
+                session.request_count += 1
                 session.last_activity = datetime.now()
 
                 # Route based on state
@@ -439,22 +440,20 @@ class MessageHandler:
     # =====================================================
     # Display Helpers
     # =====================================================
-
     async def display_order_details(self, chat_id: int, order: Dict[str, Any]):
-        """Format and display an order's details"""
-        status_text = STATUS_TEXT.get(order.get('status'), 'نامشخص')
+        """Display order details with improved UI/UX"""
+        # Format the message using the new formatter
+        msg = await self.format_order_details(order)
+        
+        # Create inline keyboard
+        keyboard = InlineKeyboardMarkup([
+            [InlineKeyboardButton("🔄 بروزرسانی", callback_data=f"refresh_order:{order.get('order_number')}")],
+            [InlineKeyboardButton("🏠 منوی اصلی", callback_data="main_menu")]
+        ])
+        
+        await self.send_message(chat_id, msg, parse_mode=ParseMode.MARKDOWN, reply_markup=keyboard)
 
-        msg = MESSAGES['order_details'].format(
-            order_number=order.get('order_number', ''),
-            customer_name=order.get('customer_name', ''),
-            device_model=order.get('device_model', ''),
-            status=status_text,
-            progress=order.get('progress', 0),
-            registration_date=order.get('registration_date', ''),
-            additional_info=order.get('additional_info', '')
-        )
 
-        await self.send_message(chat_id, msg, parse_mode=ParseMode.MARKDOWN)
 
     async def show_main_menu(self, chat_id: int):
         """Display menu for non-authenticated users"""
@@ -520,13 +519,67 @@ class MessageHandler:
         keyboard = InlineKeyboardMarkup([nav_btns, [InlineKeyboardButton("🔙 بازگشت", callback_data="main_menu")]])
         await self.bot.edit_message_text(chat_id=chat_id, message_id=message_id, text=text, reply_markup=keyboard)
 
+
+    async def format_order_details(self, order: Dict[str, Any]) -> str:
+        """Format order details for display with improved UI/UX"""
+        parts = ["📦 **جزئیات سفارش**\n"]
+        
+        # Order number (always show)
+        parts.append(f"🔢 شماره پذیرش: `{order.get('order_number', '')}`")
+        
+        # Customer name (only if exists and not 'نامشخص')
+        name = order.get('customer_name', '')
+        if name and name != 'نامشخص':
+            parts.append(f"👤 نام: {name}")
+        
+        # Device model
+        parts.append(f"📱 دستگاه: {order.get('device_model', '')}")
+        
+        # Status (only if exists)
+        status = order.get('status', '')
+        if status and status != 'نامشخص':
+            icon = order.get('status_icon', '📍')
+            parts.append(f"{icon} وضعیت: **{status}**")
+        
+        # Progress bar only (no percentage text)
+        progress_bar = order.get('progress_bar', '⬜' * 9)
+        parts.append(f"\n{progress_bar}")
+        
+        # Current step info
+        current_step = order.get('current_step', '')
+        if current_step:
+            parts.append(f"📍 {current_step}")
+        
+        # Dates (without time)
+        reg_date = order.get('registration_date', '')
+        if reg_date and '/' in reg_date:
+            date_only = reg_date.split(' ')[0]  # Remove time part
+            parts.append(f"\n📅 تاریخ ثبت: {date_only}")
+        
+        pre_date = order.get('pre_reception_date', '')
+        if pre_date and '/' in pre_date:
+            date_only = pre_date.split(' ')[0]  # Remove time part
+            parts.append(f"📅 پیش‌پذیرش: {date_only}")
+        
+        # Tracking code (if exists)
+        tracking = order.get('tracking_code', '')
+        if tracking and tracking != '---':
+            parts.append(f"\n🔍 کد رهگیری: `{tracking}`")
+        
+        # Repair description (if exists)
+        repair_desc = order.get('repair_description', '')
+        if repair_desc and repair_desc != '---':
+            parts.append(f"🔧 شرح تعمیرات: {repair_desc[:50]}...")
+        
+        return "\n".join(parts)
+
     # =====================================================
     # Utility
     # =====================================================
 
     async def send_message(self, chat_id: int, text: str,
-                           parse_mode: Optional[str] = None,
-                           reply_markup: Optional[InlineKeyboardMarkup] = None) -> Optional[Message]:
+                parse_mode: Optional[str] = None,
+                reply_markup: Optional[InlineKeyboardMarkup] = None) -> Optional[Message]:
         """Wrapper to send messages safely"""
         try:
             return await self.bot.send_message(chat_id=chat_id, text=text,

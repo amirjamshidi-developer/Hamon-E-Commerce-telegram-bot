@@ -8,9 +8,9 @@ import re
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.constants import ParseMode
 
-from CoreConfig import UserState, ComplaintType, MESSAGES, STATUS_TEXT  
-from SessionManager import RedisSessionManager
-from DataProvider import DataProvider
+from .CoreConfig import UserState, ComplaintType, MESSAGES, STATUS_TEXT  
+from .SessionManager import RedisSessionManager
+from .DataProvider import DataProvider
 
 logger = logging.getLogger(__name__)
 
@@ -32,7 +32,7 @@ class CallbackHandler:
         query = update.callback_query
         if not query:
             return
-        
+
         chat_id = query.message.chat_id
         message_id = query.message.message_id
         callback_data = query.data
@@ -113,11 +113,53 @@ class CallbackHandler:
             # Cancel operation
             elif callback_data == "cancel":
                 await self.handle_cancel(chat_id, message_id)
-            
+
+            elif callback_data.startswith("refresh_order:"):
+                order_number = callback_data.split(":")[1]
+                await self.handle_refresh_order(chat_id, message_id, order_number)
+
         except Exception as e:
             logger.error(f"Error handling callback {callback_data}: {e}")
             await query.edit_message_text("❌ خطایی رخ داد. لطفاً مجدداً تلاش کنید.")
     
+
+    async def handle_refresh_order(self, chat_id: int, message_id: int, order_number: str):
+        """Refresh order details"""
+        try:
+            # Get fresh data
+            order_data = await self.data.get_order_by_number(order_number)
+            
+            if order_data:
+                # Format the updated message
+                msg = await self.msg.format_order_details(order_data)
+                
+                # Keep the same keyboard
+                keyboard = InlineKeyboardMarkup([
+                    [InlineKeyboardButton("🔄 بروزرسانی", callback_data=f"refresh_order:{order_number}")],
+                    [InlineKeyboardButton("🏠 منوی اصلی", callback_data="main_menu")]
+                ])
+                
+                # Edit the message
+                await self.msg.bot.edit_message_text(
+                    chat_id=chat_id,
+                    message_id=message_id,
+                    text=msg,
+                    parse_mode=ParseMode.MARKDOWN,
+                    reply_markup=keyboard
+                )
+            else:
+                await self.msg.bot.edit_message_text(
+                    chat_id=chat_id,
+                    message_id=message_id,
+                    text="❌ خطا در بروزرسانی. لطفاً دوباره تلاش کنید.",
+                    reply_markup=InlineKeyboardMarkup([[
+                        InlineKeyboardButton("🏠 منوی اصلی", callback_data="main_menu")
+                    ]])
+                )
+        except Exception as e:
+            logger.error(f"Error refreshing order: {e}")
+
+
     async def edit_to_main_menu(self, chat_id: int, message_id: int):
         """Edit message to show main menu"""
         keyboard = InlineKeyboardMarkup([
