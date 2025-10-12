@@ -108,7 +108,6 @@ class DataProvider:
         self.session: Optional[ClientSession] = None
         self._session_lock = asyncio.Lock()
         
-        # Configuration
         self.cache_prefix = "bot:cache:"
         self.auth_token = os.getenv("AUTH_TOKEN", "")
         self.cache_ttl = 300  # 5 minutes
@@ -117,8 +116,6 @@ class DataProvider:
         # Request tracking
         self._request_count = 0
         self._error_count = 0
-        
-        logger.info("DataProvider initialized")
     
     # =====================================================
     # Context Manager Support

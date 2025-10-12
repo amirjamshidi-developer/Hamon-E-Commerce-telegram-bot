@@ -1,5 +1,5 @@
 """
-Redis Session Manager - Complete Minimized Production Version
+Redis Session Manager - Handling Sessions (Data , Create , Rate Limit and etc) and Backgroind Tasks
 """
 import json
 import asyncio
@@ -10,7 +10,6 @@ from dataclasses import dataclass, field, asdict
 import redis.asyncio as aioredis
 from contextlib import asynccontextmanager
 
-# Import from core config
 from .CoreConfig import UserState, BotConfig, BotMetrics
 
 logger = logging.getLogger(__name__)
@@ -26,15 +25,12 @@ class SessionData:
     created_at: datetime = field(default_factory=datetime.now)
     expires_at: datetime = field(default_factory=lambda: datetime.now() + timedelta(minutes=30))
     
-    # Authentication
     is_authenticated: bool = False
     national_id: Optional[str] = None
     user_name: Optional[str] = None
     
-    # Temporary storage
     temp_data: Dict[str, Any] = field(default_factory=dict)
-    
-    # Activity tracking
+
     last_activity: datetime = field(default_factory=datetime.now)
     request_count: int = 0
     
@@ -241,12 +237,11 @@ class RedisSessionManager:
     async def _cleanup_cache(self):
         """Clean up local cache"""
         async with self._lock:
-            # Remove expired sessions
             expired = [
                 k for k, v in self._local_cache.items() 
                 if v.is_expired()
             ]
-            for k in expired[:250]:  # Remove half
+            for k in expired[:250]: 
                 del self._local_cache[k]
             
             self.metrics.active_sessions = len(self._local_cache)
@@ -271,9 +266,8 @@ class RedisSessionManager:
             session.national_id = national_id
             session.user_name = name
             session.state = UserState.AUTHENTICATED
-            session.extend(60)  # 60 minutes for authenticated users
+            session.extend(60)
             
-            # Save auth index
             auth_key = f"{self.AUTH_PREFIX}{national_id}"
             await self.redis.setex(auth_key, self.AUTH_TTL, chat_id)
             
@@ -284,12 +278,10 @@ class RedisSessionManager:
     async def logout(self, chat_id: int):
         """Logout user"""
         async with self.session(chat_id) as session:
-            # Clear auth index
             if session.national_id:
                 auth_key = f"{self.AUTH_PREFIX}{session.national_id}"
                 await self.redis.delete(auth_key)
             
-            # Reset session
             session.is_authenticated = False
             session.national_id = None
             session.user_name = None
@@ -304,7 +296,6 @@ class RedisSessionManager:
     async def clear(self, chat_id: int):
         """Clear session completely"""
         try:
-            # Remove from Redis - با مدیریت خطا
             if self.redis:
                 key = f"{self.KEY_PREFIX}{chat_id}"
                 try:
@@ -312,7 +303,6 @@ class RedisSessionManager:
                 except (ConnectionError, RuntimeError) as e:
                     logger.warning(f"Could not delete from Redis: {e}")
             
-            # Remove from cache
             if chat_id in self._local_cache:
                 del self._local_cache[chat_id]
             
@@ -336,7 +326,6 @@ class RedisSessionManager:
             )
             total += len(keys)
             
-            # Count authenticated sessions
             for key in keys:
                 try:
                     data = await self.redis.get(key)
@@ -392,7 +381,6 @@ class RedisSessionManager:
         """Check if user is rate limited"""
         session = await self.get_or_create(chat_id)
         
-        # Check hourly limit
         if session.request_count > self.config.max_requests_hour:
             session.state = UserState.RATE_LIMITED
             await self.save(session)
@@ -442,18 +430,20 @@ class SessionBackgroundTasks:
         """Periodic cleanup task"""
         while self.running:
             try:
-                await asyncio.sleep(1800)  # Run every 30 minutes
+                await asyncio.sleep(1800) 
                 await self.manager.cleanup_expired()
                 await self.manager._cleanup_cache()
             except Exception as e:
                 logger.error(f"Cleanup error: {e}")
 
+# =====================================================
+# Create Session and Start Background Tasks
+# =====================================================
 async def create_session_manager(config: BotConfig, metrics: BotMetrics) -> RedisSessionManager:
     """Factory to create and initialize session manager"""
     manager = RedisSessionManager(config, metrics)
     await manager.connect()
     
-    # Start background tasks
     tasks = SessionBackgroundTasks(manager)
     await tasks.start()
     manager.background_tasks = tasks

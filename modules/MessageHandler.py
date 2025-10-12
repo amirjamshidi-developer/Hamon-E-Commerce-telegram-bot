@@ -1,9 +1,7 @@
 """
-Message Handler - Minimized Production Version
-Handles all user message interactions for the Telegram bot
+Message Handler - Handles all user message interactions for the Telegram bot
 """
 import logging
-import asyncio
 import re
 from typing import Optional, Dict, Any
 from telegram import Bot, Message, InlineKeyboardButton, InlineKeyboardMarkup
@@ -11,9 +9,8 @@ from telegram.constants import ParseMode
 from datetime import datetime
 
 from .CoreConfig import (
-    UserState, BotConfig, BotMetrics, Validators,
-    MESSAGES, STATUS_TEXT, COMPLAINT_TYPE_MAP, ComplaintType,
-    WORKFLOW_STEPS, STEP_ICONS
+    UserState, BotConfig, Validators,ComplaintType,CallbackFormats,
+    MESSAGES, COMPLAINT_TYPE_MAP, STATUS_TEXT, WORKFLOW_STEPS, STEP_ICONS, STEP_PROGRESS
 )
 from .SessionManager import RedisSessionManager
 from .DataProvider import DataProvider
@@ -35,8 +32,6 @@ class MessageHandler:
         self.sessions = session_manager
         self.data = data_provider
         self.validators = Validators()
-        
-        logger.info("MessageHandler initialized")
 
     # =====================================================
     # Main Message Processing
@@ -54,7 +49,7 @@ class MessageHandler:
             async with self.sessions.session(chat_id) as session:
                 # Check rate limiting
                 if session.state == UserState.RATE_LIMITED:
-                    remaining = session.temp_data.get('rate_limit_expires', 0) - asyncio.get_event_loop().time()
+                    remaining = session.temp_data.get('rate_limit_expires', 0) - datetime.now().timestamp()
                     if remaining > 0:
                         await self.send_message(
                             chat_id,
@@ -106,11 +101,12 @@ class MessageHandler:
         welcome_msg = MESSAGES['welcome']
         
         keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton("🔐 ورود با کد ملی", callback_data="authenticate")],
-            [InlineKeyboardButton("🔢 پیگیری با شماره پذیرش", callback_data="track_by_number")],
-            [InlineKeyboardButton("#️⃣ پیگیری با سریال دستگاه", callback_data="track_by_serial")],
-            [InlineKeyboardButton("📞 اطلاعات تماس", callback_data="contact_info")],
-            [InlineKeyboardButton("❓ راهنما", callback_data="help")]
+            [InlineKeyboardButton("🔐 ورود با کد ملی", callback_data=CallbackFormats.AUTHENTICATE)],
+            [
+                InlineKeyboardButton("🔢 پیگیری سفارش", callback_data=CallbackFormats.TRACK_BY_NUMBER),
+                InlineKeyboardButton("#️⃣ پیگیری سریال", callback_data=CallbackFormats.TRACK_BY_SERIAL)
+            ],
+            [InlineKeyboardButton("❓ راهنما", callback_data=CallbackFormats.HELP)]
         ])
         
         await self.bot.send_message(
@@ -152,7 +148,7 @@ class MessageHandler:
                     session.user_name = user_info.get('name', 'کاربر')
                     session.phone_number = user_info.get('phone')
                     session.state = UserState.AUTHENTICATED
-                    session.extend_expiry(60)  # Extend for authenticated users
+                    session.extend(60)  # Extend for authenticated users
                 
                 # Delete loading message
                 if loading_msg:
@@ -178,8 +174,8 @@ class MessageHandler:
                 
                 # Show error with retry option
                 keyboard = InlineKeyboardMarkup([
-                    [InlineKeyboardButton("🔄 تلاش مجدد", callback_data="authenticate")],
-                    [InlineKeyboardButton("🏠 منوی اصلی", callback_data="main_menu")]
+                    [InlineKeyboardButton("🔄 تلاش مجدد", callback_data=CallbackFormats.AUTHENTICATE)],
+                    [InlineKeyboardButton("🏠 منوی اصلی", callback_data=CallbackFormats.MAIN_MENU)]
                 ])
                 
                 await self.send_message(
@@ -233,8 +229,8 @@ class MessageHandler:
             if not order_data or not order_data.get('order_number'):
                 # Not found - show error with options
                 keyboard = InlineKeyboardMarkup([
-                    [InlineKeyboardButton("🔄 تلاش مجدد", callback_data="track_by_number")],
-                    [InlineKeyboardButton("🏠 منوی اصلی", callback_data="main_menu")]
+                    [InlineKeyboardButton("🔄 تلاش مجدد", callback_data=CallbackFormats.TRACK_BY_NUMBER)],
+                    [InlineKeyboardButton("🏠 منوی اصلی", callback_data=CallbackFormats.MAIN_MENU)]
                 ])
                 
                 await self.send_message(
@@ -294,8 +290,8 @@ class MessageHandler:
             if not order_data or not order_data.get('order_number'):
                 # Not found - show error with options
                 keyboard = InlineKeyboardMarkup([
-                    [InlineKeyboardButton("🔄 تلاش مجدد", callback_data="track_by_serial")],
-                    [InlineKeyboardButton("🏠 منوی اصلی", callback_data="main_menu")]
+                    [InlineKeyboardButton("🔄 تلاش مجدد", callback_data=CallbackFormats.TRACK_BY_SERIAL)],
+                    [InlineKeyboardButton("🏠 منوی اصلی", callback_data=CallbackFormats.MAIN_MENU)]
                 ])
                 
                 await self.send_message(
@@ -378,6 +374,9 @@ class MessageHandler:
 
     async def handle_rating_text(self, chat_id: int, text: str):
         """Handle rating comment"""
+        if text.lower() in ['/skip', '/cancel', '/logout']:
+            text = ''    
+
         async with self.sessions.session(chat_id) as session:
             score = session.temp_data.get('rating_score', 5)
             
@@ -385,7 +384,7 @@ class MessageHandler:
             success = await self.data.submit_rating(
                 session.national_id,
                 score,
-                text if text.lower() != 'skip' else ''
+                text
             )
             
             if success:
@@ -440,31 +439,47 @@ class MessageHandler:
     # =====================================================
     # Display Helpers
     # =====================================================
-    async def display_order_details(self, chat_id: int, order: Dict[str, Any]):
-        """Display order details with improved UI/UX"""
+    async def display_order_details(self, chat_id: int, order: Dict[str, Any], message_id: Optional[int] = None):
+        """Display formatted order details with action buttons"""
         # Format the message using the new formatter
-        msg = await self.format_order_details(order)
+        msg = self.format_order_details(order)
         
-        # Create inline keyboard
-        keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton("🔄 بروزرسانی", callback_data=f"refresh_order:{order.get('order_number')}")],
-            [InlineKeyboardButton("🏠 منوی اصلی", callback_data="main_menu")]
-        ])
+        buttons = [
+            [InlineKeyboardButton("🔄 بروزرسانی", callback_data=CallbackFormats.REFRESH_ORDER.format(order.get('order_number')))]
+        ]
+
+        # Add devices button if multiple
+        device_count = order.get('device_count', 1)
+        if device_count > 1:
+            buttons.append([InlineKeyboardButton(f"📋 دستگاه‌ها ({device_count})", 
+                            callback_data=CallbackFormats.DEVICES.format(order.get('order_number')))])
+
+        buttons.append([InlineKeyboardButton("🏠 منوی اصلی", callback_data=CallbackFormats.MAIN_MENU)])
+
+        keyboard = InlineKeyboardMarkup(buttons)
         
-        await self.send_message(chat_id, msg, parse_mode=ParseMode.MARKDOWN, reply_markup=keyboard)
+        if message_id:
+            await self.bot.edit_message_text(
+                chat_id=chat_id,
+                message_id=message_id,
+                text=msg,
+                reply_markup=keyboard,
+                parse_mode=ParseMode.MARKDOWN
+            )
+        else:
+            await self.send_message(chat_id, msg, reply_markup=keyboard, parse_mode=ParseMode.MARKDOWN)
 
 
 
     async def show_main_menu(self, chat_id: int):
         """Display menu for non-authenticated users"""
         keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton("🔐 ورود با کد ملی", callback_data="authenticate")],
+            [InlineKeyboardButton("🔐 ورود با کد ملی", callback_data=CallbackFormats.AUTHENTICATE)],
             [
-                InlineKeyboardButton("🔢 پیگیری سفارش", callback_data="track_by_number"),
-                InlineKeyboardButton("#️⃣ پیگیری سریال", callback_data="track_by_serial")
+                InlineKeyboardButton("🔢 پیگیری سفارش", callback_data=CallbackFormats.TRACK_BY_NUMBER),
+                InlineKeyboardButton("#️⃣ پیگیری سریال", callback_data=CallbackFormats.TRACK_BY_SERIAL)
             ],
-            [InlineKeyboardButton("📞 اطلاعات تماس", callback_data="contact_info")],
-            [InlineKeyboardButton("❓ راهنما", callback_data="help")]
+            [InlineKeyboardButton("❓ راهنما", callback_data=CallbackFormats.HELP)]
         ])
         await self.send_message(chat_id, "🏠 منوی اصلی\n\nلطفاً یک گزینه را انتخاب کنید:", reply_markup=keyboard)
 
@@ -473,16 +488,16 @@ class MessageHandler:
         async with self.sessions.session(chat_id) as session:
             name = session.user_name or "کاربر"
         keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton("👤 اطلاعات من", callback_data="my_info")],
-            [InlineKeyboardButton("📦 سفارشات من", callback_data="my_orders")],
+            [InlineKeyboardButton("👤 اطلاعات من", callback_data=CallbackFormats.MY_INFO)],
+            [InlineKeyboardButton("📦 سفارشات من", callback_data=CallbackFormats.MY_ORDERS)],
             [
-                InlineKeyboardButton("🔢 پیگیری سفارش", callback_data="track_by_number"),
-                InlineKeyboardButton("#️⃣ پیگیری سریال", callback_data="track_by_serial")
+                InlineKeyboardButton("🔢 پیگیری سفارش", callback_data=CallbackFormats.TRACK_BY_NUMBER),
+                InlineKeyboardButton("#️⃣ پیگیری سریال", callback_data=CallbackFormats.TRACK_BY_SERIAL)
             ],
-            [InlineKeyboardButton("🔧 درخواست تعمیر", callback_data="repair_request")],
-            [InlineKeyboardButton("📝 ثبت شکایت", callback_data="submit_complaint")],
-            [InlineKeyboardButton("⭐ امتیازدهی", callback_data="rate_service")],
-            [InlineKeyboardButton("🚪 خروج", callback_data="logout")]
+            [InlineKeyboardButton("🔧 درخواست تعمیر", callback_data=CallbackFormats.REPAIR_REQUEST)],
+            [InlineKeyboardButton("📝 ثبت شکایت", callback_data=CallbackFormats.SUBMIT_COMPLAINT)],
+            [InlineKeyboardButton("⭐ امتیازدهی", callback_data=CallbackFormats.RATE_SERVICE)],
+            [InlineKeyboardButton("🚪 خروج", callback_data=CallbackFormats.LOGOUT)]
         ])
         await self.send_message(
             chat_id,
@@ -512,20 +527,29 @@ class MessageHandler:
 
         nav_btns = []
         if page > 1:
-            nav_btns.append(InlineKeyboardButton("⬅️ قبلی", callback_data=f"devices_page:{page-1}:{order_number}"))
+            nav_btns.append(InlineKeyboardButton("⬅️ قبلی", callback_data=f"page_{page-1}_devices_{order_number}"))
         if page < total_pages:
-            nav_btns.append(InlineKeyboardButton("➡️ بعدی", callback_data=f"devices_page:{page+1}:{order_number}"))
+            nav_btns.append(InlineKeyboardButton("➡️ بعدی", callback_data=f"page_{page+1}_devices_{order_number}"))
 
-        keyboard = InlineKeyboardMarkup([nav_btns, [InlineKeyboardButton("🔙 بازگشت", callback_data="main_menu")]])
+        keyboard = InlineKeyboardMarkup([nav_btns, [InlineKeyboardButton("🔙 بازگشت", callback_data=CallbackFormats.MAIN_MENU)]])
         await self.bot.edit_message_text(chat_id=chat_id, message_id=message_id, text=text, reply_markup=keyboard)
 
+    def generate_progress_bar(self, step: int) -> str:
+        """Generate visual progress bar based on actual progress"""
+        
+        progress = STEP_PROGRESS.get(step, 0)
+        filled = int(progress / 12.5)  # Each block = 12.5%
+        empty = 8 - filled
+        return "█" * filled + "░" * empty
 
-    async def format_order_details(self, order: Dict[str, Any]) -> str:
+    def format_order_details(self, order: Dict[str, Any]) -> str:
         """Format order details for display with improved UI/UX"""
         parts = ["📦 **جزئیات سفارش**\n"]
         
         # Order number (always show)
-        parts.append(f"🔢 شماره پذیرش: `{order.get('order_number', '')}`")
+        order_num = order.get('order_number', '')
+        if order_num:
+            parts.append(f"🔢 شماره پذیرش: `{order_num}`")
         
         # Customer name (only if exists and not 'نامشخص')
         name = order.get('customer_name', '')
@@ -533,32 +557,44 @@ class MessageHandler:
             parts.append(f"👤 نام: {name}")
         
         # Device model
-        parts.append(f"📱 دستگاه: {order.get('device_model', '')}")
+        device = order.get('device_model', '')
+        if device:
+            parts.append(f"📱 دستگاه: {device}")
         
-        # Status (only if exists)
-        status = order.get('status', '')
-        if status and status != 'نامشخص':
-            icon = order.get('status_icon', '📍')
-            parts.append(f"{icon} وضعیت: **{status}**")
+        # Status display using STATUS_TEXT (for display)
+        status_code = order.get('status')
+        if status_code is not None:
+            status_display = STATUS_TEXT.get(status_code, 'نامشخص')
+            if status_display and status_display != 'نامشخص':
+                icon = STEP_ICONS.get(status_code, '📍')
+                parts.append(f"{icon} وضعیت: **{status_display}**")
         
-        # Progress bar only (no percentage text)
-        progress_bar = order.get('progress_bar', '⬜' * 9)
-        parts.append(f"\n{progress_bar}")
+        # Progress calculation and bar
+        step = order.get('steps', 0)
+        progress_percent = STEP_PROGRESS.get(step, 0)
+        progress_bar = self.generate_progress_bar(step)
         
-        # Current step info
-        current_step = order.get('current_step', '')
-        if current_step:
-            parts.append(f"📍 {current_step}")
+        parts.append(f"\n📊 پیشرفت: {progress_percent}%")
+        parts.append(f"{progress_bar}")
+        if progress_percent == 100:
+            parts.append("✨ **سفارش تکمیل شده**")
+            
+        # Current workflow step using WORKFLOW_STEPS
+        if step is not None:
+            workflow_step = WORKFLOW_STEPS.get(step, '')
+            if workflow_step:
+                icon = STEP_ICONS.get(step, '📍')
+                parts.append(f"{icon} مرحله فعلی: **{workflow_step}**")
         
         # Dates (without time)
         reg_date = order.get('registration_date', '')
         if reg_date and '/' in reg_date:
-            date_only = reg_date.split(' ')[0]  # Remove time part
+            date_only = reg_date.split(' ')[0] if ' ' in reg_date else reg_date
             parts.append(f"\n📅 تاریخ ثبت: {date_only}")
         
         pre_date = order.get('pre_reception_date', '')
         if pre_date and '/' in pre_date:
-            date_only = pre_date.split(' ')[0]  # Remove time part
+            date_only = pre_date.split(' ')[0] if ' ' in pre_date else pre_date
             parts.append(f"📅 پیش‌پذیرش: {date_only}")
         
         # Tracking code (if exists)
@@ -569,9 +605,27 @@ class MessageHandler:
         # Repair description (if exists)
         repair_desc = order.get('repair_description', '')
         if repair_desc and repair_desc != '---':
-            parts.append(f"🔧 شرح تعمیرات: {repair_desc[:50]}...")
+            # Truncate long descriptions
+            if len(repair_desc) > 50:
+                repair_desc = repair_desc[:50] + "..."
+            parts.append(f"🔧 شرح تعمیرات: {repair_desc}")
+        
+        # Technician name (if exists)
+        tech_name = order.get('technician_name', '')
+        if tech_name and tech_name != '---':
+            parts.append(f"👨‍🔧 کارشناس: {tech_name}")
+        
+        # Cost information (if exists)
+        total_cost = order.get('total_cost')
+        if total_cost and total_cost > 0:
+            formatted_cost = f"{total_cost:,}"
+            parts.append(f"💰 هزینه: {formatted_cost} تومان")
+        
+        # Update timestamp
+        parts.append(f"\n🔄 _آخرین بروزرسانی: {datetime.now().strftime('%H:%M:%S')}_")
         
         return "\n".join(parts)
+
 
     # =====================================================
     # Utility
