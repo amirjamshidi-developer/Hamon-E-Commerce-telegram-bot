@@ -1,78 +1,49 @@
 """
 Message Handler - Handles all user message interactions for the Telegram bot
+FIXED VERSION - Safe dictionary access and formatting
 """
-
-import asyncio
 import logging
+import asyncio
+from typing import Optional, Dict, Any
+from telegram import Bot, Message, InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup
+from telegram.constants import ParseMode
 from datetime import datetime
 from functools import wraps
-from typing import Any, Optional
 
-from telegram import (
-    Bot,
-    CallbackQuery,
-    InlineKeyboardButton,
-    InlineKeyboardMarkup,
-    KeyboardButton,
-)
-from telegram import Message
-from telegram import Message as TelegramMessage
-from telegram import ReplyKeyboardMarkup, Update
-from telegram.constants import ParseMode
-
-from .CallbackHandler import CallbackHandler
 from .CoreConfig import (
-    CANCEL_REPLY_KEYBOARD,
-    MAIN_INLINE_KEYBOARD,
-    MAIN_REPLY_KEYBOARD,
-    MESSAGES,
-    REPLY_BUTTON_TO_CALLBACK,
-    BotConfig,
-    CallbackFormats,
-    ComplaintType,
-    UserState,
-    Validators,
-    get_step_info,
+    UserState, BotConfig, Validators, ComplaintType, CallbackFormats,
+    MESSAGES, COMPLAINT_TYPE_MAP, WORKFLOW_STEPS, STEP_ICONS, STEP_PROGRESS,
+    STATE_LABELS, MAIN_INLINE_KEYBOARD, MAIN_REPLY_KEYBOARD, REPLY_BUTTON_TO_CALLBACK,
+    CANCEL_REPLY_KEYBOARD,safe_format_date
 )
-from .DataProvider import DataProvider
 from .SessionManager import RedisSessionManager
+from .DataProvider import DataProvider
 
 logger = logging.getLogger(__name__)
 
-
 def with_error_handling(func):
     """Error handling decorator"""
-
     @wraps(func)
     async def wrapper(self, chat_id: int, *args, **kwargs):
         try:
             return await func(self, chat_id, *args, **kwargs)
         except Exception as e:
             logger.error(f"Error in {func.__name__}: {e}")
-            await self.send_message(chat_id, MESSAGES.get("error", "❌ خطا"))
+            await self.send_message(chat_id, MESSAGES.get('error', '❌ خطا'))
             return None
-
     return wrapper
 
-
 class MessageHandler:
-    """Handles all message processing and state management - MINIMAL VERSION"""
+    """Handles all message processing and state management"""
 
-    def __init__(
-        self,
-        bot: Bot,
-        config: BotConfig,
-        session_manager: RedisSessionManager,
-        data_provider: DataProvider,
-        callback_handler=None,
-    ):
+    def __init__(self, bot: Bot, config: BotConfig, session_manager: RedisSessionManager, data_provider: DataProvider , callback_handler: None):
         self.bot = bot
         self.config = config
         self.sessions = session_manager
         self.data = data_provider
-        self.callback_handler = callback_handler
         self.validators = Validators()
         self._in_callback_context = False
+        self.callback_handler = callback_handler
 
         # State handlers mapping
         self.state_handlers = {
@@ -83,760 +54,690 @@ class MessageHandler:
             UserState.WAITING_REPAIR_DESC: self.handle_repair_description,
         }
 
-    # ========== KEYBOARD MANAGEMENT - CENTRALIZED & MINIMAL ==========
-    async def _activate_keyboard(
-        self, chat_id: int, keyboard_layout, placeholder: str = "", is_main: bool = True
-    ):
-        """Activate Reply keyboard cleanly without visible text"""
+    # ========== KEYBOARD MANAGEMENT ==========
+    async def activate_main_keyboard(self, chat_id: int):
+        """Activate main reply keyboard"""
         try:
             msg = await self.bot.send_message(
                 chat_id=chat_id,
-                text=" ",  # Invisible character
+                text=" ",
                 reply_markup=ReplyKeyboardMarkup(
-                    keyboard_layout,
+                    MAIN_REPLY_KEYBOARD,
                     resize_keyboard=True,
                     one_time_keyboard=False,
-                    input_field_placeholder=placeholder,
-                ),
+                    input_field_placeholder="از منوی زیر انتخاب کنید..."
+                )
             )
             await asyncio.sleep(0.1)
-            await self.bot.delete_message(chat_id=chat_id, message_id=msg.message_id)
-
-            if is_main:
-                async with self.sessions.session(chat_id) as session:
-                    session.temp_data["main_keyboard_active"] = True
-
-            logger.debug(f"Keyboard activated for {chat_id}: {placeholder}")
+            await self.bot.delete_message(chat_id, msg.message_id)
         except Exception as e:
-            logger.debug(f"Failed to activate keyboard for {chat_id}: {e}")
-
-    async def activate_main_keyboard(self, chat_id: int):
-        """Activate main Reply keyboard"""
-        await self._activate_keyboard(
-            chat_id, MAIN_REPLY_KEYBOARD, "از منوی زیر انتخاب کنید...", is_main=True
-        )
+            logger.debug(f"Could not activate main keyboard: {e}")
 
     async def activate_cancel_keyboard(self, chat_id: int):
-        """Activate cancel-only keyboard during operations"""
-        await self._activate_keyboard(
-            chat_id, CANCEL_REPLY_KEYBOARD, "برای لغو، انصراف بزنید", is_main=False
-        )
+        """Activate cancel-only keyboard"""
+        try:
+            msg = await self.bot.send_message(
+                chat_id=chat_id,
+                text=" ",
+                reply_markup=ReplyKeyboardMarkup(
+                    CANCEL_REPLY_KEYBOARD,
+                    resize_keyboard=True,
+                    one_time_keyboard=False,
+                    input_field_placeholder="برای انصراف، دکمه انصراف را بزنید"
+                )
+            )
+            await asyncio.sleep(0.1)
+            await self.bot.delete_message(chat_id, msg.message_id)
+        except Exception as e:
+            logger.debug(f"Could not activate cancel keyboard: {e}")
 
-    async def restore_main_keyboard(self, chat_id: int):
-        """Restore main keyboard after operations"""
-        await self.activate_main_keyboard(chat_id)
-
-    # ========== MESSAGE METHODS - CLEAN & NO AUTOMATIC KEYBOARD ==========
-    async def send_message(
-        self,
-        chat_id: int,
-        text: str,
-        reply_markup=None,
-        parse_mode=None,
-        activate_keyboard: bool = False,
-    ):
-        """Send message - keyboard activation is explicit"""
+    # ========== MESSAGE UTILITIES ==========
+    async def send_message(self, chat_id: int, text: str, reply_markup=None, parse_mode=None, activate_keyboard=False):
+        """Send message with optional keyboard activation"""
         try:
             msg = await self.bot.send_message(
                 chat_id=chat_id,
                 text=text,
                 reply_markup=reply_markup,
-                parse_mode=parse_mode or ParseMode.HTML,
+                parse_mode=parse_mode or ParseMode.HTML
             )
-
+            
             if activate_keyboard:
-                await self.activate_main_keyboard(chat_id)
-
+                if "cancel" in text.lower() or "انصراف" in text:
+                    await self.activate_cancel_keyboard(chat_id)
+                else:
+                    await self.activate_main_keyboard(chat_id)
+                    
             return msg
         except Exception as e:
-            logger.error(f"Error sending message to {chat_id}: {e}")
+            logger.error(f"Error sending message: {e}")
             return None
 
-    async def edit_message(
-        self,
-        chat_id: int,
-        message_id: int,
-        text: str,
-        reply_markup=None,
-        parse_mode=None,
-        activate_keyboard=False,
-    ):
-        """Edit existing message with error handling"""
+    async def edit_message(self, chat_id: int, message_id: int, text: str, reply_markup=None, parse_mode=None):
+        """Edit message with error handling"""
         try:
             await self.bot.edit_message_text(
                 chat_id=chat_id,
                 message_id=message_id,
                 text=text,
                 reply_markup=reply_markup,
-                parse_mode=parse_mode,
+                parse_mode=parse_mode or ParseMode.HTML
             )
-            if activate_keyboard:
-                await self.activate_main_keyboard(chat_id)
+            return True
         except Exception as e:
-            logger.error(f"Edit message error: {e}")
-            await self.send_message(
-                chat_id, text, reply_markup=reply_markup, parse_mode=parse_mode
-            )
+            error_str = str(e).lower()
+            if "message is not modified" in error_str or "message to edit not found" in error_str:
+                logger.debug(f"Edit skipped for message {message_id}: {error_str}")
+                return False
+            else:
+                logger.error(f"Error editing message {message_id}: {e}")
+                return False
 
     async def delete_message(self, chat_id: int, message_id: int):
-        """Delete message"""
+        """Delete message safely"""
         try:
-            return await self.bot.delete_message(chat_id=chat_id, message_id=message_id)
+            await self.bot.delete_message(chat_id=chat_id, message_id=message_id)
+            return True
         except Exception as e:
-            logger.debug(f"Failed to delete message {message_id}: {e}")
-            return None
+            logger.debug(f"Could not delete message {message_id}: {e}")
+            return False
 
-    # ========== CORE MESSAGE PROCESSING - MINIMAL ==========
+    # ========== MAIN PROCESSOR ==========
     @with_error_handling
     async def process_message(self, chat_id: int, text: str, message: Message = None):
-        """Process text messages - DIRECT METHOD CALLS"""
+        """Process incoming text messages"""
+        # Delete user message for clean interface
         if message:
             await self.delete_message(chat_id, message.message_id)
 
         if self.config.maintenance_mode:
-            await self.send_message(
-                chat_id, MESSAGES["maintenance"], activate_keyboard=True
-            )
+            await self.send_message(chat_id, MESSAGES['maintenance'])
             return
 
-        async with self.sessions.session(chat_id, chat_id) as session:
-            last_bot_message_id = session.temp_data.get("last_bot_message_id")
-
+        async with self.sessions.session(chat_id) as session:
             # Handle rate limiting
             if session.state == UserState.RATE_LIMITED:
-                remaining = (
-                    session.temp_data.get("rate_limit_expires", 0)
-                    - datetime.now().timestamp()
-                )
+                remaining = session.temp_data.get('rate_limit_expires', 0) - datetime.now().timestamp()
                 if remaining > 0:
-                    if last_bot_message_id:
-                        await self.edit_message(
-                            chat_id,
-                            last_bot_message_id,
-                            MESSAGES["rate_limited"].format(
-                                minutes=int(remaining / 60)
-                            ),
-                            reply_markup=InlineKeyboardMarkup(
-                                [
-                                    [
-                                        InlineKeyboardButton(
-                                            "🔙 بازگشت", callback_data="main_menu"
-                                        )
-                                    ]
-                                ]
-                            ),
-                            activate_keyboard=True,
-                        )
-                    else:
-                        await self.send_message(
-                            chat_id,
-                            MESSAGES["rate_limited"].format(
-                                minutes=int(remaining / 60)
-                            ),
-                        )
+                    await self.send_message(
+                        chat_id, 
+                        MESSAGES['rate_limited'].format(minutes=int(remaining/60)),
+                        reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("🔙 بازگشت", callback_data="main_menu")]])
+                    )
                     return
                 session.state = UserState.IDLE
 
+            # Update activity
             session.request_count += 1
             session.last_activity = datetime.now()
 
-            # DIRECT ROUTING
+            # Check for reply keyboard buttons
             callback_data = REPLY_BUTTON_TO_CALLBACK.get(text.strip())
             if callback_data:
-                # Direct method call instead of fake update
-                await self._route_reply_button(
-                    chat_id, callback_data, last_bot_message_id
-                )
+                await self._handle_reply_button(chat_id, callback_data, session)
                 return
 
-            # Handle state-based input
+            # Process based on state
             handler = self.state_handlers.get(session.state)
             if handler:
+                last_bot_message_id = session.temp_data.get('last_bot_message_id')
                 await handler(chat_id, text, last_bot_message_id)
             else:
-                # Default: show menu
-                await self.show_menu(chat_id, message_id=last_bot_message_id)
+                await self.show_menu(chat_id, session.is_authenticated)
 
-    async def _route_reply_button(
-        self, chat_id: int, callback_data: str, message_id: int = None
-    ):
-        """Route Reply button to appropriate callback handler method"""
-        async with self.sessions.session(chat_id) as session:
-            session.temp_data["last_bot_message_id"] = message_id
-
-        # Direct method calls based on callback data
-        routes = {
-            CallbackFormats.MAIN_MENU: self.show_menu,
-            CallbackFormats.AUTHENTICATE: lambda: self.callback_handler.handle_authenticate(
-                chat_id, message_id, MESSAGES["auth_request"]
-            ),
-            CallbackFormats.TRACK_BY_NUMBER: lambda: self.callback_handler.handle_track_by_number(
-                chat_id, message_id, "🔢 لطفاً شماره پذیرش را وارد کنید:"
-            ),
-            CallbackFormats.TRACK_BY_SERIAL: lambda: self.callback_handler.handle_track_by_serial(
-                chat_id, message_id, "#️⃣ لطفاً شماره سریال دستگاه را وارد کنید:"
-            ),
-            CallbackFormats.SUBMIT_COMPLAINT: self.callback_handler.handle_submit_complaint,
-            CallbackFormats.HELP: self.show_help,
-            CallbackFormats.LOGOUT: self.handle_logout_direct,
-        }
-
-        handler = routes.get(callback_data)
-        if handler:
-            try:
-                if callable(handler) and handler.__code__.co_argcount == 1:  # Lambda
-                    await handler(chat_id)
-                else:
-                    await handler(chat_id, message_id)
-            except Exception as e:
-                logger.error(f"Reply button routing error: {e}")
-                await self.show_menu(chat_id, message_id=message_id)
-        else:
-            logger.warning(f"Unknown reply button callback: {callback_data}")
-            await self.show_menu(chat_id, message_id=message_id)
-
-    async def handle_logout_direct(self, chat_id: int, message_id: int = None):
-        """Direct logout without fake update"""
-        async with self.sessions.session(chat_id) as session:
-            session.is_authenticated = False
-            session.nationalId = None
-            session.user_name = None
-            session.state = UserState.IDLE
-            session.temp_data.clear()
-
-        await self.send_message(
-            chat_id, "✅ با موفقیت خارج شدید", activate_keyboard=True
-        )
-        await self.show_menu(chat_id, message_id=message_id)
-
-    # ========= COMMAND HANDLERS ==========
-    async def handle_start(self, chat_id: int):
-        """Handle /start - show welcome + keyboards"""
-        async with self.sessions.session(chat_id) as session:
-            session.state = UserState.IDLE
-            session.temp_data.clear()
-
-        keyboard = InlineKeyboardMarkup(MAIN_INLINE_KEYBOARD)
-        await self.send_message(
-            chat_id=chat_id,
-            text=MESSAGES["welcome"],
-            reply_markup=keyboard,
-            parse_mode=ParseMode.HTML,
-            activate_keyboard=True,
-        )
-
-    async def show_menu(self, chat_id: int, message_id: int = None):
-        """Show main menu - get auth status from session"""
+    async def _handle_reply_button(self, chat_id: int, callback_data: str, session):
+        """Handle reply keyboard button presses"""
         try:
-            async with self.sessions.session(chat_id) as session:
-                is_authenticated = session.is_authenticated
-                if message_id:
-                    session.temp_data["last_bot_message_id"] = message_id
-
-            await self.callback_handler.show_main_menu(
-                chat_id, message_id, is_authenticated
-            )
-
-        except Exception as e:
-            logger.error(f"Error showing menu for {chat_id}: {e}")
-            await self.send_message(chat_id, "❌ خطا در نمایش منو")
-
-    async def show_help(self, chat_id: int, message_id: int = None):
-        """Show help menu - simplified version"""
-        try:
-            async with self.sessions.session(chat_id) as session:
-                if message_id:
-                    session.temp_data["last_bot_message_id"] = message_id
-
-            await self.callback_handler.show_help(chat_id, message_id)
-
-        except Exception as e:
-            logger.error(f"Error showing help for {chat_id}: {e}")
-            await self.send_message(chat_id, "❌ خطا در نمایش راهنما")
-
-    async def show_authenticated_menu(self, chat_id: int, message_id: int = None):
-        """Show authenticated user menu - simplified version"""
-        try:
-            async with self.sessions.session(chat_id) as session:
-                if message_id:
-                    session.temp_data["last_bot_message_id"] = message_id
-
-            await self.callback_handler.show_authenticated_menu(chat_id, message_id)
-
-        except Exception as e:
-            logger.error(f"Error showing authenticated menu for {chat_id}: {e}")
-            await self.send_message(chat_id, "❌ خطا در نمایش منوی کاربری")
-
-    # ========== STATE HANDLERS - TEXT INPUT ONLY ==========
-    @with_error_handling
-    async def handle_nationalId(
-        self, chat_id: int, nationalId: str, message_id: int = None
-    ):
-        """Handle national ID verification using centralized validation"""
-        nationalId = nationalId.strip()
-        # Use centralized validation
-        is_valid, error_msg = self.validators.validate_nationalId(nationalId)
-        if not is_valid:
-            error_text = MESSAGES.get(
-                "validation_error", "❌ خطا در اعتبارسنجی"
-            ).format(error_message=error_msg or "ورودی نامعتبر")
-            keyboard = InlineKeyboardMarkup(
-                [[InlineKeyboardButton("🔙 بازگشت", callback_data="main_menu")]]
-            )
-
-            if message_id:
-                await self.edit_message(
-                    chat_id, message_id, error_text, reply_markup=keyboard
-                )
-            else:
-                await self.send_message(chat_id, error_text, reply_markup=keyboard)
-
-            # Reset state
-            async with self.sessions.session(chat_id) as session:
+            if callback_data == "cancel":
                 session.state = UserState.IDLE
+                await self.activate_main_keyboard(chat_id)
+                await self.show_menu(chat_id, session.is_authenticated)
+            elif callback_data == "track_by_number":
+                session.state = UserState.WAITING_ORDER_NUMBER
+                await self.send_message(chat_id, "🔢 لطفاً شماره سفارش را وارد کنید:")
+            elif callback_data == "track_by_serial":
+                session.state = UserState.WAITING_SERIAL
+                await self.send_message(chat_id, "#️⃣ لطفاً شماره سریال را وارد کنید:")
+            elif callback_data == "authenticate":
+                session.state = UserState.WAITING_nationalId
+                await self.send_message(chat_id, "🔐 لطفاً کد ملی ۱۰ رقمی را وارد کنید:")
+            elif callback_data == "my_orders":
+                if session.is_authenticated:
+                    await self.show_my_orders(chat_id, session)
+                else:
+                    await self.send_message(chat_id, "⚠️ ابتدا وارد حساب کاربری شوید")
+            elif callback_data == "help":
+                await self.show_help(chat_id)
+            else:
+                await self.show_menu(chat_id, session.is_authenticated)
+        except Exception as e:
+            logger.error(f"Reply button error: {e}")
+            await self.send_message(chat_id, MESSAGES['error'])
+
+    # ========== STATE HANDLERS ==========
+    @with_error_handling
+    async def handle_nationalId(self, chat_id: int, nationalId: str, message_id: int = None):
+        """Handle national ID authentication - FIXED"""
+        # Validate input
+        if not nationalId.isdigit() or len(nationalId) != 10:
+            error_text = "❌ کد ملی باید دقیقاً ۱۰ رقم باشد\n\nمثال: 1234567890"
+            keyboard = InlineKeyboardMarkup([
+                [InlineKeyboardButton("🔄 تلاش مجدد", callback_data="authenticate")],
+                [InlineKeyboardButton("🔙 منوی اصلی", callback_data="main_menu")]
+            ])
+            if message_id:
+                await self.edit_message(chat_id, message_id, error_text, keyboard)
+            else:
+                await self.send_message(chat_id, error_text, keyboard)
             return
 
-        # Validation passed - proceed with authentication
+        # Show loading
+        loading_text = "🔄 در حال بررسی احراز هویت..."
         if message_id:
-            await self.edit_message(chat_id, message_id, "🔄 در حال بررسی...")
+            await self.edit_message(chat_id, message_id, loading_text)
         else:
-            loading_msg = await self.send_message(chat_id, "🔄 در حال بررسی...")
+            loading_msg = await self.send_message(chat_id, loading_text)
             message_id = loading_msg.message_id if loading_msg else None
 
         try:
+            # Authenticate
             user_data = await self.data.authenticate_user(nationalId)
-
-            if user_data and user_data.get("authenticated", False):
-                user_name = user_data.get("name", "کاربر")
-                phone_number = user_data.get("phone", "نامشخص") or user_data.get(
-                    "phone_number", "نامشخص"
-                )
-                city = user_data.get("city", "نامشخص")
-
+            
+            if user_data and user_data.get('authenticated', False):
+                # Success - update session
                 async with self.sessions.session(chat_id) as session:
                     session.is_authenticated = True
                     session.nationalId = nationalId
-                    session.user_name = user_name
-                    session.phone_number = phone_number
-                    session.city = city
+                    session.user_name = user_data.get('name', 'کاربر گرامی')
+                    session.phone_number = user_data.get('phone_number', 'نامشخص')
+                    session.city = user_data.get('city', 'نامشخص')
                     session.state = UserState.AUTHENTICATED
-                    session.extend(60)
+                    session.extend(3600)  # 1 hour session
 
-                    auth_key = f"{self.sessions.AUTH_PREFIX}{nationalId}"
-                    await self.sessions.redis.setex(
-                        auth_key, self.sessions.AUTH_TTL, chat_id
-                    )
-
-                    session.temp_data["last_bot_message_id"] = message_id
-
-                success_text = f"✅ احراز هویت با موفقیت انجام شد\n\n👤 {user_name} عزیز، خوش آمدید!"
-
-                if message_id:
-                    await self.edit_message(
-                        chat_id, message_id, success_text, parse_mode=ParseMode.HTML
-                    )
-                    await asyncio.sleep(1.5)
-                    await self.show_authenticated_menu(chat_id, message_id)
-                else:
-                    await self.send_message(
-                        chat_id, success_text, parse_mode=ParseMode.HTML
-                    )
-                    await self.show_authenticated_menu(chat_id)
-
-            else:
-                error_text = "❌ کد ملی یافت نشد\n\nلطفاً از صحت کد/شناسه ملی اطمینان حاصل کنید و مجددا امتحان کنید."
-                keyboard = InlineKeyboardMarkup(
-                    [
-                        [
-                            InlineKeyboardButton(
-                                "🔄 تلاش مجدد", callback_data="authenticate"
-                            )
-                        ],
-                        [
-                            InlineKeyboardButton(
-                                "🔙 منوی اصلی", callback_data="main_menu"
-                            )
-                        ],
-                    ]
+                success_text = f"✅ **احراز هویت موفق**\n\n👤 {session.user_name} عزیز، خوش آمدید!"
+                await self.edit_message(
+                    chat_id, message_id, success_text,
+                    parse_mode=ParseMode.MARKDOWN
                 )
-
-                if message_id:
-                    await self.edit_message(
-                        chat_id, message_id, error_text, reply_markup=keyboard
-                    )
-
-                async with self.sessions.session(chat_id) as session:
-                    session.state = UserState.IDLE
+                await asyncio.sleep(1)
+                await self.show_authenticated_menu(chat_id, message_id)
+                
+            else:
+                error_text = "❌ **کد ملی یافت نشد**\n\nلطفاً از صحت اطلاعات اطمینان حاصل کنید"
+                keyboard = InlineKeyboardMarkup([
+                    [InlineKeyboardButton("🔄 تلاش مجدد", callback_data="authenticate")],
+                    [InlineKeyboardButton("🔙 منوی اصلی", callback_data="main_menu")]
+                ])
+                await self.edit_message(chat_id, message_id, error_text, keyboard, ParseMode.MARKDOWN)
 
         except Exception as e:
-            logger.error(f"Error in handle_nationalId: {e}")
+            logger.error(f"Authentication error: {e}")
             error_text = "❌ خطا در احراز هویت. لطفاً دوباره تلاش کنید."
-            keyboard = InlineKeyboardMarkup(
-                [[InlineKeyboardButton("🔙 منوی اصلی", callback_data="main_menu")]]
-            )
-
-            if message_id:
-                await self.edit_message(
-                    chat_id, message_id, error_text, reply_markup=keyboard
-                )
-
-            async with self.sessions.session(chat_id) as session:
-                session.state = UserState.IDLE
+            keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 منوی اصلی", callback_data="main_menu")]])
+            await self.edit_message(chat_id, message_id, error_text, keyboard)
 
     @with_error_handling
-    async def handle_order_number(
-        self, chat_id: int, order_number: str, message_id: int = None
-    ):
-        """Handle order number input with centralized validation"""
-        order_number = order_number.strip()
-
-        # Validate using centralized validator
-        is_valid, error_msg = self.validators.validate_order_number(order_number)
-        if not is_valid:
-            error_text = MESSAGES.get(
-                "validation_error", "❌ خطا در اعتبارسنجی"
-            ).format(error_message=error_msg or "ورودی نامعتبر")
-            keyboard = InlineKeyboardMarkup(
-                [[InlineKeyboardButton("🔙 بازگشت", callback_data="main_menu")]]
-            )
-
-            if message_id:
-                await self.edit_message(
-                    chat_id, message_id, error_text, reply_markup=keyboard
-                )
-            else:
-                await self.send_message(chat_id, error_text, reply_markup=keyboard)
-
-            async with self.sessions.session(chat_id) as session:
-                session.state = UserState.IDLE
-            return
-
-        # Validation passed - proceed with lookup
-        await self.handle_order_lookup(chat_id, order_number, "number", message_id)
-
-    @with_error_handling
-    async def handle_serial(self, chat_id: int, serial: str, message_id: int = None):
-        """Handle serial number input with centralized validation"""
-        serial = serial.strip()
-
-        # Validate using centralized validator
-        is_valid, error_msg = self.validators.validate_serial(serial)
-        if not is_valid:
-            error_text = MESSAGES.get(
-                "validation_error", "❌ خطا در اعتبارسنجی"
-            ).format(error_message=error_msg or "ورودی نامعتبر")
-            keyboard = InlineKeyboardMarkup(
-                [[InlineKeyboardButton("🔙 بازگشت", callback_data="main_menu")]]
-            )
-
-            if message_id:
-                await self.edit_message(
-                    chat_id, message_id, error_text, reply_markup=keyboard
-                )
-            else:
-                await self.send_message(chat_id, error_text, reply_markup=keyboard)
-
-            async with self.sessions.session(chat_id) as session:
-                session.state = UserState.IDLE
-            return
-
-        # Validation passed - proceed with lookup
-        await self.handle_order_lookup(chat_id, serial, "serial", message_id)
-
-    async def handle_order_lookup(
-        self, chat_id: int, value: str, lookup_type: str, message_id: int = None
-    ):
-        """Unified order lookup processing"""
+    async def handle_order_lookup(self, chat_id: int, value: str, lookup_type: str, message_id: int = None):
+        """Handle order lookup by number or serial - FIXED"""
         value = value.strip()
+        logger.info(f"Looking up {lookup_type}: {value}")
 
+        # Store lookup info
         async with self.sessions.session(chat_id) as session:
-            session.temp_data["lookup_type"] = lookup_type
-            session.temp_data["lookup_value"] = value
+            session.temp_data['lookup_type'] = lookup_type
+            session.temp_data['lookup_value'] = value
 
         # Show loading
+        loading_text = "🔄 در حال جستجوی سفارش..."
         if message_id:
-            await self.edit_message(
-                chat_id, message_id, "🔄 در حال جستجو...", activate_keyboard=False
-            )
+            await self.edit_message(chat_id, message_id, loading_text)
         else:
-            loading_msg = await self.send_message(
-                chat_id, "🔄 در حال جستجو...", activate_keyboard=False
-            )
+            loading_msg = await self.send_message(chat_id, loading_text)
             message_id = loading_msg.message_id if loading_msg else None
 
         try:
             # Fetch order data
-            if lookup_type == "number":
-                order_info = await self.data.get_order_by_number(value)
+            if lookup_type == 'number':
+                order_data = await self.data.get_order_by_number(value)
+            else:  # serial
+                order_data = await self.data.get_order_by_serial(value)
+
+            # Display results
+            if order_data and not order_data.get('error'):
+                await self.display_order_details(chat_id, order_data, message_id)
             else:
-                order_info = await self.data.get_order_by_serial(value)
+                error_text = f"❌ سفارشی با این {'شماره' if lookup_type == 'number' else 'سریال'} یافت نشد"
+                keyboard = InlineKeyboardMarkup([
+                    [InlineKeyboardButton("🔄 تلاش مجدد", callback_data=f"track_by_{lookup_type}")],
+                    [InlineKeyboardButton("🔙 منوی اصلی", callback_data="main_menu")]
+                ])
+                await self.edit_message(chat_id, message_id, error_text, keyboard)
 
-            if order_info:
-                # Format display
-                text = self._format_order_summary(order_info)
-
-                # Create inline keyboard for actions
-                keyboard = InlineKeyboardMarkup(
-                    [
-                        [
-                            InlineKeyboardButton(
-                                "🔄 بروزرسانی",
-                                callback_data=f"refresh_order:{order_info.order_number}",
-                            )
-                        ],
-                        [
-                            InlineKeyboardButton(
-                                "📋 جزئیات کامل",
-                                callback_data=f"order_{order_info.order_number}",
-                            )
-                        ],
-                        [
-                            InlineKeyboardButton(
-                                "🔙 منوی اصلی", callback_data="main_menu"
-                            )
-                        ],
-                    ]
-                )
-
-                if message_id:
-                    await self.edit_message(
-                        chat_id,
-                        message_id,
-                        text,
-                        reply_markup=keyboard,
-                        activate_keyboard=True,
-                    )
-                else:
-                    await self.send_message(
-                        chat_id, text, reply_markup=keyboard, activate_keyboard=True
-                    )
-
-                async with self.sessions.session(chat_id) as session:
-                    session.state = UserState.IDLE
-
-            else:
-                error_text = MESSAGES["order_not_found"]
-                keyboard = InlineKeyboardMarkup(
-                    [[InlineKeyboardButton("🔙 منوی اصلی", callback_data="main_menu")]]
-                )
-
-                if message_id:
-                    await self.edit_message(
-                        chat_id,
-                        message_id,
-                        error_text,
-                        reply_markup=keyboard,
-                        activate_keyboard=True,
-                    )
-                else:
-                    await self.send_message(
-                        chat_id,
-                        error_text,
-                        reply_markup=keyboard,
-                        activate_keyboard=True,
-                    )
-
-                async with self.sessions.session(chat_id) as session:
-                    session.state = UserState.IDLE
+            # Reset state
+            async with self.sessions.session(chat_id) as session:
+                session.state = UserState.AUTHENTICATED if session.is_authenticated else UserState.IDLE
+                session.temp_data['last_bot_message_id'] = message_id
 
         except Exception as e:
-            logger.error(f"Order lookup error: {e}")
-            error_text = "❌ خطا در جستجو"
+            logger.error(f"Order lookup error: {e}", exc_info=True)
+            error_text = "❌ خطا در جستجو. لطفاً دوباره تلاش کنید."
+            keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 منوی اصلی", callback_data="main_menu")]])
+            await self.edit_message(chat_id, message_id, error_text, keyboard)
+
+    async def handle_order_number(self, chat_id: int, text: str, message_id: int = None):
+        """Handle order number input"""
+        await self.handle_order_lookup(chat_id, text, "number", message_id)
+        await self.activate_main_keyboard(chat_id)
+
+    async def handle_serial(self, chat_id: int, text: str, message_id: int = None):
+        """Handle serial number input"""
+        await self.handle_order_lookup(chat_id, text, "serial", message_id)
+        await self.activate_main_keyboard(chat_id)
+
+    @with_error_handling
+    async def handle_complaint_text(self, chat_id: int, text: str, message_id: int = None):
+        """Handle complaint text - FIXED validation"""
+        if len(text.strip()) < 10:
+            error_text = "⚠️ متن شکایت باید حداقل ۱۰ کاراکتر باشد\n\nلطفاً توضیحات کامل‌تری بنویسید:"
+            keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 انصراف", callback_data="main_menu")]])
             if message_id:
-                await self.edit_message(
-                    chat_id, message_id, error_text, activate_keyboard=True
-                )
+                await self.edit_message(chat_id, message_id, error_text, keyboard)
             else:
-                await self.send_message(chat_id, error_text, activate_keyboard=True)
-            async with self.sessions.session(chat_id) as session:
-                session.state = UserState.IDLE
-
-    def _format_order_summary(self, order_info) -> str:
-        """Format order summary for display"""
-        step_info = get_step_info(order_info.steps)
-
-        return f"""📦 **سفارش {order_info.order_number}**
-
-👤 {order_info.customer_name}
-📱 {order_info.device_model}
-🔢 {order_info.serial_number}
-
-{step_info['bar']}
-📍 {step_info['display']}
-
-📅 {order_info.registration_date or 'نامشخص'}"""
-
-    @with_error_handling
-    async def handle_complaint_text(
-        self, chat_id: int, text: str, message_id: int = None
-    ):
-        """Process complaint text with validation"""
-        text = text.strip()
+                await self.send_message(chat_id, error_text, keyboard)
+            return
 
         async with self.sessions.session(chat_id) as session:
-            # Authentication check
             if not session.is_authenticated:
-                keyboard = InlineKeyboardMarkup(
-                    [
-                        [
-                            InlineKeyboardButton(
-                                "🔐 ورود", callback_data=CallbackFormats.AUTHENTICATE
-                            )
-                        ],
-                        [
-                            InlineKeyboardButton(
-                                "🔙 بازگشت", callback_data=CallbackFormats.MAIN_MENU
-                            )
-                        ],
-                    ]
-                )
-                await self._show_message(
-                    chat_id, message_id, "⚠️ ابتدا وارد حساب کاربری خود شوید", keyboard
-                )
-                session.state = UserState.IDLE
+                await self.send_message(chat_id, "⚠️ ابتدا وارد حساب کاربری شوید")
                 return
 
-            # Validate complaint type
-            complaint_type = session.temp_data.get("complaint_type")
-            if not complaint_type or not isinstance(complaint_type, ComplaintType):
-                keyboard = InlineKeyboardMarkup(
-                    [
-                        [
-                            InlineKeyboardButton(
-                                "🔙 بازگشت", callback_data=CallbackFormats.MAIN_MENU
-                            )
-                        ]
-                    ]
-                )
-                await self._show_message(
-                    chat_id, message_id, "❌ خطا در فرآیند ثبت شکایت", keyboard
-                )
-                session.state = UserState.IDLE
-                return
-
-            # Validate text length
-            is_valid, error_msg = self.validators.validate_text_length(
-                text, min_length=10, max_length=1000
+            complaint_type = session.temp_data.get('complaint_type', 'other')
+            ticket_number = await self.data.submit_complaint(
+                session.nationalId, 
+                complaint_type, 
+                text.strip()
             )
-            if not is_valid:
-                keyboard = InlineKeyboardMarkup(
-                    [
-                        [
-                            InlineKeyboardButton(
-                                "📝 ویرایش متن",
-                                callback_data=CallbackFormats.SUBMIT_COMPLAINT,
-                            )
-                        ],
-                        [
-                            InlineKeyboardButton(
-                                "🔙 انصراف", callback_data=CallbackFormats.MAIN_MENU
-                            )
-                        ],
-                    ]
+
+            if ticket_number and not ticket_number.get('error'):
+                success_text = MESSAGES['complaint_submitted'].format(
+                    ticket_number=ticket_number.get('ticket_id', 'نامشخص'),
+                    complaint_type=COMPLAINT_TYPE_MAP.get(complaint_type, 'سایر'),
+                    date=datetime.now().strftime('%Y/%m/%d')
                 )
-                await self._show_message(chat_id, message_id, error_msg, keyboard)
-                return
+                await self.send_message(chat_id, success_text)
+            else:
+                await self.send_message(chat_id, "❌ خطا در ثبت شکایت. لطفاً دوباره تلاش کنید.")
 
-            # Show loading
-            await self._show_message(chat_id, message_id, "⏳ در حال ثبت شکایت...")
-
-            try:
-                # Submit complaint
-                ticket_number = await self.data.submit_complaint(
-                    national_id=session.nationalId,
-                    complaint_type=complaint_type.value,
-                    description=text,
-                    user_name=session.user_name,
-                    phone_number=session.phone_number or "",
-                )
-
-                # Success response
-                success_text = f"✅ شکایت ثبت شد\n\n🎫 شماره: {ticket_number or 'درخواست-XXX'}\n📞 تیم پشتیبانی با شما تماس خواهد گرفت"
-                keyboard = InlineKeyboardMarkup(
-                    [
-                        [
-                            InlineKeyboardButton(
-                                "🏠 منوی اصلی", callback_data=CallbackFormats.MAIN_MENU
-                            )
-                        ]
-                    ]
-                )
-
-                await self._show_message(chat_id, message_id, success_text, keyboard)
-
-                # Cleanup session
-                session.state = UserState.IDLE
-                session.temp_data.pop("complaint_type", None)
-                session.extend(60)
-
-                logger.info(
-                    f"Complaint submitted: {session.user_name} (ticket: {ticket_number})"
-                )
-
-            except Exception as e:
-                logger.error(f"Complaint submission failed for {chat_id}: {e}")
-
-                keyboard = InlineKeyboardMarkup(
-                    [
-                        [
-                            InlineKeyboardButton(
-                                "🔄 تلاش مجدد",
-                                callback_data=CallbackFormats.SUBMIT_COMPLAINT,
-                            )
-                        ],
-                        [
-                            InlineKeyboardButton(
-                                "🔙 بازگشت", callback_data=CallbackFormats.MAIN_MENU
-                            )
-                        ],
-                    ]
-                )
-                await self._show_message(
-                    chat_id, message_id, "❌ خطا در ثبت شکایت", keyboard
-                )
-                session.state = UserState.WAITING_COMPLAINT_TEXT
-
-            # Restore main keyboard
-            await self.restore_main_keyboard(chat_id)
-
-    def _show_message(
-        self, chat_id: int, message_id: int, text: str, reply_markup=None
-    ):
-        """Helper: Send or edit message"""
-        if message_id:
-            return self.edit_message(
-                chat_id, message_id, text, reply_markup=reply_markup
-            )
-        else:
-            return self.send_message(chat_id, text, reply_markup=reply_markup)
+            # Reset state
+            session.state = UserState.AUTHENTICATED
+            session.temp_data.clear()
+            await self.show_menu(chat_id, True)
 
     @with_error_handling
-    async def handle_repair_description(
-        self, chat_id: int, text: str, message_id: int = None
-    ):
-        """Process repair description"""
+    async def handle_repair_description(self, chat_id: int, text: str, message_id: int = None):
+        """Handle repair request - FIXED"""
+        if not text.strip():
+            await self.send_message(chat_id, "⚠️ لطفاً توضیحات را وارد کنید")
+            return
+
         async with self.sessions.session(chat_id) as session:
             if not session.is_authenticated:
-                await self.show_menu(chat_id, message_id=message_id)
+                await self.send_message(chat_id, "⚠️ ابتدا وارد حساب کاربری شوید")
+                return
+
+            if len(text.strip()) < 10:
+                await self.send_message(chat_id, "⚠️ توضیحات باید حداقل ۱۰ کاراکتر باشد")
                 return
 
             request_number = await self.data.submit_repair_request(
-                session.nationalId, text.strip(), session.phone_number or ""
+                session.nationalId, 
+                text.strip()
             )
 
-            success_msg = MESSAGES["repair_submitted"].format(
-                request_number=request_number or "درخواست ثبت شد"
-            )
-            await self.send_message(chat_id, success_msg, activate_keyboard=True)
+            if request_number and not request_number.get('error'):
+                success_text = MESSAGES['repair_submitted'].format(
+                    request_number=request_number.get('request_id', 'نامشخص'),
+                    date=datetime.now().strftime('%Y/%m/%d')
+                )
+                await self.send_message(chat_id, success_text)
+            else:
+                await self.send_message(chat_id, "❌ خطا در ثبت درخواست تعمیر")
 
+            # Reset state
+            session.state = UserState.AUTHENTICATED
+            session.temp_data.clear()
+            await self.show_menu(chat_id, True)
+
+    # ========== DISPLAY METHODS - FIXED FORMATTING ==========
+    async def display_order_details(self, chat_id: int, order_data: Dict[str, Any], message_id: int = None):
+        """Display order details"""
+        try:
+            logger.info(f"Display order details called with data: {order_data}")
+            
+            if not order_data:
+                error_text = MESSAGES.get('order_not_found', '❌ سفارش یافت نشد')
+                keyboard = InlineKeyboardMarkup([
+                    [InlineKeyboardButton("🔙 منوی اصلی", callback_data="main_menu")]
+                ])
+                
+                if message_id:
+                    await self.edit_message(chat_id, message_id, error_text, keyboard)
+                else:
+                    await self.send_message(chat_id, error_text, keyboard)
+                return
+
+            if isinstance(order_data, dict):
+                if order_data.get('success') == False or order_data.get('error'):
+                    error_text = order_data.get('message', order_data.get('error', MESSAGES.get('order_not_found', '❌ سفارش یافت نشد')))
+                    keyboard = InlineKeyboardMarkup([
+                        [InlineKeyboardButton("🔙 منوی اصلی", callback_data="main_menu")]
+                    ])
+                    
+                    if message_id:
+                        await self.edit_message(chat_id, message_id, error_text, keyboard)
+                    else:
+                        await self.send_message(chat_id, error_text, keyboard)
+                    return
+
+                meaningful_data = any(
+                    str(order_data.get(key, '')).strip() not in ['نامشخص', '', '---', '0'] 
+                    for key in ['order_number', 'customer_name', 'device_model']
+                )
+                
+                if not meaningful_data:
+                    error_text = MESSAGES.get('order_not_found', '❌ سفارشی با این مشخصات یافت نشد')
+                    keyboard = InlineKeyboardMarkup([
+                        [InlineKeyboardButton("🔙 منوی اصلی", callback_data="main_menu")]
+                    ])
+                    
+                    if message_id:
+                        await self.edit_message(chat_id, message_id, error_text, keyboard)
+                    else:
+                        await self.send_message(chat_id, error_text, keyboard)
+                    return
+
+            additional_info = ""
+            
+            order_number = str(order_data.get('order_number', 'نامشخص') or 'نامشخص').strip()
+            customer_name = str(order_data.get('customer_name', 'نامشخص') or 'نامشخص').strip()
+            device_model = str(order_data.get('device_model', 'نامشخص') or 'نامشخص').strip()
+            serial_number = str(order_data.get('serial_number', '---') or '---').strip()
+            phone_number = str(order_data.get('phone_number', '---') or '---').strip()
+            city = str(order_data.get('city', 'نامشخص') or 'نامشخص').strip()
+            
+            registration_date_raw = order_data.get('registration_date', '')
+            pre_reception_date_raw = order_data.get('pre_reception_date', '')
+            
+            registration_date = safe_format_date(registration_date_raw, "نامشخص")
+            pre_reception_date = safe_format_date(pre_reception_date_raw, "نامشخص")
+            
+            total_cost_raw = order_data.get('total_cost')
+            if total_cost_raw is None or total_cost_raw == 0 or str(total_cost_raw).strip() in ['', 'null']:
+                total_cost = "رایگان"
+                total_cost_formatted = "رایگان"
+            else:
+                try:
+                    total_cost_value = float(str(total_cost_raw).strip())
+                    if total_cost_value > 0:
+                        total_cost_formatted = f"{int(total_cost_value):,}"
+                        additional_info += f"💰 **هزینه کل:** {total_cost_formatted} تومان"
+                    else:
+                        total_cost = "رایگان"
+                        total_cost_formatted = "رایگان"
+                except (ValueError, TypeError, AttributeError):
+                    total_cost = "نامشخص"
+                    total_cost_formatted = "نامشخص"
+
+            current_step_num = int(order_data.get('steps', 0))
+            current_step_text = WORKFLOW_STEPS.get(current_step_num, f"مرحله {current_step_num}")
+            progress_percent = STEP_PROGRESS.get(current_step_num, 0)
+            status_icon = STEP_ICONS.get(current_step_num, "📍")
+            
+            total_bars = 10
+            filled_bars = max(0, min(int((progress_percent / 100) * total_bars), total_bars))
+            progress_bar = "█" * filled_bars + "░" * (total_bars - filled_bars)
+
+            notes = str(order_data.get('notes', '') or '').strip()
+            if notes and notes not in ['نامشخص', '']:
+                additional_info += f"\n📝 **یادداشت:** {notes}"
+
+            delivery_date_raw = order_data.get('delivery_date', '')
+            if delivery_date_raw:
+                delivery_date = safe_format_date(delivery_date_raw, "")
+                if delivery_date and delivery_date not in ['نامشخص', '']:
+                    additional_info += f"\n📅 **تاریخ تحویل:** {delivery_date}"
+
+            tracking_code = str(order_data.get('tracking_code', '') or '').strip()
+            if tracking_code and tracking_code not in ['نامشخص', '']:
+                additional_info += f"\n📦 **کد رهگیری:** `{tracking_code}`"
+
+            repair_desc = str(order_data.get('repair_description', '') or '').strip()
+            if repair_desc and repair_desc not in ['نامشخص', '']:
+                additional_info += f"\n🔧 **توضیحات تعمیر:** {repair_desc}"
+
+            order_details_text = f"""📦 **جزئیات سفارش #{order_number}**
+
+    👤 **مشتری:** {customer_name}
+    📞 **تلفن:** `{phone_number}`
+    🏙️ **استان/شهر:** {city}
+
+    📱 **دستگاه:**
+    ├ مدل: {device_model}
+    ├ سریال: `{serial_number}`
+    └ وضعیت: {order_data.get('device_status', 'نامشخص')}
+
+    📊 ** سفارش وضعیت:**
+    ├ مرحله: {status_icon} {current_step_text}
+    └ پیشرفت:
+            {progress_bar} **{progress_percent}%**
+
+    📅 **تاریخ‌ها:**
+    ├ ثبت: {registration_date}
+    └ پیش‌پذیرش: {pre_reception_date}
+
+    {additional_info if additional_info.strip() else ''}
+
+    ⏰ **آخرین بروزرسانی:** {datetime.now().strftime('%Y/%m/%d - %H:%M')}"""
+
+            buttons = []
+            payment_link = order_data.get('payment_link')
+            factor_payment = order_data.get('factor_payment', {})
+            
+            if payment_link:
+                if isinstance(factor_payment, dict) and factor_payment:  # Payment completed
+                    buttons.append([InlineKeyboardButton("💳 مشاهده فاکتور", url=payment_link)])
+                elif not factor_payment or factor_payment == {}:  # Payment pending
+                    buttons.append([InlineKeyboardButton("💳 مشاهده فاکتور و پرداخت", url=payment_link)])
+            
+            buttons.extend([
+                [InlineKeyboardButton("🔄 بروزرسانی", callback_data=f"refresh_order:{order_number}")],
+                [InlineKeyboardButton("🔙 منوی اصلی", callback_data="main_menu")]
+            ])
+            
+            keyboard = InlineKeyboardMarkup(buttons)
+
+            if message_id:
+                try:
+                    success = await self.edit_message(
+                        chat_id, message_id, order_details_text, 
+                        keyboard, parse_mode=ParseMode.MARKDOWN
+                    )
+                    if not success:
+                        await self.send_message(
+                            chat_id, order_details_text, 
+                            keyboard, parse_mode=ParseMode.MARKDOWN
+                        )
+                except Exception as edit_error:
+                    logger.warning(f"Edit failed, sending new message: {edit_error}")
+                    await self.send_message(
+                        chat_id, order_details_text, 
+                        keyboard, parse_mode=ParseMode.MARKDOWN
+                    )
+            else:
+                await self.send_message(
+                    chat_id, order_details_text, 
+                    keyboard, parse_mode=ParseMode.MARKDOWN
+                )
+
+            logger.info(f"✅ Order details displayed successfully for {order_number}")
+
+        except Exception as e:
+            logger.error(f"❌ Display order details error: {e}", exc_info=True)
+            error_text = "❌ خطا در نمایش جزئیات سفارش. لطفاً دوباره تلاش کنید."
+            keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 منوی اصلی", callback_data="main_menu")]])
+            
+            try:
+                if message_id:
+                    await self.edit_message(chat_id, message_id, error_text, keyboard)
+                else:
+                    await self.send_message(chat_id, error_text, keyboard)
+            except Exception as send_error:
+                logger.error(f"Failed to send error message: {send_error}")
+
+
+    async def show_menu(self, chat_id: int, authenticated: bool = False, message_id: int = None):
+        """Show main menu - FIXED keyboard sizing"""
+        try:
+            if authenticated is None:
+                async with self.sessions.session(chat_id) as session:
+                    authenticated = session.is_authenticated and bool(session.nationalId)
+
+            if authenticated:
+                async with self.sessions.session(chat_id) as session:
+                    name = session.user_name or "کاربر"
+                    session.temp_data.pop('last_menu_type', None)
+
+                text = f"👋 **سلام {name}!**\n\n📋 از پنل کاربری انتخاب کنید:"
+                keyboard = InlineKeyboardMarkup([
+                    [InlineKeyboardButton("👤 اطلاعات من", callback_data="my_info")],
+                    [InlineKeyboardButton("📦 سفارشات من", callback_data="my_orders")],
+                    [InlineKeyboardButton("🔢 پیگیری سفارش", callback_data="track_by_number")],
+                    [InlineKeyboardButton("🔢 پیگیری سریال", callback_data="track_by_serial")],
+                    [InlineKeyboardButton("🔧 درخواست تعمیر", callback_data="repair_request")],
+                    [InlineKeyboardButton("📝 ثبت شکایت", callback_data="submit_complaint")],
+                    [InlineKeyboardButton("🚪 خروج", callback_data="logout")]
+                ])
+            else:
+                async with self.sessions.session(chat_id) as session:
+                    session.temp_data.pop('last_menu_type', None)
+
+                text = "🏠 **منوی اصلی**\n\nلطفاً یک گزینه را انتخاب کنید:"
+                keyboard = InlineKeyboardMarkup([
+                    [InlineKeyboardButton("🔐 ورود با کد ملی", callback_data="authenticate")],
+                    [InlineKeyboardButton("🔢 پیگیری سفارش", callback_data="track_by_number")],
+                    [InlineKeyboardButton("🔢 پیگیری سریال", callback_data="track_by_serial")],
+                    [InlineKeyboardButton("❓ راهنما", callback_data="help")]
+                ])
+
+            if message_id:
+                await self.edit_message(chat_id, message_id, text, keyboard, ParseMode.MARKDOWN)
+            else:
+                await self.send_message(chat_id, text, keyboard, ParseMode.MARKDOWN, activate_keyboard=True)
+
+        except Exception as e:
+            logger.error(f"Show menu error: {e}")
+            fallback_text = "🏠 منوی اصلی"
+            fallback_keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 شروع", callback_data="main_menu")]])
+            await self.send_message(chat_id, fallback_text, fallback_keyboard)
+
+    async def show_authenticated_menu(self, chat_id: int, message_id: int = None):
+        """Show authenticated user menu"""
+        await self.show_menu(chat_id, authenticated=True, message_id=message_id)
+
+    async def show_my_orders(self, chat_id: int, session):
+        """Show user's orders list"""
+        try:
+            if not session.is_authenticated or not session.nationalId:
+                await self.send_message(
+                    chat_id, 
+                    "⚠️ **ابتدا وارد حساب کاربری شوید**",
+                    InlineKeyboardMarkup([
+                        [InlineKeyboardButton("🔐 ورود", callback_data="authenticate")],
+                        [InlineKeyboardButton("🔙 منوی اصلی", callback_data="main_menu")]
+                    ]),
+                    ParseMode.MARKDOWN
+                )
+                return
+
+            # Show loading
+            loading_msg = await self.send_message(chat_id, "🔄 در حال بارگذاری سفارشات...")
+            
+            # Fetch orders
+            orders_data = await self.data.get_user_orders(session.nationalId)
+            
+            if not orders_data or orders_data.get('error') or not orders_data.get('orders'):
+                text = "📦 **سفارشات شما**\n\nهیچ سفارشی یافت نشد.\n\nبرای ثبت سفارش جدید با پشتیبانی تماس بگیرید."
+                keyboard = InlineKeyboardMarkup([[InlineKeyboardButton("🔙 منوی اصلی", callback_data="main_menu")]])
+            else:
+                orders = orders_data.get('orders', [])
+                text = "📦 **سفارشات فعال شما**\n\n"
+                
+                for i, order in enumerate(orders[:5], 1):  # Show max 5
+                    order_num = str(order.get('order_number', f'سفارش {i}') or f'سفارش {i}')
+                    steps = order.get('steps', 0)
+                    status_icon = STEP_ICONS.get(steps, "📍")
+                    status_text = WORKFLOW_STEPS.get(steps, "در حال بررسی")
+                    reg_date = str(order.get('registration_date', '---') or '---')
+                    
+                    if ' ' in reg_date:
+                        reg_date = reg_date.split(' ')[0]
+                    
+                    text += f"{i}. {status_icon} `{order_num}`\n"
+                    text += f"   📅 {reg_date} | {status_text}\n\n"
+                
+                if len(orders) > 5:
+                    text += f"... و {len(orders) - 5} سفارش دیگر"
+                
+                keyboard = InlineKeyboardMarkup([
+                    [InlineKeyboardButton("🔄 بروزرسانی", callback_data="my_orders")],
+                    [InlineKeyboardButton("🔙 منوی اصلی", callback_data="main_menu")]
+                ])
+
+            await self.delete_message(chat_id, loading_msg.message_id)
+            await self.send_message(chat_id, text, keyboard, ParseMode.MARKDOWN)
+
+        except Exception as e:
+            logger.error(f"Show my orders error: {e}")
+            await self.send_message(
+                chat_id, 
+                "❌ خطا در بارگذاری سفارشات",
+                InlineKeyboardMarkup([[InlineKeyboardButton("🔙 منوی اصلی", callback_data="main_menu")]])
+            )
+
+    async def show_help(self, chat_id: int, message_id: int = None):
+        """Show help using MESSAGES['help']"""
+        try:
+            # Use MESSAGES['help'] but replace config vars with hardcoded values
+            help_text = MESSAGES['help'].format(
+                support_phone=self.config.support_phone,
+                website_url=self.config.website_url 
+            )
+            keyboard = InlineKeyboardMarkup([
+                [InlineKeyboardButton("🔙 منوی اصلی", callback_data="main_menu")]
+            ])
+            if message_id:
+                await self.edit_message(chat_id, message_id, help_text, 
+                                    reply_markup=keyboard, parse_mode=ParseMode.MARKDOWN)
+            else:
+                msg = await self.send_message(chat_id, help_text, 
+                                            reply_markup=keyboard, parse_mode=ParseMode.MARKDOWN)
+                async with self.sessions.session(chat_id) as session:
+                    if msg: session.temp_data['last_bot_message_id'] = msg.message_id
+                    
+        except Exception as e:
+            logger.error(f"Help error: {e}")
+
+    # ========== START COMMAND ==========
+    async def handle_start(self, chat_id: int):
+        """Handle /start command"""
+        async with self.sessions.session(chat_id) as session:
             session.state = UserState.IDLE
-            await self.show_menu(chat_id, message_id=message_id)
+            session.temp_data.clear()
 
-    # ========== CALLBACK ROUTING ==========
-    async def handle_callback(self, update: Update):
-        """Route callbacks to CallbackHandler"""
-        if not self.callback_handler:
-            logger.error("CallbackHandler not initialized")
-            return
-
-        await self.callback_handler.handle_callback(update)
+        await self.send_message(
+            chat_id=chat_id,
+            text=MESSAGES['welcome'],
+            reply_markup=InlineKeyboardMarkup(MAIN_INLINE_KEYBOARD),
+            parse_mode=ParseMode.HTML,
+            activate_keyboard=True
+        )

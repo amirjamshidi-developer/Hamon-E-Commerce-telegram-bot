@@ -4,6 +4,7 @@ HamoonBot - Production Entry Point
 
 import logging
 import sys
+import os
 
 from telegram import Bot, Update
 from telegram.ext import Application, CallbackQueryHandler, CommandHandler, ContextTypes
@@ -75,7 +76,7 @@ async def cmd_logout(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     chat_id, "👋 با موفقیت از حساب کاربری خارج شدید."
                 )
 
-        await handler.show_menu(chat_id, is_authenticated=False)
+        await handler.show_menu(chat_id, authenticated=False)
 
 
 async def cmd_cancel(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -102,7 +103,7 @@ async def cmd_stats(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if sessions:
         stats = await sessions.get_stats()
-        if chat_id != YOUR_ADMIN_CHAT_ID:  # Replace with admin ID for access the stats
+        if chat_id != int(os.getenv("ADMIN_CHAT_ID", "0")) :  # Replace with admin ID for access the stats
             await context.bot.send_message(chat_id, "❌ دسترسی ندارید")
             return
         await context.bot.send_message(

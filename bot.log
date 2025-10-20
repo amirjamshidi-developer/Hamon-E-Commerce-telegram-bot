@@ -807,3 +807,890 @@ Traceback (most recent call last):
     raise NetworkError(f"httpx.{err.__class__.__name__}: {err}") from err
 telegram.error.NetworkError: httpx.ConnectError: All connection attempts failed
 2025-10-20 12:23:39,840 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 14:46:42,675 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 14:46:44,189 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 14:46:44,218 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 14:46:44,263 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 14:46:44,312 - __main__ - INFO - ✅ All bot components initialized successfully
+2025-10-20 14:47:01,316 - modules.SessionManager - WARNING - Creating session for chat_id 778562716 without user_id
+2025-10-20 14:47:01,322 - modules.SessionManager - INFO - New session created: chat_id=778562716, user_id=778562716
+2025-10-20 14:47:04,036 - modules.CallbackHandler - INFO - Callback 'help' from user 778562716 in chat 778562716
+2025-10-20 14:47:05,137 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 14:47:05,929 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 14:47:06,871 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 14:47:08,109 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 14:47:11,058 - modules.DataProvider - INFO - Fetching serial 01HEC2345678 from API
+2025-10-20 14:47:33,101 - modules.MessageHandler - ERROR - Order lookup error: 'dict' object has no attribute 'steps'
+2025-10-20 14:58:07,252 - modules.SessionManager - INFO - Redis disconnected
+2025-10-20 14:58:07,253 - __main__ - INFO - ✅ Cleanup completed
+2025-10-20 14:58:07,253 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 14:58:10,831 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 14:58:11,605 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 14:58:11,606 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 14:58:11,607 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 14:58:11,608 - __main__ - INFO - ✅ All bot components initialized successfully
+2025-10-20 14:58:16,117 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 14:58:19,530 - modules.DataProvider - INFO - Fetching serial 01HEC2345678 from API
+2025-10-20 14:58:19,812 - modules.MessageHandler - ERROR - Order lookup error: 'dict' object has no attribute 'order_number'
+2025-10-20 15:09:41,501 - modules.SessionManager - INFO - Redis disconnected
+2025-10-20 15:09:41,501 - __main__ - INFO - ✅ Cleanup completed
+2025-10-20 15:09:41,502 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 15:09:43,869 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 15:09:44,307 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 15:09:44,307 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 15:09:44,308 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 15:09:44,308 - __main__ - INFO - ✅ All bot components initialized successfully
+2025-10-20 15:09:47,938 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 15:09:50,816 - modules.DataProvider - INFO - Fetching serial 01HEC2345678 from API
+2025-10-20 15:11:25,625 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 15:11:26,882 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 15:22:11,393 - modules.SessionManager - INFO - Redis disconnected
+2025-10-20 15:22:11,394 - __main__ - INFO - ✅ Cleanup completed
+2025-10-20 15:22:11,395 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 15:22:14,089 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 15:22:14,561 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 15:22:14,561 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 15:22:14,562 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 15:22:14,562 - __main__ - INFO - ✅ All bot components initialized successfully
+2025-10-20 15:22:25,119 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 15:22:25,122 - modules.SessionManager - WARNING - Creating session for chat_id 778562716 without user_id
+2025-10-20 15:22:25,123 - modules.SessionManager - INFO - New session created: chat_id=778562716, user_id=778562716
+2025-10-20 15:22:26,325 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 15:22:28,930 - modules.DataProvider - INFO - Fetching serial 01HEC2345678 from API
+2025-10-20 15:22:29,472 - modules.DataProvider - WARNING - API error for serial 01HEC2345678: سریال یافت نشد
+2025-10-20 15:22:50,864 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 15:22:52,339 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 15:22:56,120 - modules.DataProvider - INFO - Fetching serial 01HEC2345678 from API
+2025-10-20 15:22:56,582 - modules.DataProvider - WARNING - API error for serial 01HEC2345678: سریال یافت نشد
+2025-10-20 15:26:34,274 - modules.SessionManager - INFO - Redis disconnected
+2025-10-20 15:26:34,275 - __main__ - INFO - ✅ Cleanup completed
+2025-10-20 15:26:34,276 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 15:26:36,627 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 15:26:37,245 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 15:26:37,245 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 15:26:37,246 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 15:26:37,246 - __main__ - INFO - ✅ All bot components initialized successfully
+2025-10-20 15:26:43,104 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 15:26:46,693 - modules.DataProvider - INFO - Fetching serial 01HEC2345678 from API
+2025-10-20 15:26:46,984 - modules.DataProvider - WARNING - API error for serial 01HEC2345678: سریال یافت نشد
+2025-10-20 15:27:10,963 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 15:27:14,961 - modules.DataProvider - INFO - Fetching serial 00HEC063350 from API
+2025-10-20 15:27:20,703 - modules.CallbackHandler - INFO - Callback 'refresh_order:72113' from user 778562716 in chat 778562716
+2025-10-20 15:27:20,847 - modules.DataProvider - INFO - Getting order by number: 72113
+2025-10-20 15:27:20,848 - modules.DataProvider - INFO - Fetching order 72113 from API
+2025-10-20 15:27:21,029 - modules.CallbackHandler - ERROR - Refresh error: 'dict' object has no attribute 'steps'
+2025-10-20 15:27:23,043 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 15:27:24,517 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 15:27:28,060 - modules.CallbackHandler - INFO - Callback 'order_72113' from user 778562716 in chat 778562716
+2025-10-20 15:27:28,296 - modules.CallbackHandler - ERROR - Order details error: 'dict' object has no attribute 'steps'
+2025-10-20 15:27:29,913 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 15:27:31,367 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 15:27:34,615 - modules.DataProvider - INFO - Fetching serial 01HEC2345678 from API
+2025-10-20 15:27:34,853 - modules.DataProvider - WARNING - API error for serial 01HEC2345678: سریال یافت نشد
+2025-10-20 15:27:36,108 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 15:27:38,494 - modules.DataProvider - INFO - Fetching serial 01HEC2345678 from API
+2025-10-20 15:27:38,668 - modules.DataProvider - WARNING - API error for serial 01HEC2345678: سریال یافت نشد
+2025-10-20 15:27:39,819 - modules.CallbackHandler - INFO - Callback 'track_by_number' from user 778562716 in chat 778562716
+2025-10-20 15:27:43,124 - modules.DataProvider - INFO - Fetching order 123456 from API
+2025-10-20 15:27:46,309 - modules.CallbackHandler - INFO - Callback 'order_' from user 778562716 in chat 778562716
+2025-10-20 15:27:47,622 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 15:27:49,035 - modules.CallbackHandler - INFO - Callback 'track_by_number' from user 778562716 in chat 778562716
+2025-10-20 15:27:52,789 - modules.CallbackHandler - INFO - Callback 'refresh_order:' from user 778562716 in chat 778562716
+2025-10-20 15:27:52,988 - modules.DataProvider - INFO - Getting order by number: 
+2025-10-20 15:27:54,285 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 15:27:55,674 - modules.CallbackHandler - INFO - Callback 'track_by_number' from user 778562716 in chat 778562716
+2025-10-20 15:27:59,276 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 15:28:00,869 - modules.CallbackHandler - INFO - Callback 'track_by_number' from user 778562716 in chat 778562716
+2025-10-20 15:28:04,503 - modules.DataProvider - INFO - Fetching order 72427 from API
+2025-10-20 15:28:08,027 - modules.CallbackHandler - INFO - Callback 'refresh_order:72427' from user 778562716 in chat 778562716
+2025-10-20 15:28:08,234 - modules.DataProvider - INFO - Getting order by number: 72427
+2025-10-20 15:28:08,235 - modules.DataProvider - INFO - Fetching order 72427 from API
+2025-10-20 15:28:08,405 - modules.CallbackHandler - ERROR - Refresh error: 'dict' object has no attribute 'steps'
+2025-10-20 15:28:09,469 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 15:28:10,803 - modules.CallbackHandler - INFO - Callback 'track_by_number' from user 778562716 in chat 778562716
+2025-10-20 15:28:16,133 - modules.CallbackHandler - INFO - Callback 'order_72427' from user 778562716 in chat 778562716
+2025-10-20 15:28:16,301 - modules.CallbackHandler - ERROR - Order details error: 'dict' object has no attribute 'steps'
+2025-10-20 15:28:17,517 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 15:29:28,615 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 15:29:31,585 - modules.DataProvider - INFO - Fetching serial 01HEC2345678 from API
+2025-10-20 15:29:31,836 - modules.DataProvider - WARNING - API error for serial 01HEC2345678: سریال یافت نشد
+2025-10-20 15:29:35,937 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 15:30:45,932 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 15:30:47,068 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 15:30:50,062 - modules.DataProvider - INFO - Fetching serial 01HEC2345678 from API
+2025-10-20 15:30:50,364 - modules.DataProvider - WARNING - API error for serial 01HEC2345678: سریال یافت نشد
+2025-10-20 15:30:58,517 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 15:31:03,266 - modules.DataProvider - INFO - Fetching serial 063350 from API
+2025-10-20 15:31:07,072 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 15:32:14,678 - modules.SessionManager - INFO - Redis disconnected
+2025-10-20 15:32:14,679 - __main__ - INFO - ✅ Cleanup completed
+2025-10-20 15:32:14,680 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 15:48:25,015 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 15:48:25,594 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 15:48:25,595 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 15:48:25,595 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 15:48:25,596 - __main__ - ERROR - ❌ Initialization failed: CallbackHandler.__init__() missing 2 required positional arguments: 'bot' and 'config'
+Traceback (most recent call last):
+  File "D:\telegram-bot\main.py", line 178, in post_init
+    callback_handler = CallbackHandler(
+        message_handler=message_handler,
+        session_manager=session_manager,
+        data_provider=data_provider,
+    )
+TypeError: CallbackHandler.__init__() missing 2 required positional arguments: 'bot' and 'config'
+2025-10-20 15:48:25,601 - __main__ - INFO - ✅ Cleanup completed
+2025-10-20 15:48:25,601 - __main__ - ERROR - ❌ Fatal error: CallbackHandler.__init__() missing 2 required positional arguments: 'bot' and 'config'
+Traceback (most recent call last):
+  File "D:\telegram-bot\main.py", line 275, in main
+    app.run_polling(allowed_updates=Update.ALL_TYPES, drop_pending_updates=True)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\agra\AppData\Local\Programs\Python\Python313\Lib\site-packages\telegram\ext\_application.py", line 839, in run_polling
+    return self.__run(
+           ~~~~~~~~~~^
+        updater_coroutine=self.updater.start_polling(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+        close_loop=close_loop,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\agra\AppData\Local\Programs\Python\Python313\Lib\site-packages\telegram\ext\_application.py", line 1056, in __run
+    loop.run_until_complete(self.post_init(self))
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\agra\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "D:\telegram-bot\main.py", line 178, in post_init
+    callback_handler = CallbackHandler(
+        message_handler=message_handler,
+        session_manager=session_manager,
+        data_provider=data_provider,
+    )
+TypeError: CallbackHandler.__init__() missing 2 required positional arguments: 'bot' and 'config'
+2025-10-20 15:48:25,641 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 15:48:25,729 - asyncio - ERROR - Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x000002A8F7AE9160>
+2025-10-20 16:02:24,863 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 16:02:25,563 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 16:02:25,564 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 16:02:25,565 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 16:02:25,566 - __main__ - INFO - ✅ All bot components initialized successfully
+2025-10-20 16:02:31,569 - modules.SessionManager - WARNING - Creating session for chat_id 778562716 without user_id
+2025-10-20 16:02:31,570 - modules.SessionManager - INFO - New session created: chat_id=778562716, user_id=778562716
+2025-10-20 16:02:34,282 - modules.CallbackHandler - INFO - Callback 'help' from user 778562716 in chat 778562716
+2025-10-20 16:02:35,394 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 16:02:36,330 - modules.CallbackHandler - INFO - Callback 'help' from user 778562716 in chat 778562716
+2025-10-20 16:03:02,053 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 16:03:03,621 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 16:03:13,877 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 16:03:15,431 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 16:03:25,866 - modules.CallbackHandler - INFO - Callback 'help' from user 778562716 in chat 778562716
+2025-10-20 16:03:28,136 - modules.MessageHandler - INFO - Looking up serial: 05HEC004952
+2025-10-20 16:03:28,318 - modules.DataProvider - INFO - Fetching serial 05HEC004952 from API
+2025-10-20 16:03:31,158 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 16:03:33,003 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 16:03:35,248 - modules.MessageHandler - INFO - Looking up serial: 05HEC004952
+2025-10-20 16:03:53,305 - modules.CallbackHandler - INFO - Callback 'refresh_order:71897' from user 778562716 in chat 778562716
+2025-10-20 16:03:53,434 - modules.DataProvider - INFO - Fetching order 71897 from API
+2025-10-20 16:03:58,764 - modules.CallbackHandler - INFO - Callback 'order_71897' from user 778562716 in chat 778562716
+2025-10-20 16:04:02,116 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 16:04:03,502 - modules.CallbackHandler - INFO - Callback 'track_by_number' from user 778562716 in chat 778562716
+2025-10-20 16:04:08,390 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 16:04:09,589 - modules.CallbackHandler - INFO - Callback 'track_by_number' from user 778562716 in chat 778562716
+2025-10-20 16:04:11,295 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 16:04:12,407 - modules.CallbackHandler - INFO - Callback 'track_by_number' from user 778562716 in chat 778562716
+2025-10-20 16:04:14,996 - modules.MessageHandler - INFO - Looking up number: 123456
+2025-10-20 16:04:15,200 - modules.DataProvider - INFO - Fetching order 123456 from API
+2025-10-20 16:04:15,533 - modules.MessageHandler - ERROR - Display order details error: unsupported format string passed to NoneType.__format__
+2025-10-20 16:55:57,007 - modules.SessionManager - INFO - Redis disconnected
+2025-10-20 16:55:57,011 - __main__ - INFO - ✅ Cleanup completed
+2025-10-20 16:55:57,017 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 16:55:58,652 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 16:55:58,653 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 16:55:59,528 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 16:55:59,870 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 16:55:59,871 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 16:55:59,876 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 16:55:59,877 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 16:55:59,878 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 16:55:59,879 - __main__ - ERROR - ❌ Initialization failed: MessageHandler.__init__() got an unexpected keyword argument 'callback_handler'
+Traceback (most recent call last):
+  File "D:\telegram-bot\main.py", line 170, in post_init
+    message_handler = MessageHandler(
+        bot=bot,
+    ...<3 lines>...
+        callback_handler=None,
+    )
+TypeError: MessageHandler.__init__() got an unexpected keyword argument 'callback_handler'
+2025-10-20 16:55:59,886 - __main__ - INFO - ✅ Cleanup completed
+2025-10-20 16:55:59,887 - __main__ - ERROR - ❌ Fatal error: MessageHandler.__init__() got an unexpected keyword argument 'callback_handler'
+Traceback (most recent call last):
+  File "D:\telegram-bot\main.py", line 275, in main
+    app.run_polling(allowed_updates=Update.ALL_TYPES, drop_pending_updates=True)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\agra\AppData\Local\Programs\Python\Python313\Lib\site-packages\telegram\ext\_application.py", line 839, in run_polling
+    return self.__run(
+           ~~~~~~~~~~^
+        updater_coroutine=self.updater.start_polling(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+        close_loop=close_loop,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\agra\AppData\Local\Programs\Python\Python313\Lib\site-packages\telegram\ext\_application.py", line 1056, in __run
+    loop.run_until_complete(self.post_init(self))
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\agra\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "D:\telegram-bot\main.py", line 170, in post_init
+    message_handler = MessageHandler(
+        bot=bot,
+    ...<3 lines>...
+        callback_handler=None,
+    )
+TypeError: MessageHandler.__init__() got an unexpected keyword argument 'callback_handler'
+2025-10-20 16:55:59,901 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 16:55:59,937 - asyncio - ERROR - Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x0000024E069BDFD0>
+2025-10-20 16:56:27,008 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 16:56:27,008 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 16:56:27,893 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 16:56:28,477 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 16:56:28,478 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 16:56:28,480 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 16:56:28,480 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 16:56:28,480 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 16:56:28,481 - __main__ - ERROR - ❌ Initialization failed: MessageHandler.__init__() got an unexpected keyword argument 'callback_handler'
+Traceback (most recent call last):
+  File "D:\telegram-bot\main.py", line 170, in post_init
+    message_handler = MessageHandler(
+        bot=bot,
+    ...<3 lines>...
+        callback_handler=None,
+    )
+TypeError: MessageHandler.__init__() got an unexpected keyword argument 'callback_handler'
+2025-10-20 16:56:28,483 - __main__ - INFO - ✅ Cleanup completed
+2025-10-20 16:56:28,483 - __main__ - ERROR - ❌ Fatal error: MessageHandler.__init__() got an unexpected keyword argument 'callback_handler'
+Traceback (most recent call last):
+  File "D:\telegram-bot\main.py", line 275, in main
+    app.run_polling(allowed_updates=Update.ALL_TYPES, drop_pending_updates=True)
+    ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\agra\AppData\Local\Programs\Python\Python313\Lib\site-packages\telegram\ext\_application.py", line 839, in run_polling
+    return self.__run(
+           ~~~~~~~~~~^
+        updater_coroutine=self.updater.start_polling(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<9 lines>...
+        close_loop=close_loop,
+        ^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\agra\AppData\Local\Programs\Python\Python313\Lib\site-packages\telegram\ext\_application.py", line 1056, in __run
+    loop.run_until_complete(self.post_init(self))
+    ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\agra\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+  File "D:\telegram-bot\main.py", line 170, in post_init
+    message_handler = MessageHandler(
+        bot=bot,
+    ...<3 lines>...
+        callback_handler=None,
+    )
+TypeError: MessageHandler.__init__() got an unexpected keyword argument 'callback_handler'
+2025-10-20 16:56:28,487 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 16:56:28,520 - asyncio - ERROR - Unclosed client session
+client_session: <aiohttp.client.ClientSession object at 0x0000015A790CE120>
+2025-10-20 17:17:15,337 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 17:17:15,339 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 17:17:16,230 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 17:17:16,778 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 17:17:16,778 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 17:17:16,783 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 17:17:16,784 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 17:17:16,785 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 17:17:16,786 - __main__ - INFO - ✅ All bot components initialized successfully
+2025-10-20 17:17:31,652 - modules.SessionManager - WARNING - Creating session for chat_id 778562716 without user_id
+2025-10-20 17:17:31,654 - modules.SessionManager - INFO - New session created: chat_id=778562716, user_id=778562716
+2025-10-20 17:17:33,249 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 17:17:33,249 - modules.CallbackHandler - ERROR - Callback error [track_by_serial]: 'BotMetrics' object has no attribute 'cache_hits'
+Traceback (most recent call last):
+  File "D:\telegram-bot\modules\CallbackHandler.py", line 59, in handle_callback
+    async with self.sessions.session(chat_id) as session:
+               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\agra\AppData\Local\Programs\Python\Python313\Lib\contextlib.py", line 214, in __aenter__
+    return await anext(self.gen)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\telegram-bot\modules\SessionManager.py", line 151, in session
+    session = await self.get_or_create(chat_id, user_id)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\telegram-bot\modules\SessionManager.py", line 172, in get_or_create
+    self.metrics.cache_hits += 1
+    ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'BotMetrics' object has no attribute 'cache_hits'
+2025-10-20 17:18:38,139 - modules.SessionManager - INFO - Redis disconnected
+2025-10-20 17:18:38,140 - __main__ - INFO - ✅ Cleanup completed
+2025-10-20 17:18:38,141 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 17:18:40,535 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 17:18:40,535 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 17:18:41,400 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 17:18:41,852 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 17:18:41,852 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 17:18:41,855 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 17:18:41,856 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 17:18:41,856 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 17:18:41,857 - __main__ - INFO - ✅ All bot components initialized successfully
+2025-10-20 17:18:46,302 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 17:18:54,843 - modules.MessageHandler - INFO - Looking up serial: 778562716
+2025-10-20 17:18:55,023 - modules.MessageHandler - ERROR - Order lookup error: cannot unpack non-iterable bool object
+Traceback (most recent call last):
+  File "D:\telegram-bot\modules\MessageHandler.py", line 303, in handle_order_lookup
+    order_data = await self.data.get_order_by_serial(value)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\telegram-bot\modules\DataProvider.py", line 362, in get_order_by_serial
+    is_valid, error_msg = Validators.validate_serial(serial)
+    ^^^^^^^^^^^^^^^^^^^
+TypeError: cannot unpack non-iterable bool object
+2025-10-20 17:22:57,450 - modules.SessionManager - INFO - Redis disconnected
+2025-10-20 17:22:57,451 - __main__ - INFO - ✅ Cleanup completed
+2025-10-20 17:22:57,451 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 17:22:59,328 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 17:22:59,328 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 17:23:00,326 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 17:23:00,704 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 17:23:00,705 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 17:23:00,710 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 17:23:00,710 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 17:23:00,711 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 17:23:00,712 - __main__ - INFO - ✅ All bot components initialized successfully
+2025-10-20 17:23:02,720 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 17:23:04,184 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 17:23:07,933 - modules.MessageHandler - INFO - Looking up serial: sadasd
+2025-10-20 17:23:08,083 - modules.DataProvider - WARNING - Invalid serial format: فرمت سریال نامعتبر است. لطفاً:
+• 6 رقم آخر سریال (مثال: 234567)
+• یا سریال کامل (مثال: 01HEC2345678)
+را وارد کنید ❌
+2025-10-20 17:24:01,312 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 17:24:19,304 - modules.MessageHandler - INFO - Looking up serial: 057872
+2025-10-20 17:24:19,458 - modules.DataProvider - INFO - Fetching serial 057872 from API
+2025-10-20 17:24:20,375 - modules.MessageHandler - INFO - Display order details called with data: {'order_number': '69925', 'customer_name': 'تجارت الکترونیک پارسیان ', 'phone_number': '09131652344', 'city': 'تهران تهران', 'steps': 3, 'current_step': 'در حال تعمیر', 'status_icon': '🔧', 'progress': 45, 'progress_bar': '████░░░░░░', 'device_model': 'ANFU AF75', 'serial_number': '05HEC014509', 'device_status': 'نامشخص', 'registration_date': '1404/03/03', 'pre_reception_date': '1404/03/05', 'tracking_code': '84366', 'repair_description': '---', 'payment_link': '', 'total_cost': None, 'factor_payment': {}, 'devices': [{'model': 'ANFU AF75', 'serial': '05HEC014509', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF75', 'serial': '05HEC017674', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF75', 'serial': '05HEC015092', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF75', 'serial': '05HEC017937', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC017219', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC000646', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC017897', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC014867', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC000490', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC000441', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF75', 'serial': '05HEC013794', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF75', 'serial': '05HEC000367', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF75', 'serial': '05HEC014920', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC015096', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC017136', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC014903', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF75', 'serial': '05HEC014611', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC017022', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF75', 'serial': '05HEC016396', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC015177', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC014411', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC000422', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC017379', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC015102', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC016403', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC014002', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC000496', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC000565', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF75', 'serial': '05HEC017375', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC063706', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC088817', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC056007', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC075379', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC077155', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC075362', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC101030', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC083439', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC077205', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC056270', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC077001', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC052532', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC083012', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC057102', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC096823', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC078892', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC057872', 'status': 'نامشخص', 'status_code': 2}, {'model': 'ANFU AF70', 'serial': '00HEC053887', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC074100', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC076834', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC077008', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC094056', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC077704', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC079075', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC087336', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC097536', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC087571', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC078036', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC076964', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC085218', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC060235', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC060251', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC073964', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC091377', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC085249', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC089759', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC079722', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC085784', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC081900', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC091046', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC086228', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC057136', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC074433', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC060031', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC078078', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC049268', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC061696', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC094852', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC058070', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC058184', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC056771', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC100744', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC074038', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC052196', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC055748', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC084537', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC055710', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC084251', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC088967', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC055704', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC074407', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC087952', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC064406', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC053933', 'status': 'نامشخص', 'status_code': 3}, {'model': 'ANFU AF70', 'serial': '00HEC074721', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC079111', 'status': 'نامشخص', 'status_code': 2}, {'model': 'ANFU AF70', 'serial': '00HEC084988', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC076953', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC063277', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC081581', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC059928', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC056213', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC059620', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC091112', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC062663', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC074874', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC059116', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC051468', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC084958', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC056786', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC053936', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC077572', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC054036', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HC077764', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC078593', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC083367', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC099445', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC086487', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC051526', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC060014', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC053902', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC087637', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC097591', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC074327', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC053917', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC053498', 'status': 'نامشخص', 'status_code': 3}, {'model': 'ANFU AF70', 'serial': '00HEC076681', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC080579', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC051988', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC055766', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC085006', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC087393', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC062798', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC091080', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC079709', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC080130', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC052257', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC097857', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC092666', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC089017', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC058060', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC056605', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC087135', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC056167', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC054821', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC081537', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC059568', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC089340', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC077409', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC056018', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC083143', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC097261', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC056064', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC084762', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC050107', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC076897', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC089465', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC078548', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC086898', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC080253', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC081115', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC083078', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC063302', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC080755', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC077637', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC049606', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC073931', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC058295', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC079859', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC090876', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC084035', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC058055', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC085378', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC082914', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC075390', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC102559', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC050106', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC087269', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC049232', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC074435', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC048977', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC091210', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC076889', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC078455', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC078912', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC084980', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC102476', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC063736', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC052269', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC080089', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC087133', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC081074', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC078645', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC056359', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC063693', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC055714', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC090007', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC076827', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC083962', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC094404', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC077780', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC062691', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC056284', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC055552', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC058248', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC087863', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC058179', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC056043', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC074839', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC077773', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC056984', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC049959', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC049771', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC080928', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC096652', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC064009', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC109627', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC082291', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC084074', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC060817', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC052053', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC057843', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC058178', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC081550', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC085056', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC080842', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC089526', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC050099', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC091183', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC087177', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC028498', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC073994', 'status': 'نامشخص', 'status_code': 5}]}
+2025-10-20 17:24:20,580 - modules.MessageHandler - INFO - Order details displayed successfully for 69925
+2025-10-20 17:24:27,074 - modules.CallbackHandler - INFO - Callback 'refresh_order:69925' from user 778562716 in chat 778562716
+2025-10-20 17:24:27,215 - modules.DataProvider - INFO - Fetching order 69925 from API
+2025-10-20 17:24:30,791 - modules.CallbackHandler - INFO - Callback 'order_69925' from user 778562716 in chat 778562716
+2025-10-20 17:24:30,956 - modules.MessageHandler - INFO - Display order details called with data: {'order_number': '69925', 'customer_name': 'تجارت الکترونیک پارسیان ', 'phone_number': '09131652344', 'city': 'تهران تهران', 'steps': 3, 'current_step': 'در حال تعمیر', 'status_icon': '🔧', 'progress': 45, 'progress_bar': '████░░░░░░', 'device_model': 'ANFU AF75', 'serial_number': '05HEC014509', 'device_status': 'نامشخص', 'registration_date': '1404/03/03', 'pre_reception_date': '1404/03/05', 'tracking_code': '84366', 'repair_description': '---', 'payment_link': '', 'total_cost': None, 'factor_payment': {}, 'devices': [{'model': 'ANFU AF75', 'serial': '05HEC014509', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF75', 'serial': '05HEC017674', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF75', 'serial': '05HEC015092', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF75', 'serial': '05HEC017937', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC017219', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC000646', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC017897', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC014867', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC000490', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC000441', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF75', 'serial': '05HEC013794', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF75', 'serial': '05HEC000367', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF75', 'serial': '05HEC014920', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC015096', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC017136', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC014903', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF75', 'serial': '05HEC014611', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC017022', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF75', 'serial': '05HEC016396', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC015177', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC014411', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC000422', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC017379', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC015102', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC016403', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC014002', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC000496', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC000565', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF75', 'serial': '05HEC017375', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC063706', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC088817', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC056007', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC075379', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC077155', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC075362', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC101030', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC083439', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC077205', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC056270', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC077001', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC052532', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC083012', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC057102', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC096823', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC078892', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC057872', 'status': 'نامشخص', 'status_code': 2}, {'model': 'ANFU AF70', 'serial': '00HEC053887', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC074100', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC076834', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC077008', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC094056', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC077704', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC079075', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC087336', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC097536', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC087571', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC078036', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC076964', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC085218', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC060235', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC060251', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC073964', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC091377', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC085249', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC089759', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC079722', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC085784', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC081900', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC091046', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC086228', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC057136', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC074433', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC060031', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC078078', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC049268', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC061696', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC094852', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC058070', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC058184', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC056771', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC100744', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC074038', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC052196', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC055748', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC084537', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC055710', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC084251', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC088967', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC055704', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC074407', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC087952', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC064406', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC053933', 'status': 'نامشخص', 'status_code': 3}, {'model': 'ANFU AF70', 'serial': '00HEC074721', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC079111', 'status': 'نامشخص', 'status_code': 2}, {'model': 'ANFU AF70', 'serial': '00HEC084988', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC076953', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC063277', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC081581', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC059928', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC056213', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC059620', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC091112', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC062663', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC074874', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC059116', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC051468', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC084958', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC056786', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC053936', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC077572', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC054036', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HC077764', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC078593', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC083367', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC099445', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC086487', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC051526', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC060014', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC053902', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC087637', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC097591', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC074327', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC053917', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC053498', 'status': 'نامشخص', 'status_code': 3}, {'model': 'ANFU AF70', 'serial': '00HEC076681', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC080579', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC051988', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC055766', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC085006', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC087393', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC062798', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC091080', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC079709', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC080130', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC052257', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC097857', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC092666', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC089017', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC058060', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC056605', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC087135', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC056167', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC054821', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC081537', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC059568', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC089340', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC077409', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC056018', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC083143', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC097261', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC056064', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC084762', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC050107', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC076897', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC089465', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC078548', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC086898', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC080253', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC081115', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC083078', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC063302', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC080755', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC077637', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC049606', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC073931', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC058295', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC079859', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC090876', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC084035', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC058055', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC085378', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC082914', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC075390', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC102559', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC050106', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC087269', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC049232', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC074435', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC048977', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC091210', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC076889', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC078455', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC078912', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC084980', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC102476', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC063736', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC052269', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC080089', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC087133', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC081074', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC078645', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC056359', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC063693', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC055714', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC090007', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC076827', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC083962', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC094404', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC077780', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC062691', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC056284', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC055552', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC058248', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC087863', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC058179', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC056043', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC074839', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC077773', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC056984', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC049959', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC049771', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC080928', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC096652', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC064009', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC109627', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC082291', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC084074', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC060817', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC052053', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC057843', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC058178', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC081550', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC085056', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC080842', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC089526', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC050099', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC091183', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC087177', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC028498', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC073994', 'status': 'نامشخص', 'status_code': 5}]}
+2025-10-20 17:24:31,148 - modules.MessageHandler - INFO - Order details displayed successfully for 69925
+2025-10-20 17:24:32,054 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 17:24:33,228 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 17:24:38,225 - modules.MessageHandler - INFO - Looking up serial: 00HEC057872
+2025-10-20 17:24:38,424 - modules.DataProvider - INFO - Fetching serial 00HEC057872 from API
+2025-10-20 17:24:38,965 - modules.MessageHandler - INFO - Display order details called with data: {'order_number': '69925', 'customer_name': 'تجارت الکترونیک پارسیان ', 'phone_number': '09131652344', 'city': 'تهران تهران', 'steps': 3, 'current_step': 'در حال تعمیر', 'status_icon': '🔧', 'progress': 45, 'progress_bar': '████░░░░░░', 'device_model': 'ANFU AF75', 'serial_number': '05HEC014509', 'device_status': 'نامشخص', 'registration_date': '1404/03/03', 'pre_reception_date': '1404/03/05', 'tracking_code': '84366', 'repair_description': '---', 'payment_link': '', 'total_cost': None, 'factor_payment': {}, 'devices': [{'model': 'ANFU AF75', 'serial': '05HEC014509', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF75', 'serial': '05HEC017674', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF75', 'serial': '05HEC015092', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF75', 'serial': '05HEC017937', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC017219', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC000646', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC017897', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC014867', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC000490', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC000441', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF75', 'serial': '05HEC013794', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF75', 'serial': '05HEC000367', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF75', 'serial': '05HEC014920', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC015096', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC017136', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC014903', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF75', 'serial': '05HEC014611', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC017022', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF75', 'serial': '05HEC016396', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC015177', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC014411', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC000422', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC017379', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC015102', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC016403', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC014002', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC000496', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF75', 'serial': '05HEC000565', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF75', 'serial': '05HEC017375', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC063706', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC088817', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC056007', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC075379', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC077155', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC075362', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC101030', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC083439', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC077205', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC056270', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC077001', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC052532', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC083012', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC057102', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC096823', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC078892', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC057872', 'status': 'نامشخص', 'status_code': 2}, {'model': 'ANFU AF70', 'serial': '00HEC053887', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC074100', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC076834', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC077008', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC094056', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC077704', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC079075', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC087336', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC097536', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC087571', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC078036', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC076964', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC085218', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC060235', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC060251', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC073964', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC091377', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC085249', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC089759', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC079722', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC085784', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC081900', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC091046', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC086228', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC057136', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC074433', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC060031', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC078078', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC049268', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC061696', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC094852', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC058070', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC058184', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC056771', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC100744', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC074038', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC052196', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC055748', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC084537', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC055710', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC084251', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC088967', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC055704', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC074407', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC087952', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC064406', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC053933', 'status': 'نامشخص', 'status_code': 3}, {'model': 'ANFU AF70', 'serial': '00HEC074721', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC079111', 'status': 'نامشخص', 'status_code': 2}, {'model': 'ANFU AF70', 'serial': '00HEC084988', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC076953', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC063277', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC081581', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC059928', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC056213', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC059620', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC091112', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC062663', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC074874', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC059116', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC051468', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC084958', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC056786', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC053936', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC077572', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC054036', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HC077764', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC078593', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC083367', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC099445', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC086487', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC051526', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC060014', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC053902', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC087637', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC097591', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC074327', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC053917', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC053498', 'status': 'نامشخص', 'status_code': 3}, {'model': 'ANFU AF70', 'serial': '00HEC076681', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC080579', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC051988', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC055766', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC085006', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC087393', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC062798', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC091080', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC079709', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC080130', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC052257', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC097857', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC092666', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC089017', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC058060', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC056605', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC087135', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC056167', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC054821', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC081537', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC059568', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC089340', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC077409', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC056018', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC083143', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC097261', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC056064', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC084762', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC050107', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC076897', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC089465', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC078548', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC086898', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC080253', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC081115', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC083078', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC063302', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC080755', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC077637', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC049606', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC073931', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC058295', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC079859', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC090876', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC084035', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC058055', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC085378', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC082914', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC075390', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC102559', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC050106', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC087269', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC049232', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC074435', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC048977', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC091210', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC076889', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC078455', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC078912', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC084980', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC102476', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC063736', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC052269', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC080089', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC087133', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC081074', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC078645', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC056359', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC063693', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC055714', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC090007', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC076827', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC083962', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC094404', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC077780', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC062691', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC056284', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC055552', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC058248', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC087863', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC058179', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC056043', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC074839', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC077773', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC056984', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC049959', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC049771', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC080928', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC096652', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC064009', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC109627', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC082291', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC084074', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC060817', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC052053', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC057843', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC058178', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC081550', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC085056', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC080842', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC089526', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC050099', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC091183', 'status': 'نامشخص', 'status_code': 50}, {'model': 'ANFU AF70', 'serial': '00HEC087177', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC028498', 'status': 'نامشخص', 'status_code': 5}, {'model': 'ANFU AF70', 'serial': '00HEC073994', 'status': 'نامشخص', 'status_code': 5}]}
+2025-10-20 17:24:39,113 - modules.MessageHandler - INFO - Order details displayed successfully for 69925
+2025-10-20 17:24:42,105 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 17:24:43,456 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 17:24:48,534 - modules.MessageHandler - INFO - Looking up serial: 05HEC004952
+2025-10-20 17:24:48,700 - modules.DataProvider - INFO - Fetching serial 05HEC004952 from API
+2025-10-20 17:24:49,120 - modules.MessageHandler - INFO - Display order details called with data: {'order_number': '71897', 'customer_name': 'رضا قاسمی', 'phone_number': '09141513203', 'city': 'اردبیل اردبیل', 'steps': 5, 'current_step': 'پرداخت و خزانه', 'status_icon': '💰', 'progress': 75, 'progress_bar': '███████░░░', 'device_model': 'ANFU AF75', 'serial_number': '05HEC004952', 'device_status': 'نامشخص', 'registration_date': '1404/05/16', 'pre_reception_date': '1404/05/11', 'tracking_code': '85840', 'repair_description': '---', 'payment_link': 'https://cms.hamoonpay.com/l/CBBD5', 'total_cost': 4095531, 'factor_payment': {}, 'devices': [{'model': 'ANFU AF75', 'serial': '05HEC004952', 'status': 'نامشخص', 'status_code': 50}]}
+2025-10-20 17:24:49,272 - modules.MessageHandler - INFO - Order details displayed successfully for 71897
+2025-10-20 17:24:58,256 - modules.CallbackHandler - INFO - Callback 'refresh_order:71897' from user 778562716 in chat 778562716
+2025-10-20 17:24:58,386 - modules.DataProvider - INFO - Fetching order 71897 from API
+2025-10-20 17:25:00,351 - modules.CallbackHandler - INFO - Callback 'order_71897' from user 778562716 in chat 778562716
+2025-10-20 17:25:00,498 - modules.MessageHandler - INFO - Display order details called with data: {'order_number': '71897', 'customer_name': 'رضا قاسمی', 'phone_number': '09141513203', 'city': 'اردبیل اردبیل', 'steps': 5, 'current_step': 'پرداخت و خزانه', 'status_icon': '💰', 'progress': 75, 'progress_bar': '███████░░░', 'device_model': 'ANFU AF75', 'serial_number': '05HEC004952', 'device_status': 'نامشخص', 'registration_date': '1404/05/16', 'pre_reception_date': '1404/05/11', 'tracking_code': '85840', 'repair_description': '---', 'payment_link': 'https://cms.hamoonpay.com/l/CBBD5', 'total_cost': 4095531, 'factor_payment': {}, 'devices': [{'model': 'ANFU AF75', 'serial': '05HEC004952', 'status': 'نامشخص', 'status_code': 50}]}
+2025-10-20 17:25:00,649 - modules.MessageHandler - INFO - Order details displayed successfully for 71897
+2025-10-20 17:25:01,710 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 17:25:02,956 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 17:25:15,779 - modules.MessageHandler - INFO - Looking up serial: 05HEC000000
+2025-10-20 17:25:15,919 - modules.DataProvider - INFO - Fetching serial 05HEC000000 from API
+2025-10-20 17:25:16,233 - modules.MessageHandler - INFO - Display order details called with data: {'order_number': '70121', 'customer_name': 'فرزاد ساسانی', 'phone_number': '09111844096', 'city': 'گیلان رضوانشهر', 'steps': 0, 'current_step': 'ورود مرسوله', 'status_icon': '📥', 'progress': 0, 'progress_bar': '░░░░░░░░░░', 'device_model': 'ANFU AF75', 'serial_number': '05HEC000000', 'device_status': 'نامشخص', 'registration_date': 'نامشخص', 'pre_reception_date': '1403/11/29', 'tracking_code': '72141', 'repair_description': '---', 'payment_link': '', 'total_cost': None, 'factor_payment': {}, 'devices': [{'model': 'ANFU AF75', 'serial': '05HEC000000', 'status': 'نامشخص', 'status_code': 0}]}
+2025-10-20 17:25:16,443 - modules.MessageHandler - INFO - Order details displayed successfully for 70121
+2025-10-20 17:25:21,031 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 17:25:22,180 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 17:25:32,317 - modules.MessageHandler - INFO - Looking up serial: 01HEC004495
+2025-10-20 17:25:32,454 - modules.DataProvider - INFO - Fetching serial 01HEC004495 from API
+2025-10-20 17:25:32,629 - modules.DataProvider - WARNING - API error for serial 01HEC004495: سریال یافت نشد
+2025-10-20 17:26:51,743 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 17:26:53,367 - modules.CallbackHandler - INFO - Callback 'track_by_number' from user 778562716 in chat 778562716
+2025-10-20 17:26:57,032 - modules.MessageHandler - INFO - Looking up number: 123456
+2025-10-20 17:26:57,240 - modules.DataProvider - INFO - Fetching order 123456 from API
+2025-10-20 17:26:57,567 - modules.MessageHandler - INFO - Display order details called with data: {'order_number': 'ORDER-1760968617', 'customer_name': 'نامشخص', 'phone_number': '', 'city': 'نامشخص', 'steps': 0, 'current_step': 'ورود مرسوله', 'status_icon': '📥', 'progress': 0, 'progress_bar': '░░░░░░░░░░', 'device_model': 'نامشخص', 'serial_number': '---', 'device_status': 'نامشخص', 'registration_date': 'نامشخص', 'pre_reception_date': 'نامشخص', 'tracking_code': '---', 'repair_description': '---', 'payment_link': None, 'total_cost': 0, 'factor_payment': {}, 'devices': []}
+2025-10-20 17:26:57,767 - modules.MessageHandler - INFO - Order details displayed successfully for ORDER-1760968617
+2025-10-20 17:27:05,836 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 17:27:07,148 - modules.CallbackHandler - INFO - Callback 'track_by_number' from user 778562716 in chat 778562716
+2025-10-20 17:27:10,459 - modules.MessageHandler - INFO - Looking up number: 72113
+2025-10-20 17:27:10,614 - modules.DataProvider - INFO - Fetching order 72113 from API
+2025-10-20 17:27:10,854 - modules.MessageHandler - INFO - Display order details called with data: {'order_number': '72113', 'customer_name': 'سلامت محمدی', 'phone_number': '9,143,508,159', 'city': 'اردبیل پارس آباد', 'steps': 3, 'current_step': 'در حال تعمیر', 'status_icon': '🔧', 'progress': 45, 'progress_bar': '████░░░░░░', 'device_model': 'ANFU AF70', 'serial_number': '00HEC063350', 'device_status': 'نامشخص', 'registration_date': '1404/05/26', 'pre_reception_date': '1404/05/18', 'tracking_code': '86056', 'repair_description': '---', 'payment_link': '', 'total_cost': None, 'factor_payment': {}, 'devices': [{'model': 'ANFU AF70', 'serial': '00HEC063350', 'status': 'نامشخص', 'status_code': 2}]}
+2025-10-20 17:27:11,029 - modules.MessageHandler - INFO - Order details displayed successfully for 72113
+2025-10-20 17:27:13,020 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 17:27:14,207 - modules.CallbackHandler - INFO - Callback 'track_by_number' from user 778562716 in chat 778562716
+2025-10-20 17:27:17,471 - modules.MessageHandler - INFO - Looking up number: 72113
+2025-10-20 17:27:17,631 - modules.MessageHandler - INFO - Display order details called with data: {'order_number': '72113', 'customer_name': 'سلامت محمدی', 'phone_number': '9,143,508,159', 'city': 'اردبیل پارس آباد', 'steps': 3, 'current_step': 'در حال تعمیر', 'status_icon': '🔧', 'progress': 45, 'progress_bar': '████░░░░░░', 'device_model': 'ANFU AF70', 'serial_number': '00HEC063350', 'device_status': 'نامشخص', 'registration_date': '1404/05/26', 'pre_reception_date': '1404/05/18', 'tracking_code': '86056', 'repair_description': '---', 'payment_link': '', 'total_cost': None, 'factor_payment': {}, 'devices': [{'model': 'ANFU AF70', 'serial': '00HEC063350', 'status': 'نامشخص', 'status_code': 2}]}
+2025-10-20 17:27:17,775 - modules.MessageHandler - INFO - Order details displayed successfully for 72113
+2025-10-20 17:27:18,612 - modules.CallbackHandler - INFO - Callback 'refresh_order:72113' from user 778562716 in chat 778562716
+2025-10-20 17:27:18,775 - modules.DataProvider - INFO - Fetching order 72113 from API
+2025-10-20 17:27:21,123 - modules.CallbackHandler - INFO - Callback 'order_72113' from user 778562716 in chat 778562716
+2025-10-20 17:27:21,269 - modules.MessageHandler - INFO - Display order details called with data: {'order_number': '72113', 'customer_name': 'سلامت محمدی', 'phone_number': '9,143,508,159', 'city': 'اردبیل پارس آباد', 'steps': 3, 'current_step': 'در حال تعمیر', 'status_icon': '🔧', 'progress': 45, 'progress_bar': '████░░░░░░', 'device_model': 'ANFU AF70', 'serial_number': '00HEC063350', 'device_status': 'نامشخص', 'registration_date': '1404/05/26', 'pre_reception_date': '1404/05/18', 'tracking_code': '86056', 'repair_description': '---', 'payment_link': '', 'total_cost': None, 'factor_payment': {}, 'devices': [{'model': 'ANFU AF70', 'serial': '00HEC063350', 'status': 'نامشخص', 'status_code': 2}]}
+2025-10-20 17:27:21,437 - modules.MessageHandler - INFO - Order details displayed successfully for 72113
+2025-10-20 17:27:22,510 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 17:30:18,747 - modules.CallbackHandler - INFO - Callback 'track_by_number' from user 778562716 in chat 778562716
+2025-10-20 17:30:21,569 - modules.MessageHandler - INFO - Looking up number: 123456
+2025-10-20 17:30:21,708 - modules.MessageHandler - INFO - Display order details called with data: {'order_number': 'ORDER-1760968617', 'customer_name': 'نامشخص', 'phone_number': '', 'city': 'نامشخص', 'steps': 0, 'current_step': 'ورود مرسوله', 'status_icon': '📥', 'progress': 0, 'progress_bar': '░░░░░░░░░░', 'device_model': 'نامشخص', 'serial_number': '---', 'device_status': 'نامشخص', 'registration_date': 'نامشخص', 'pre_reception_date': 'نامشخص', 'tracking_code': '---', 'repair_description': '---', 'payment_link': None, 'total_cost': 0, 'factor_payment': {}, 'devices': []}
+2025-10-20 17:30:21,862 - modules.MessageHandler - INFO - Order details displayed successfully for ORDER-1760968617
+2025-10-20 17:53:45,338 - modules.SessionManager - INFO - Redis disconnected
+2025-10-20 17:53:45,350 - __main__ - INFO - ✅ Cleanup completed
+2025-10-20 17:53:45,353 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 17:53:47,753 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 17:53:47,754 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 17:53:48,680 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 17:53:49,064 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 17:53:49,065 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 17:53:49,070 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 17:53:49,071 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 17:53:49,071 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 17:53:49,072 - __main__ - INFO - ✅ All bot components initialized successfully
+2025-10-20 17:53:53,616 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 17:53:53,617 - modules.SessionManager - WARNING - Creating session for chat_id 778562716 without user_id
+2025-10-20 17:53:53,618 - modules.SessionManager - INFO - New session created: chat_id=778562716, user_id=778562716
+2025-10-20 17:53:55,535 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 17:53:57,940 - modules.MessageHandler - INFO - Looking up serial: sdasds
+2025-10-20 17:53:58,095 - modules.DataProvider - WARNING - Invalid serial format: فرمت سریال نامعتبر است. لطفاً:
+• 6 رقم آخر سریال (مثال: 234567)
+• یا سریال کامل (مثال: 01HEC2345678)
+را وارد کنید ❌
+2025-10-20 17:53:59,879 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 17:54:03,516 - modules.MessageHandler - INFO - Looking up serial: uiuhui2545354
+2025-10-20 17:54:03,658 - modules.DataProvider - WARNING - Invalid serial format: فرمت سریال نامعتبر است. لطفاً:
+• 6 رقم آخر سریال (مثال: 234567)
+• یا سریال کامل (مثال: 01HEC2345678)
+را وارد کنید ❌
+2025-10-20 17:54:05,169 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 17:54:11,929 - modules.MessageHandler - INFO - Looking up serial: 00HEC000000
+2025-10-20 17:54:12,085 - modules.DataProvider - INFO - Fetching serial 00HEC000000 from API
+2025-10-20 17:54:12,681 - modules.DataProvider - ERROR - ❌ Error parsing order response: 'DataProvider' object has no attribute '_safe_format_date'
+Traceback (most recent call last):
+  File "D:\telegram-bot\modules\DataProvider.py", line 692, in _parse_order_response
+    reg_date = self._safe_format_date(reg_date_raw, "نامشخص")
+               ^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DataProvider' object has no attribute '_safe_format_date'
+2025-10-20 17:54:12,688 - modules.DataProvider - WARNING - Failed to parse serial 00HEC000000
+2025-10-20 17:54:57,336 - modules.SessionManager - INFO - Redis disconnected
+2025-10-20 17:54:57,336 - __main__ - INFO - ✅ Cleanup completed
+2025-10-20 17:54:57,337 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 17:54:59,241 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 17:54:59,242 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 17:55:00,141 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 17:55:00,554 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 17:55:00,554 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 17:55:00,557 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 17:55:00,557 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 17:55:00,558 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 17:55:00,558 - __main__ - INFO - ✅ All bot components initialized successfully
+2025-10-20 17:55:26,941 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 17:55:28,159 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 17:55:40,951 - modules.MessageHandler - INFO - Looking up serial: 05HEC004952
+2025-10-20 17:55:41,091 - modules.DataProvider - INFO - Fetching serial 05HEC004952 from API
+2025-10-20 17:55:41,704 - modules.DataProvider - ERROR - ❌ Error parsing order response: 'DataProvider' object has no attribute 'safe_format_date'
+Traceback (most recent call last):
+  File "D:\telegram-bot\modules\DataProvider.py", line 692, in _parse_order_response
+    reg_date = self.safe_format_date(reg_date_raw, "نامشخص")
+               ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DataProvider' object has no attribute 'safe_format_date'
+2025-10-20 17:55:41,706 - modules.DataProvider - WARNING - Failed to parse serial 05HEC004952
+2025-10-20 17:56:25,418 - __main__ - INFO - ⏹ Received shutdown signal
+2025-10-20 17:56:25,418 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 17:56:27,287 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 17:56:27,287 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 17:56:28,189 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 17:56:28,595 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 17:56:28,595 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 17:56:28,597 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 17:56:28,598 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 17:56:28,598 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 17:56:28,598 - __main__ - INFO - ✅ All bot components initialized successfully
+2025-10-20 17:56:35,865 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 17:56:37,719 - modules.MessageHandler - INFO - Looking up serial: 05HEC004952
+2025-10-20 17:56:37,855 - modules.DataProvider - INFO - Fetching serial 05HEC004952 from API
+2025-10-20 17:56:38,463 - modules.DataProvider - INFO - Successfully processed serial 05HEC004952
+2025-10-20 17:56:38,464 - modules.MessageHandler - INFO - Display order details called with data: {'order_number': '71897', 'customer_name': 'رضا قاسمی', 'phone_number': '09141513203', 'city': 'اردبیل اردبیل', 'steps': 5, 'current_step': 'پرداخت و خزانه', 'status_icon': '💰', 'progress': 75, 'progress_bar': '███████░░░', 'device_model': 'ANFU AF75', 'serial_number': '05HEC004952', 'device_status': 'نامشخص', 'registration_date': '1404/05/16', 'pre_reception_date': '1404/05/11', 'tracking_code': '85840', 'repair_description': '---', 'payment_link': 'https://cms.hamoonpay.com/l/CBBD5', 'total_cost': 4095531, 'factor_payment': {}, 'devices': [{'model': 'ANFU AF75', 'serial': '05HEC004952', 'status': 'نامشخص', 'status_code': 50, 'passDescription': ''}], 'success': True}
+2025-10-20 17:56:38,465 - modules.MessageHandler - ERROR - Display order details error: cannot access local variable 'additional_info' where it is not associated with a value
+Traceback (most recent call last):
+  File "D:\telegram-bot\modules\MessageHandler.py", line 478, in display_order_details
+    additional_info += f"\n💰 **هزینه کل:** {total_cost_formatted} تومان"
+    ^^^^^^^^^^^^^^^
+UnboundLocalError: cannot access local variable 'additional_info' where it is not associated with a value
+2025-10-20 18:01:36,236 - modules.SessionManager - INFO - Redis disconnected
+2025-10-20 18:01:36,239 - __main__ - INFO - ✅ Cleanup completed
+2025-10-20 18:01:36,241 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 18:01:38,124 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:01:38,125 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:01:39,041 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 18:01:39,476 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:01:39,476 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:01:39,478 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 18:01:39,478 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 18:01:39,479 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 18:01:39,479 - __main__ - INFO - ✅ All bot components initialized successfully
+2025-10-20 18:01:42,672 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 18:01:43,791 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 18:01:48,949 - modules.MessageHandler - INFO - Looking up serial: 05HEC004952
+2025-10-20 18:01:49,163 - modules.DataProvider - INFO - Fetching serial 05HEC004952 from API
+2025-10-20 18:01:49,755 - modules.DataProvider - INFO - Successfully processed serial 05HEC004952
+2025-10-20 18:01:49,756 - modules.MessageHandler - INFO - Display order details called with data: {'order_number': '71897', 'customer_name': 'رضا قاسمی', 'phone_number': '09141513203', 'city': 'اردبیل اردبیل', 'steps': 5, 'current_step': 'پرداخت و خزانه', 'status_icon': '💰', 'progress': 75, 'progress_bar': '███████░░░', 'device_model': 'ANFU AF75', 'serial_number': '05HEC004952', 'device_status': 'نامشخص', 'registration_date': '1404/05/16', 'pre_reception_date': '1404/05/11', 'tracking_code': '85840', 'repair_description': '---', 'payment_link': 'https://cms.hamoonpay.com/l/CBBD5', 'total_cost': 4095531, 'factor_payment': {}, 'devices': [{'model': 'ANFU AF75', 'serial': '05HEC004952', 'status': 'نامشخص', 'status_code': 50, 'passDescription': ''}], 'success': True}
+2025-10-20 18:01:49,922 - modules.MessageHandler - INFO - ✅ Order details displayed successfully for 71897
+2025-10-20 18:02:12,907 - modules.CallbackHandler - INFO - Callback 'refresh_order:71897' from user 778562716 in chat 778562716
+2025-10-20 18:02:13,059 - modules.CallbackHandler - ERROR - Refresh error: 'DataProvider' object has no attribute 'validate_order_number'
+Traceback (most recent call last):
+  File "D:\telegram-bot\modules\CallbackHandler.py", line 323, in handle_refresh_order
+    order_data = await self.data.get_order_by_number(order_number, force_refresh=True)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\telegram-bot\modules\DataProvider.py", line 329, in get_order_by_number
+    is_valid, error_msg = self.validate_order_number(order_number)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'DataProvider' object has no attribute 'validate_order_number'
+2025-10-20 18:04:22,598 - modules.SessionManager - INFO - Redis disconnected
+2025-10-20 18:04:22,599 - __main__ - INFO - ✅ Cleanup completed
+2025-10-20 18:04:22,600 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 18:04:24,223 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:04:24,224 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:04:25,162 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 18:04:25,604 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:04:25,605 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:04:25,610 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 18:04:25,610 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 18:04:25,611 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 18:04:25,611 - __main__ - INFO - ✅ All bot components initialized successfully
+2025-10-20 18:04:32,290 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 18:04:33,483 - modules.CallbackHandler - INFO - Callback 'track_by_number' from user 778562716 in chat 778562716
+2025-10-20 18:04:35,504 - modules.MessageHandler - INFO - Looking up number: 05HEC004952
+2025-10-20 18:04:35,627 - modules.DataProvider - WARNING - Invalid order number format: 05HEC004952 - فرمت شماره سفارش نامعتبر است. لطفاً:
+• فقط عدد شماره پذیرش (مثال: 123456)
+را وارد کنید
+2025-10-20 18:04:42,046 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 18:04:43,139 - modules.CallbackHandler - INFO - Callback 'track_by_serial' from user 778562716 in chat 778562716
+2025-10-20 18:04:44,911 - modules.MessageHandler - INFO - Looking up serial: 05HEC004952
+2025-10-20 18:04:45,039 - modules.MessageHandler - INFO - Display order details called with data: {'order_number': '71897', 'customer_name': 'رضا قاسمی', 'phone_number': '09141513203', 'city': 'اردبیل اردبیل', 'steps': 5, 'current_step': 'پرداخت و خزانه', 'status_icon': '💰', 'progress': 75, 'progress_bar': '███████░░░', 'device_model': 'ANFU AF75', 'serial_number': '05HEC004952', 'device_status': 'نامشخص', 'registration_date': '1404/05/16', 'pre_reception_date': '1404/05/11', 'tracking_code': '85840', 'repair_description': '---', 'payment_link': 'https://cms.hamoonpay.com/l/CBBD5', 'total_cost': 4095531, 'factor_payment': {}, 'devices': [{'model': 'ANFU AF75', 'serial': '05HEC004952', 'status': 'نامشخص', 'status_code': 50, 'passDescription': ''}], 'success': True}
+2025-10-20 18:04:45,207 - modules.MessageHandler - INFO - ✅ Order details displayed successfully for 71897
+2025-10-20 18:04:49,781 - modules.CallbackHandler - INFO - Callback 'refresh_order:71897' from user 778562716 in chat 778562716
+2025-10-20 18:04:49,953 - modules.DataProvider - INFO - Fetching order by number: 71897
+2025-10-20 18:04:50,572 - modules.DataProvider - INFO - Successfully processed order 71897
+2025-10-20 18:04:58,105 - modules.CallbackHandler - INFO - Callback 'order_71897' from user 778562716 in chat 778562716
+2025-10-20 18:04:58,229 - modules.MessageHandler - INFO - Display order details called with data: {'order_number': '71897', 'customer_name': 'رضا قاسمی', 'phone_number': '09141513203', 'city': 'اردبیل اردبیل', 'steps': 5, 'current_step': 'پرداخت و خزانه', 'status_icon': '💰', 'progress': 75, 'progress_bar': '███████░░░', 'device_model': 'ANFU AF75', 'serial_number': '05HEC004952', 'device_status': 'نامشخص', 'registration_date': '1404/05/16', 'pre_reception_date': '1404/05/11', 'tracking_code': '85840', 'repair_description': '---', 'payment_link': 'https://cms.hamoonpay.com/l/CBBD5', 'total_cost': 4095531, 'factor_payment': {}, 'devices': [{'model': 'ANFU AF75', 'serial': '05HEC004952', 'status': 'نامشخص', 'status_code': 50, 'passDescription': ''}], 'success': True}
+2025-10-20 18:04:58,372 - modules.MessageHandler - INFO - ✅ Order details displayed successfully for 71897
+2025-10-20 18:11:38,154 - modules.SessionManager - INFO - Redis disconnected
+2025-10-20 18:11:38,155 - __main__ - INFO - ✅ Cleanup completed
+2025-10-20 18:11:38,156 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 18:11:39,901 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:11:39,902 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:11:40,868 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 18:11:41,403 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:11:41,403 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:11:41,425 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 18:11:41,425 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 18:11:41,426 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 18:11:41,426 - __main__ - INFO - ✅ All bot components initialized successfully
+2025-10-20 18:11:43,220 - modules.CallbackHandler - INFO - Callback 'refresh_order:71897' from user 778562716 in chat 778562716
+2025-10-20 18:11:43,444 - modules.DataProvider - INFO - Fetching order by number: 71897
+2025-10-20 18:11:43,979 - modules.DataProvider - INFO - Successfully processed order 71897
+2025-10-20 18:11:45,165 - modules.CallbackHandler - INFO - Callback 'order_71897' from user 778562716 in chat 778562716
+2025-10-20 18:11:45,303 - modules.MessageHandler - INFO - Display order details called with data: {'order_number': '71897', 'customer_name': 'رضا قاسمی', 'phone_number': '09141513203', 'city': 'اردبیل اردبیل', 'steps': 5, 'current_step': 'پرداخت و خزانه', 'status_icon': '💰', 'progress': 75, 'progress_bar': '███████░░░', 'device_model': 'ANFU AF75', 'serial_number': '05HEC004952', 'device_status': 'نامشخص', 'registration_date': '1404/05/16', 'pre_reception_date': '1404/05/11', 'tracking_code': '85840', 'repair_description': '---', 'payment_link': 'https://cms.hamoonpay.com/l/CBBD5', 'total_cost': 4095531, 'factor_payment': {}, 'devices': [{'model': 'ANFU AF75', 'serial': '05HEC004952', 'status': 'نامشخص', 'status_code': 50, 'passDescription': ''}], 'success': True}
+2025-10-20 18:11:45,446 - modules.MessageHandler - INFO - ✅ Order details displayed successfully for 71897
+2025-10-20 18:12:40,360 - modules.SessionManager - INFO - Redis disconnected
+2025-10-20 18:12:40,360 - __main__ - INFO - ✅ Cleanup completed
+2025-10-20 18:12:40,361 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 18:12:42,344 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:12:42,353 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:12:43,361 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 18:12:43,806 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:12:43,807 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:12:43,811 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 18:12:43,811 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 18:12:43,812 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 18:12:43,813 - __main__ - INFO - ✅ All bot components initialized successfully
+2025-10-20 18:12:45,755 - modules.CallbackHandler - INFO - Callback 'refresh_order:71897' from user 778562716 in chat 778562716
+2025-10-20 18:12:45,962 - modules.DataProvider - INFO - Fetching order by number: 71897
+2025-10-20 18:12:46,445 - modules.DataProvider - INFO - Successfully processed order 71897
+2025-10-20 18:12:50,147 - modules.CallbackHandler - INFO - Callback 'order_71897' from user 778562716 in chat 778562716
+2025-10-20 18:12:50,283 - modules.MessageHandler - INFO - Display order details called with data: {'order_number': '71897', 'customer_name': 'رضا قاسمی', 'phone_number': '09141513203', 'city': 'اردبیل اردبیل', 'steps': 5, 'current_step': 'پرداخت و خزانه', 'status_icon': '💰', 'progress': 75, 'progress_bar': '███████░░░', 'device_model': 'ANFU AF75', 'serial_number': '05HEC004952', 'device_status': 'نامشخص', 'registration_date': '1404/05/16', 'pre_reception_date': '1404/05/11', 'tracking_code': '85840', 'repair_description': '---', 'payment_link': 'https://cms.hamoonpay.com/l/CBBD5', 'total_cost': 4095531, 'factor_payment': {}, 'devices': [{'model': 'ANFU AF75', 'serial': '05HEC004952', 'status': 'نامشخص', 'status_code': 50, 'passDescription': ''}], 'success': True}
+2025-10-20 18:12:50,417 - modules.MessageHandler - INFO - ✅ Order details displayed successfully for 71897
+2025-10-20 18:13:34,255 - modules.SessionManager - INFO - Redis disconnected
+2025-10-20 18:13:34,255 - __main__ - INFO - ✅ Cleanup completed
+2025-10-20 18:13:34,256 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 18:13:36,683 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:13:36,684 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:13:37,698 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 18:13:38,213 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:13:38,213 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:13:38,216 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 18:13:38,217 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 18:13:38,217 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 18:13:38,217 - __main__ - INFO - ✅ All bot components initialized successfully
+2025-10-20 18:13:39,441 - modules.CallbackHandler - INFO - Callback 'refresh_order:71897' from user 778562716 in chat 778562716
+2025-10-20 18:13:39,627 - modules.DataProvider - INFO - Fetching order by number: 71897
+2025-10-20 18:13:40,106 - modules.DataProvider - INFO - Successfully processed order 71897
+2025-10-20 18:13:41,101 - modules.CallbackHandler - INFO - Callback 'order_71897' from user 778562716 in chat 778562716
+2025-10-20 18:13:41,257 - modules.MessageHandler - INFO - Display order details called with data: {'order_number': '71897', 'customer_name': 'رضا قاسمی', 'phone_number': '09141513203', 'city': 'اردبیل اردبیل', 'steps': 5, 'current_step': 'پرداخت و خزانه', 'status_icon': '💰', 'progress': 75, 'progress_bar': '███████░░░', 'device_model': 'ANFU AF75', 'serial_number': '05HEC004952', 'device_status': 'نامشخص', 'registration_date': '1404/05/16', 'pre_reception_date': '1404/05/11', 'tracking_code': '85840', 'repair_description': '---', 'payment_link': 'https://cms.hamoonpay.com/l/CBBD5', 'total_cost': 4095531, 'factor_payment': {}, 'devices': [{'model': 'ANFU AF75', 'serial': '05HEC004952', 'status': 'نامشخص', 'status_code': 50, 'passDescription': ''}], 'success': True}
+2025-10-20 18:13:41,421 - modules.MessageHandler - INFO - ✅ Order details displayed successfully for 71897
+2025-10-20 18:14:26,978 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 18:14:27,894 - modules.CallbackHandler - INFO - Callback 'track_by_number' from user 778562716 in chat 778562716
+2025-10-20 18:14:34,412 - modules.MessageHandler - INFO - Looking up number: 123456
+2025-10-20 18:14:34,555 - modules.DataProvider - INFO - Fetching order by number: 123456
+2025-10-20 18:14:34,881 - modules.DataProvider - WARNING - API error for order 123456: شماره در سیستم یافت نشد
+2025-10-20 18:14:45,275 - modules.CallbackHandler - INFO - Callback 'track_by_number' from user 778562716 in chat 778562716
+2025-10-20 18:14:46,596 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 18:14:48,020 - modules.CallbackHandler - INFO - Callback 'track_by_number' from user 778562716 in chat 778562716
+2025-10-20 18:14:55,996 - __main__ - ERROR - Update Update(message=Message(channel_chat_created=False, chat=Chat(first_name='ᴀᴍɪʀ¹¹', id=778562716, type=<ChatType.PRIVATE>, username='Amir11'), date=datetime.datetime(2025, 10, 20, 14, 44, 56, tzinfo=datetime.timezone.utc), delete_chat_photo=False, entities=(MessageEntity(length=6, offset=0, type=<MessageEntityType.BOT_COMMAND>),), from_user=User(first_name='ᴀᴍɪʀ¹¹', id=778562716, is_bot=False, language_code='en', username='Amir11'), group_chat_created=False, message_id=3029, supergroup_chat_created=False, text='/stats'), update_id=911464897) caused error 'BotMetrics' object has no attribute 'cache_misses'
+Traceback (most recent call last):
+  File "C:\Users\agra\AppData\Local\Programs\Python\Python313\Lib\site-packages\telegram\ext\_application.py", line 1315, in process_update
+    await coroutine
+  File "C:\Users\agra\AppData\Local\Programs\Python\Python313\Lib\site-packages\telegram\ext\_handlers\basehandler.py", line 159, in handle_update
+    return await self.callback(update, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\telegram-bot\main.py", line 105, in cmd_stats
+    stats = await sessions.get_stats()
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\telegram-bot\modules\SessionManager.py", line 426, in get_stats
+    self.metrics.cache_hits + self.metrics.cache_misses, 1
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'BotMetrics' object has no attribute 'cache_misses'. Did you mean: 'cache_hits'?
+2025-10-20 18:16:02,214 - modules.SessionManager - INFO - Redis disconnected
+2025-10-20 18:16:02,215 - __main__ - INFO - ✅ Cleanup completed
+2025-10-20 18:16:02,215 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 18:16:04,294 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:16:04,294 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:16:05,302 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 18:16:05,690 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:16:05,691 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:16:05,692 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 18:16:05,693 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 18:16:05,693 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 18:16:05,693 - __main__ - INFO - ✅ All bot components initialized successfully
+2025-10-20 18:16:40,792 - modules.SessionManager - INFO - Redis disconnected
+2025-10-20 18:16:40,792 - __main__ - INFO - ✅ Cleanup completed
+2025-10-20 18:16:40,793 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 18:16:42,346 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:16:42,346 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:16:43,316 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 18:16:43,869 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:16:43,869 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:16:43,871 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 18:16:43,872 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 18:16:43,872 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 18:16:43,873 - __main__ - INFO - ✅ All bot components initialized successfully
+2025-10-20 18:16:53,740 - modules.SessionManager - INFO - Redis disconnected
+2025-10-20 18:16:53,741 - __main__ - INFO - ✅ Cleanup completed
+2025-10-20 18:16:53,742 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 18:16:55,135 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:16:55,135 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:16:55,989 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 18:16:56,447 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:16:56,448 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:16:56,449 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 18:16:56,450 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 18:16:56,450 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 18:16:56,450 - __main__ - INFO - ✅ All bot components initialized successfully
+2025-10-20 18:17:05,510 - __main__ - ERROR - Update Update(message=Message(channel_chat_created=False, chat=Chat(first_name='ᴀᴍɪʀ¹¹', id=778562716, type=<ChatType.PRIVATE>, username='Amir11'), date=datetime.datetime(2025, 10, 20, 14, 47, 5, tzinfo=datetime.timezone.utc), delete_chat_photo=False, entities=(MessageEntity(length=7, offset=0, type=<MessageEntityType.BOT_COMMAND>),), from_user=User(first_name='ᴀᴍɪʀ¹¹', id=778562716, is_bot=False, language_code='en', username='Amir11'), group_chat_created=False, message_id=3041, supergroup_chat_created=False, text='/logout'), update_id=911464903) caused error MessageHandler.show_menu() got an unexpected keyword argument 'is_authenticated'. Did you mean 'authenticated'?
+Traceback (most recent call last):
+  File "C:\Users\agra\AppData\Local\Programs\Python\Python313\Lib\site-packages\telegram\ext\_application.py", line 1315, in process_update
+    await coroutine
+  File "C:\Users\agra\AppData\Local\Programs\Python\Python313\Lib\site-packages\telegram\ext\_handlers\basehandler.py", line 159, in handle_update
+    return await self.callback(update, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\telegram-bot\main.py", line 79, in cmd_logout
+    await handler.show_menu(chat_id, is_authenticated=False)
+          ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: MessageHandler.show_menu() got an unexpected keyword argument 'is_authenticated'. Did you mean 'authenticated'?
+2025-10-20 18:17:09,760 - modules.MessageHandler - ERROR - Error sending message: Can't parse entities: can't find end of the entity starting at byte offset 1783
+2025-10-20 18:17:11,493 - modules.MessageHandler - ERROR - Error sending message: Can't parse entities: can't find end of the entity starting at byte offset 1783
+2025-10-20 18:18:16,804 - modules.SessionManager - INFO - Redis disconnected
+2025-10-20 18:18:16,805 - __main__ - INFO - ✅ Cleanup completed
+2025-10-20 18:18:16,806 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 18:18:18,149 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:18:18,149 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:18:19,078 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 18:18:19,502 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:18:19,502 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:18:19,544 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 18:18:19,544 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 18:18:19,545 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 18:18:19,545 - __main__ - INFO - ✅ All bot components initialized successfully
+2025-10-20 18:18:33,086 - modules.MessageHandler - ERROR - Error sending message: Can't parse entities: can't find end of the entity starting at byte offset 1783
+2025-10-20 18:18:58,192 - modules.MessageHandler - ERROR - Error sending message: Can't parse entities: can't find end of the entity starting at byte offset 1783
+2025-10-20 18:21:13,615 - modules.SessionManager - INFO - Redis disconnected
+2025-10-20 18:21:13,616 - __main__ - INFO - ✅ Cleanup completed
+2025-10-20 18:21:13,617 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 18:21:15,508 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:21:15,509 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:21:16,690 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 18:21:17,123 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:21:17,123 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:21:17,125 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 18:21:17,126 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 18:21:17,126 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 18:21:17,127 - __main__ - INFO - ✅ All bot components initialized successfully
+2025-10-20 18:21:29,244 - modules.MessageHandler - ERROR - Error sending message: Can't parse entities: can't find end of the entity starting at byte offset 1783
+2025-10-20 18:25:57,807 - modules.SessionManager - INFO - Redis disconnected
+2025-10-20 18:25:57,808 - __main__ - INFO - ✅ Cleanup completed
+2025-10-20 18:25:57,808 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 18:25:59,701 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:25:59,701 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:26:00,715 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 18:26:01,094 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:26:01,094 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:26:01,096 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 18:26:01,096 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 18:26:01,097 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 18:26:01,097 - __main__ - INFO - ✅ All bot components initialized successfully
+2025-10-20 18:26:02,876 - modules.MessageHandler - ERROR - Error sending message: Can't parse entities: can't find end of the entity starting at byte offset 1783
+2025-10-20 18:31:51,765 - modules.SessionManager - INFO - Redis disconnected
+2025-10-20 18:31:51,766 - __main__ - INFO - ✅ Cleanup completed
+2025-10-20 18:31:51,766 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 18:31:53,805 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:31:53,805 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:31:54,718 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 18:31:55,302 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:31:55,305 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:31:55,310 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 18:31:55,310 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 18:31:55,311 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 18:31:55,312 - __main__ - INFO - ✅ All bot components initialized successfully
+2025-10-20 18:31:59,966 - modules.SessionManager - WARNING - Creating session for chat_id 778562716 without user_id
+2025-10-20 18:31:59,967 - modules.SessionManager - INFO - New session created: chat_id=778562716, user_id=778562716
+2025-10-20 18:31:59,969 - modules.MessageHandler - ERROR - Help display error: 'MessageHandler' object has no attribute '_switch_reply_keyboard'
+2025-10-20 18:43:25,740 - modules.SessionManager - INFO - Redis disconnected
+2025-10-20 18:43:25,742 - __main__ - INFO - ✅ Cleanup completed
+2025-10-20 18:43:25,743 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 18:43:27,610 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:43:27,616 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:43:28,532 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 18:43:28,950 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:43:28,951 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:43:28,955 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 18:43:28,955 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 18:43:28,955 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 18:43:28,956 - __main__ - INFO - ✅ All bot components initialized successfully
+2025-10-20 18:43:31,922 - modules.MessageHandler - ERROR - Help error: 'support_email'
+2025-10-20 18:44:56,319 - modules.SessionManager - INFO - Redis disconnected
+2025-10-20 18:44:56,320 - __main__ - INFO - ✅ Cleanup completed
+2025-10-20 18:44:56,321 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 18:44:57,877 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:44:57,877 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:44:58,863 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 18:44:59,300 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:44:59,302 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:44:59,306 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 18:44:59,308 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 18:44:59,309 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 18:44:59,310 - __main__ - INFO - ✅ All bot components initialized successfully
+2025-10-20 18:49:53,631 - modules.SessionManager - INFO - Redis disconnected
+2025-10-20 18:49:53,632 - __main__ - INFO - ✅ Cleanup completed
+2025-10-20 18:49:53,632 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 18:49:55,205 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:49:55,206 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:49:56,370 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 18:49:56,769 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:49:56,769 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:49:56,771 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 18:49:56,771 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 18:49:56,772 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 18:49:56,772 - __main__ - INFO - ✅ All bot components initialized successfully
+2025-10-20 18:49:57,621 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 18:49:59,470 - modules.CallbackHandler - INFO - Callback 'help' from user 778562716 in chat 778562716
+2025-10-20 18:50:10,902 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 18:50:12,417 - modules.CallbackHandler - INFO - Callback 'authenticate' from user 778562716 in chat 778562716
+2025-10-20 18:50:51,226 - modules.DataProvider - INFO - ✅ User authenticated: آوا پژوهنده
+2025-10-20 18:50:58,389 - modules.CallbackHandler - INFO - Callback 'my_info' from user 778562716 in chat 778562716
+2025-10-20 18:51:05,338 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 18:51:07,387 - modules.CallbackHandler - INFO - Callback 'my_orders' from user 778562716 in chat 778562716
+2025-10-20 18:51:07,559 - modules.DataProvider - ERROR - Error getting user orders: DataProvider._make_request() got an unexpected keyword argument 'params'
+2025-10-20 18:51:10,399 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 18:51:14,765 - modules.CallbackHandler - INFO - Callback 'repair_request' from user 778562716 in chat 778562716
+2025-10-20 18:51:15,932 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 18:51:16,937 - modules.CallbackHandler - INFO - Callback 'submit_complaint' from user 778562716 in chat 778562716
+2025-10-20 18:51:18,387 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 18:51:37,588 - modules.CallbackHandler - INFO - Callback 'my_info' from user 778562716 in chat 778562716
+2025-10-20 18:51:54,922 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 18:52:29,681 - modules.CallbackHandler - INFO - Callback 'my_info' from user 778562716 in chat 778562716
+2025-10-20 18:52:31,850 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 18:55:38,689 - modules.SessionManager - INFO - Redis disconnected
+2025-10-20 18:55:38,690 - __main__ - INFO - ✅ Cleanup completed
+2025-10-20 18:55:38,691 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 18:55:41,350 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:55:41,351 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:55:42,499 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 18:55:42,951 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:55:42,952 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:55:42,956 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 18:55:42,957 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 18:55:42,958 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 18:55:42,959 - __main__ - INFO - ✅ All bot components initialized successfully
+2025-10-20 18:55:47,078 - modules.CallbackHandler - INFO - Callback 'my_info' from user 778562716 in chat 778562716
+2025-10-20 18:55:58,026 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 18:55:59,460 - modules.CallbackHandler - INFO - Callback 'my_info' from user 778562716 in chat 778562716
+2025-10-20 18:56:01,218 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 18:56:03,365 - modules.CallbackHandler - INFO - Callback 'my_orders' from user 778562716 in chat 778562716
+2025-10-20 18:56:06,179 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 18:56:08,961 - modules.CallbackHandler - INFO - Callback 'my_orders' from user 778562716 in chat 778562716
+2025-10-20 18:56:10,783 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 18:56:12,240 - modules.CallbackHandler - INFO - Callback 'my_info' from user 778562716 in chat 778562716
+2025-10-20 18:57:01,653 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 18:57:03,293 - modules.CallbackHandler - INFO - Callback 'my_info' from user 778562716 in chat 778562716
+2025-10-20 18:57:05,008 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 18:57:09,230 - modules.SessionManager - INFO - Redis disconnected
+2025-10-20 18:57:09,230 - __main__ - INFO - ✅ Cleanup completed
+2025-10-20 18:57:09,231 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 18:57:10,894 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:57:10,895 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:57:12,033 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 18:57:12,645 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:57:12,646 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:57:12,648 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 18:57:12,649 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 18:57:12,649 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 18:57:12,650 - __main__ - INFO - ✅ All bot components initialized successfully
+2025-10-20 18:57:13,259 - modules.CallbackHandler - INFO - Callback 'my_info' from user 778562716 in chat 778562716
+2025-10-20 18:59:28,934 - modules.SessionManager - INFO - Redis disconnected
+2025-10-20 18:59:28,936 - __main__ - INFO - ✅ Cleanup completed
+2025-10-20 18:59:28,937 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 18:59:30,433 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:59:30,434 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:59:31,622 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 18:59:32,003 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 18:59:32,004 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 18:59:32,006 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 18:59:32,006 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 18:59:32,006 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 18:59:32,007 - __main__ - INFO - ✅ All bot components initialized successfully
+2025-10-20 18:59:33,246 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 18:59:34,464 - modules.CallbackHandler - INFO - Callback 'my_info' from user 778562716 in chat 778562716
+2025-10-20 19:00:09,894 - modules.SessionManager - INFO - Redis disconnected
+2025-10-20 19:00:09,895 - __main__ - INFO - ✅ Cleanup completed
+2025-10-20 19:00:09,896 - __main__ - INFO - 🔚 Bot stopped
+2025-10-20 19:00:11,628 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 19:00:11,629 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 19:00:12,576 - __main__ - INFO - 🚀 Starting HamoonBot...
+2025-10-20 19:00:13,018 - modules.CoreConfig - INFO - BotConfig initialized - Maintenance: False
+2025-10-20 19:00:13,019 - modules.CoreConfig - INFO - Core components initialized successfully
+2025-10-20 19:00:13,021 - modules.SessionManager - INFO - ✅ Redis connected
+2025-10-20 19:00:13,022 - __main__ - INFO - ✅ Session manager with background tasks initialized
+2025-10-20 19:00:13,022 - __main__ - INFO - ✅ Data provider initialized
+2025-10-20 19:00:13,022 - __main__ - INFO - ✅ All bot components initialized successfully
+2025-10-20 19:00:14,088 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 19:00:15,471 - modules.CallbackHandler - INFO - Callback 'my_info' from user 778562716 in chat 778562716
+2025-10-20 19:00:31,854 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 19:00:33,029 - modules.CallbackHandler - INFO - Callback 'my_orders' from user 778562716 in chat 778562716
+2025-10-20 19:00:40,913 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 19:03:09,089 - modules.CallbackHandler - INFO - Callback 'my_info' from user 778562716 in chat 778562716
+2025-10-20 19:03:10,825 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 19:03:36,374 - modules.CallbackHandler - INFO - Callback 'track_by_number' from user 778562716 in chat 778562716
+2025-10-20 19:03:38,277 - modules.MessageHandler - INFO - Looking up number: 4340
+2025-10-20 19:03:38,396 - modules.DataProvider - INFO - Fetching order by number: 4340
+2025-10-20 19:03:38,574 - modules.DataProvider - INFO - Successfully processed order 4340
+2025-10-20 19:03:38,574 - modules.MessageHandler - INFO - Display order details called with data: {'order_number': '4340', 'customer_name': 'آوا پژوهنده', 'phone_number': '09374766354', 'city': 'اصفهان اصفهان', 'steps': 50, 'current_step': 'تکمیل شده', 'status_icon': '✔️', 'progress': 100, 'progress_bar': '██████████', 'device_model': 'ANFU AF70', 'serial_number': '00HEC014280', 'device_status': 'نامشخص', 'registration_date': 'نامشخص', 'pre_reception_date': '1402/06/14', 'tracking_code': '11012', 'repair_description': '---', 'payment_link': '', 'total_cost': None, 'factor_payment': {}, 'devices': [{'model': 'ANFU AF70', 'serial': '00HEC014280', 'status': 'نامشخص', 'status_code': 50, 'passDescription': ''}], 'success': True}
+2025-10-20 19:03:38,701 - modules.MessageHandler - INFO - ✅ Order details displayed successfully for 4340
+2025-10-20 19:04:07,164 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 19:04:10,575 - modules.CallbackHandler - INFO - Callback 'my_orders' from user 778562716 in chat 778562716
+2025-10-20 19:04:12,343 - modules.CallbackHandler - INFO - Callback 'main_menu' from user 778562716 in chat 778562716
+2025-10-20 19:08:30,310 - modules.SessionManager - INFO - Redis disconnected
+2025-10-20 19:08:30,310 - __main__ - INFO - ✅ Cleanup completed
+2025-10-20 19:08:30,311 - __main__ - INFO - 🔚 Bot stopped
