@@ -1,32 +1,32 @@
-version: '3.8'
+version: '3.9'
+
 services:
   bot:
     build: .
     container_name: hamon-bot
     env_file:
       - .env
-    ports:
-      - "8000:8000"  # For webhook mode if needed
+    volumes:
+      - ./bot.log:/app/logs/bot.log
     depends_on:
       - redis
     restart: unless-stopped
     networks:
-      - bot-network
+      - bot-net
+    command: python main.py
 
   redis:
     image: redis:7-alpine
     container_name: hamon-redis
-    ports:
-      - "6379:6379"
+    restart: unless-stopped
     volumes:
       - redis-data:/data
-    restart: unless-stopped
     networks:
-      - bot-network
+      - bot-net
 
 volumes:
   redis-data:
 
 networks:
-  bot-network:
+  bot-net:
     driver: bridge
