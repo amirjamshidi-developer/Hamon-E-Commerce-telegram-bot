@@ -4,28 +4,6 @@ from datetime import datetime
 from typing import Optional, Dict, Any, List
 from src.utils.helpers import clean_numeric_string, sanitize_text
 
-class TrackingRequest(BaseModel):
-    query_type: str
-    query_value: str
-    chat_id: int
-    user_id: Optional[int]
-    timestamp: datetime = Field(default_factory=datetime.now)
-
-class AuthRequest(BaseModel):
-    national_id: str
-    chat_id: int
-    user_id: Optional[int] = None
-    phone_number: Optional[str] = None
-    timestamp: datetime = Field(default_factory=datetime.now)
-
-class ServiceRequest(BaseModel):
-    service_type: str
-    chat_id: int
-    user_id: Optional[int]
-    national_id: str
-    data: Dict[str, Any] = Field(default_factory=dict)
-    timestamp: datetime = Field(default_factory=datetime.now)
-
 class AuthResponse(BaseModel):
     """Schema for parsing the authentication response from the API."""
     authenticated: bool = Field(True, exclude=True)
