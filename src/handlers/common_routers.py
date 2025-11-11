@@ -1,6 +1,6 @@
 """
 Common Router Handler
-Handles: start, menu, help, cancel, logout, retry, admin commands
+Handles: start, menu, help, cancel, logout & admin commands
 """
 import logging
 from typing import Union
@@ -13,9 +13,9 @@ from src.config.settings import Settings
 from src.config.callbacks import MenuCallback, AuthCallback
 from src.core.session import SessionManager
 from src.core.dynamic import DynamicConfigManager
-from src.services.keyboards import KeyboardFactory
+from src.utils.keyboards import KeyboardFactory
 from src.utils.messages import get_message
-from src.utils.helpers import _edit_or_respond    
+from src.handlers.helpers import _edit_or_respond    
 
 logger = logging.getLogger(__name__)
 
@@ -33,14 +33,16 @@ def prepare_router(
         chat_id = message.chat.id
         await state.clear()
         await session_manager.cleanup_messages(message.bot, chat_id)
+        async with session_manager.get_session(chat_id, message.from_user.id) as session:
+            is_auth = session.is_authenticated
 
         replay = await message.answer(get_message('use_menu'),
-        reply_markup=KeyboardFactory.main_reply_menu(is_auth=False)
+        reply_markup=KeyboardFactory.main_reply_menu(is_auth)
         )
         await session_manager.track_message(chat_id, replay.message_id)
 
         sent = await message.answer(get_message('welcome'),
-        reply_markup=KeyboardFactory.main_inline_menu(is_auth=False)
+        reply_markup=KeyboardFactory.main_inline_menu(is_auth)
         )
         await session_manager.track_message(chat_id, sent.message_id)
 
@@ -51,38 +53,38 @@ def prepare_router(
 
     @router.message(Command("menu"))
     @router.callback_query(MenuCallback.filter(F.target == "main_menu"))
-    @router.message(F.text == "🔙 بازگشت به منوی اصلی" or "🏠 منوی اصلی")
+    @router.message(F.text.in_(["🏠 منوی اصلی", "🔙 بازگشت به منوی اصلی"]))
     async def handle_menu(event: Union[CallbackQuery, Message], state: FSMContext):
         msg = event.message if isinstance(event, CallbackQuery) else event
         chat_id = msg.chat.id
-        if isinstance(event, CallbackQuery): await event.answer("🔰 به ربات تلگرامی هامون خوش آمدید 🔰",show_alert=False)
         await state.clear()
-
-        session_data = await state.get_data()
-        is_auth = session_data.get("is_authenticated", False)
-
-        if isinstance(event, Message):
+        async with session_manager.get_session(chat_id, msg.from_user.id) as session:
+            is_auth = session.is_authenticated
+        if isinstance(event, CallbackQuery):
+            await event.answer("🔰 به ربات تلگرامی هامون خوش آمدید 🔰", show_alert=False)
             await session_manager.cleanup_messages(event.bot, chat_id)
-        if isinstance(msg, Message): 
+            try:
+                await event.message.delete()
+            except TelegramBadRequest:
+                pass
+        else:
             await session_manager.cleanup_messages(msg.bot, chat_id)
 
         replay = await msg.answer(get_message('menu_refresh_success'), reply_markup=KeyboardFactory.main_reply_menu(is_auth))
         await session_manager.track_message(chat_id, replay.message_id)
 
-        sent = await _edit_or_respond(msg, get_message("welcome"), KeyboardFactory.main_inline_menu(is_auth))
-        await session_manager.track_message(chat_id, sent.message_id)
-
-    @router.callback_query(MenuCallback.filter(F.target == "auth_menu"))
-    async def handle_auth_menu(callback: CallbackQuery, state: FSMContext):
-        """Navigate back to authenticated menu."""
-        chat_id = callback.message.chat.id
-        await session_manager.cleanup_messages(callback.bot, chat_id)
-        await callback.answer(get_message("loading", action="بازگشت به منوی کاربری"))
-
-        sent = await _edit_or_respond(callback.message,
-            get_message("welcome"),
-            KeyboardFactory.main_inline_menu(is_auth=True)
-        )
+        if is_auth: 
+            sent = await _edit_or_respond(
+                msg, 
+                "🤖 ربات تلگرامی هامون \n" + get_message("auth_menu"), 
+                KeyboardFactory.main_inline_menu(is_auth)
+                )
+        else: 
+            sent = await _edit_or_respond(
+                msg, 
+                get_message("welcome"), 
+                KeyboardFactory.main_inline_menu(is_auth)
+                )
         await session_manager.track_message(chat_id, sent.message_id)
 
     @router.message(Command("help"))
@@ -104,25 +106,31 @@ def prepare_router(
     async def handle_logout(event: Union[CallbackQuery, Message], state: FSMContext):
         msg = event.message if isinstance(event, CallbackQuery) else event
         chat_id = msg.chat.id
-        user = await state.get_data()
-        is_auth = user.get("is_authenticated", False)
+        user_id = msg.from_user.id
 
         await session_manager.cleanup_messages(msg.bot, chat_id)
 
-        if not is_auth:
-            sent = await _edit_or_respond(event, get_message("no_logout"),KeyboardFactory.main_inline_menu(is_auth))
-            await session_manager.track_message(chat_id, sent.message_id)
-            if isinstance(event, CallbackQuery):
-                await event.answer()
-            return
+        async with session_manager.get_session(chat_id, user_id) as session:
+            if not session.is_authenticated:
+                if isinstance(event, CallbackQuery):
+                    await event.answer("🔴 شما وارد سیستم نشدید!")
+                sent = await _edit_or_respond(
+                    event,
+                    get_message("no_logout"),
+                    KeyboardFactory.main_inline_menu(is_auth=False)
+                )
+                await session_manager.track_message(chat_id, sent.message_id)
+                return
 
         await state.clear()
         await session_manager.logout(chat_id)
 
         sent = await _edit_or_respond(event, get_message("logout_success"),KeyboardFactory.main_inline_menu(is_auth=False))
         await session_manager.track_message(chat_id, sent.message_id)
-        if isinstance(event, CallbackQuery): await event.answer()
-
+        
+        if isinstance(event, CallbackQuery): 
+            await event.answer("🟢 با موفقیت خارج شدید.")
+        
     @router.message(Command("cancel"))
     @router.callback_query(MenuCallback.filter(F.target == "cancel"))
     @router.message(F.text == "❌ انصراف")
@@ -145,21 +153,7 @@ def prepare_router(
 
         sent = await _edit_or_respond(event, text, markup)
         await session_manager.track_message(chat_id, sent.message_id)
-        logger.debug(f"Cancel handled | chat={chat_id} | state={current_state}")
         if isinstance(event, CallbackQuery): await event.answer()
-
-    @router.callback_query(MenuCallback.filter(F.target == "retry"))
-    @router.message(F.text == "🔄 تلاش مجدد")
-    async def handle_retry(event: Union[CallbackQuery, Message], state: FSMContext):
-        msg = event.message if isinstance(event, CallbackQuery) else event
-        chat_id = msg.chat.id
-        session_data = await state.get_data()
-        is_auth = session_data.get("is_authenticated", False)
-
-        sent = await _edit_or_respond(event, get_message("loading"), KeyboardFactory.main_inline_menu(is_auth))
-        await session_manager.track_message(chat_id, sent.message_id)
-        if isinstance(event, CallbackQuery): await event.answer("🔄 تلاش مجدد ", show_alert=False)
-        logger.info(f"Retry triggered for chat_id={chat_id}")
 
     @router.callback_query(F.data == "reload_config")
     async def admin_reload_handler(callback: CallbackQuery):
@@ -177,7 +171,7 @@ def prepare_router(
         sent = await callback.message.answer(msg)
         await session_manager.track_message(chat_id, sent.message_id)
         await callback.answer()
-        logger.info(f"AdminReload | admin_id={callback.from_user.id} | success={success}")
+        logger.info(f"AdminReload | admin_id={callback.from_user.id} | success={success} in chat id:{chat_id}")
 
     @router.message(Command("admin"))
     @router.message(Command("stats"))
@@ -212,7 +206,7 @@ def prepare_router(
                 f"Redis Connection: {'✅ OK' if cache_stats['connected'] else '❌ DOWN'}"
             )
         except Exception as e:
-            logger.exception(f"Admin stats error: {e}")
+            logger.exception(f"Admin stats error: {e} in chat id:{chat_id}")
             text = f"❌ Error fetching stats: {e}"
 
         sent = await message.answer(text, parse_mode="MARKDOWN")
