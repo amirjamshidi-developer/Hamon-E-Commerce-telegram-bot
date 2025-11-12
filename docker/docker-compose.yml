@@ -6,15 +6,28 @@ services:
     container_name: hamon-bot
     env_file:
       - .env
-    volumes:
-      - ./bot.log:/app/logs/bot.log
     depends_on:
-      - redis
+      redis:
+          condition: service_healthy
     restart: unless-stopped
     networks:
       - bot-net
+    environment:
+      - TZ=Asia/Tehran
+      - PYTHONUNBUFFERED=1
     command: python main.py
-
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+        labels: "service=hamon-bot"
+    healthcheck:
+      test: ["CMD-SHELL", "pgrep -f 'python main.py' || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
   redis:
     image: redis:7-alpine
     container_name: hamon-redis
@@ -23,6 +36,18 @@ services:
       - redis-data:/data
     networks:
       - bot-net
+    command: redis-server --appendonly yes --appendfsync everysec
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "5m"
+        max-file: "2"
 
 volumes:
   redis-data:
