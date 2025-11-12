@@ -3,6 +3,10 @@ Thumbs.db
 Desktop.ini
 $RECYCLE.BIN/
 
+# Dynamic config
+config/
+.dynamic.json
+
 # Python
 __pycache__/
 *.pyc
@@ -32,11 +36,11 @@ bot.log
 *.swp
 *.swo
 
+# Docker
+.dockerignore
+
 # OS
 .DS_Store
-
-# GitHub Actions
-.github/workflows/.cache
 
 # Backup files - exclude dirty backups specifically
 *_dirty_*.txt
