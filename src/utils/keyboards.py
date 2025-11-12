@@ -116,9 +116,9 @@ class KeyboardFactory:
         builder = InlineKeyboardBuilder()
         
         raw = session.temp_data.get("raw_auth_data", {})
-        payment_link = raw.get("factorId_paymentLink")
-        factor_paid = bool(raw.get("factorPayment") or raw.get("payment"))
-        order_number = session.order_number or str(raw.get("number") or raw.get("order_number", ""))
+        payment_link = raw.get("payment_link")
+        factor_paid = bool(raw.get("payment") or raw.get("factorPayment"))
+        order_number = session.order_number or raw.get("order_number", "")
         
         if payment_link:
             text = "🧾 مشاهده فاکتور پرداخت" if factor_paid else "💳 پرداخت فاکتور"
