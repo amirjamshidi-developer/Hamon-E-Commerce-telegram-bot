@@ -39,7 +39,7 @@ class BotManager:
 
     async def __aenter__(self):
         if not await self.initialize():
-            raise RuntimeError("❌ BotManager initialization failed.")
+            raise RuntimeError("BotManager initialization failed!!!")
         return self
 
     async def __aexit__(self, exc_type, exc, tb):
@@ -142,7 +142,6 @@ class BotManager:
         """Start session cleanup task(Background tasks)."""
         tasks = BackgroundTasks(sessions, notifications)
         await tasks.start()
-        logger.info("Session cleanup task started.")
         return tasks
 
     async def _init_dynamic_reload(self):
@@ -152,7 +151,6 @@ class BotManager:
                 try:
                     await asyncio.sleep(300)
                     await self.dynamic.reload_config()
-                    logger.debug("Dynamic configuration reloaded.")
                 except asyncio.CancelledError:
                     break
                 except Exception as e:
@@ -172,7 +170,7 @@ class BotManager:
                 for comp in (self.cache, self.sessions, self.api):
                     if hasattr(comp, "update_defaults_from_config"):
                         comp.update_defaults_from_config(cfg_dict)
-                logger.info(f"🔄 Config hot reload applied: {changed_keys}")
+                logger.info(f"Config hot reload applied: {changed_keys}")
             except Exception as e:
                 logger.error(f"Dynamic change callback failed: {e}", exc_info=True)
 

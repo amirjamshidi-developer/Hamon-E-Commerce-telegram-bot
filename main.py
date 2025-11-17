@@ -2,6 +2,7 @@ import sys, os, asyncio, json, logging
 from datetime import datetime
 from src.config.settings import Settings
 from src.core.bot import BotManager
+from aiogram.exceptions import TelegramNetworkError
 
 def configure_logging():
     """Container-native logging (stdout only) with structured output."""
@@ -55,9 +56,16 @@ async def main():
     try:
         async with BotManager(settings) as manager:
             dp = await manager.build_aiogram_layer()
-            await manager.bot.delete_webhook(drop_pending_updates=True)
+            try:
+                await manager.bot.delete_webhook(drop_pending_updates=True)
+            except TelegramNetworkError as e:
+                logger.warning(f"[Network] Telegram unreachable: {e}")
+                logger.warning("[Network] Running in offline mode (VPN off?)")
+                return 
             logger.info("Bot polling started.")
             await dp.start_polling(manager.bot)
+    except TelegramNetworkError as e:
+        logger.error(f"[Critical] Telegram connection failed: {e}")
     except Exception as e:
         logger.critical(f"Bot crashed: {e}", exc_info=True)
         raise
