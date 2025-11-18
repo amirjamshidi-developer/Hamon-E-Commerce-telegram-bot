@@ -1,239 +1,145 @@
-```markdown
-# 🤖 Hamon E-Commerce Telegram Bot
 
-A production-ready Telegram bot built with **Python 3.11** and **Aiogram 3.x** for **Hamon E-Commerce**, providing seamless customer authentication, order tracking, and support automation for POS device management.
+# 🤖 Telegram Bot Backend
+
+A production-ready Telegram bot backend built with **Python 3.11** and **Aiogram 3.x**, designed for authentication, order tracking, and customer support automation such as request repair for POS machine device, submit complaints and etc.
 
 ---
 
 ## ✨ Features
 
-- 🔐 **Smart Authentication**
-  - National ID verification
-  - Entity-based authentication
-  - Secure session persistence
-
-- 📦 **Advanced Order Tracking**
-  - Search by reception number
-  - Search by device serial number
-  - Real-time order status
-
-- 💬 **Customer Support Hub**
-  - POS device repair requests
-  - Complaint submission system
-  - Automated ticket routing
-
-- 🛠️ **Admin Control Panel**
-  - Real-time notifications
-  - Maintenance mode toggle
-  - Dynamic configuration
-
-- ⚡ **Performance & Scale**
-  - Redis-powered FSM & sessions
-  - Async API client (aiohttp)
-  - Docker-ready deployment
-  - Built-in metrics
+- 🔐 User authentication via National ID (also include entity)
+- 📦 Order tracking (by reception number or serial of device)
+- 💬 Complaint and repair request submission
+- 🛠️ Admin notification system
+- 🔄 Redis-based session & FSM state management
+- 📊 Metrics and monitoring support
+- 🐳 Fully Dockerized deployment
 
 ---
-
 ## 🚀 Quick Start
 
 ### Prerequisites
 - Docker & Docker Compose
-- Telegram Bot Token from [@BotFather](https://t.me/botfather)
+- Telegram Bot Token
 - API server credentials
 
 ### Installation
 
-**1. Clone the repository**
+#### 1. Clone the repo
+
 ```bash
 git clone https://github.com/Amirelvx11/Hamon-E-Commerce-telegram-bot.git
+
+# move to main root of project
 cd Hamon-E-Commerce-telegram-bot
-
-**2. Configure environment**
-bash
+```
+#### 2. Setup environment
+create enviroment files based on your telegram token, auth token,server and redis url and etc.
+```bash
 cp .env.example .env
-# Edit .env with your API credentials
+```
+#### Note: Edit .env with your credentials
 
-**3. Launch with Docker**
-bash
+#### 3. Run with Docker
+```bash
 docker-compose up -d --build
-
-**4. Verify**
-bash
+```
+#### 4. Check logs 
+```bash
 docker-compose logs -f bot
+```
 
----
+### 📁 Project Structure
+## src/
 
-## 📁 Project Structure
+### ├── config/ # Settings & enums
+### ├── core/ # Bot manager, Redis, Client & etc.
+### ├── services/ # API & Notification logic
+### ├── handlers/ # Message & Callback routing
+### └── utils/ # Helpers & templates
 
+### ⚙️ Configuration
+Required Variables
+```
+.env 
+TELEGRAM_BOT_TOKEN=your_bot_token
+ADMIN_CHAT_ID=your_chat_id
+API Endpoints
+API_BASE_URL=https://api.example.com
+NATIONAL_ID=https://api.example.com/nid
+ORDER_BY_NUMBER=https://api.example.com/order/number
+ORDER_BY_SERIAL=https://api.example.com/order/serial
 
-Hamon-E-Commerce-telegram-bot/
-│
-├── src/
-│   ├── config/          # Settings, enums, callback schemas
-│   ├── core/            # Bot manager, Redis client, API client
-│   ├── services/        # Business logic, notifications, API services
-│   ├── handlers/        # Message, command & callback routers
-│   └── utils/           # Keyboard factory, message templates, formatters
-│
-├── main.py              # Bot entrypoint
-├── requirements.txt     # Dependencies
-├── Dockerfile           # Container image
-├── docker-compose.yml   # Orchestration
-└── .env.example         # Config template
-
----
-
-## ⚙️ Configuration
-
-### Environment Setup
-
-Create `.env` from template:
-
-env
-# Bot Core
-TELEGRAM_BOT_TOKEN=1234567890:ABCdefGHIjklMNOpqrsTUVwxyz
-ADMIN_CHAT_ID=123456789
-
-# API Endpoints
-SERVER_URL=https://api.hamon.com
-AUTH_TOKEN=your_api_auth_token
-SERVER_URL_NUMBER=https://api.hamon.com/order/by-number
-SERVER_URL_SERIAL=https://api.hamon.com/order/by-serial
-SERVER_URL_NATIONAL_ID=https://api.hamon.com/auth/by-national-id
-SERVER_URL_COMPLAINT=https://api.hamon.com/complaint/submit
-SERVER_URL_REPAIR=https://api.hamon.com/repair/submit
-
-# Redis
+#Redis
 REDIS_URL=redis://redis:6379/1
-REDIS_PASSWORD=
 
-# Contact
-SUPPORT_PHONE=03133127
-WEBSITE_URL=https://hamon.com
-
-# Features
-ENABLE_METRICS=true
-ENABLE_DYNAMIC_CONFIG=true
+#Features
 MAINTENANCE_MODE=false
-
----
-
-## 🐳 Docker Deployment
-
-bash
-# Start services
+```
+### 🐳 Docker Commands
+```bash
+#Start
 docker-compose up -d --build
 
-# Monitor logs
+#Logs
 docker-compose logs -f bot
 
-# Restart bot
+#Restart
 docker-compose restart bot
 
-# Stop everything
-docker-compose down
-
-# Clean restart
+#Clean restart
 docker-compose down -v && docker-compose up -d --build
-
----
-
-## 🧪 Development
-
-### Local Setup
-
-bash
-# Virtual environment
+```
+### 🧪 Development
+Local Setup
+```bash
+# create virtual enviroment
 python -m venv venv
-source venv/bin/activate  # Linux/macOS
-# venv\Scripts\activate   # Windows
 
-# Install deps
+# activate venv
+source venv/bin/activate
+
+# install dependencies
 pip install -r requirements.txt
 
-# Run bot
+# run project
 python main.py
-
-### Project Guidelines
-
-- **Handlers**: `/src/handlers/` - Message/command routing
-- **Services**: `/src/services/` - Business logic & API calls
-- **Utils**: `/src/utils/` - Shared utilities & helpers
-- **Config**: `/src/config/` - Settings, enums, constants
-
----
-
-## 📊 Monitoring
-
-### Available Features
-
-- **Metrics**: Enabled via `ENABLE_METRICS=true`
-- **Health**: Bot health monitoring
-- **Admin Alerts**: Automatic notifications to `ADMIN_CHAT_ID`
-- **Logs**: Structured logging (INFO/WARNING/ERROR/DEBUG)
-
----
-
-## 🛠️ Tech Stack
-
-| Layer | Technology |
-|-------|-----------|
-| **Bot Framework** | Aiogram 3.x |
-| **Runtime** | Python 3.11 |
-| **State/Cache** | Redis 7.x |
-| **HTTP Client** | aiohttp |
-| **Container** | Docker |
-| **Orchestration** | Docker Compose |
-
----
-
-## 🔒 Security
-
-- Environment-based secrets (zero hardcoded credentials)
-- Redis authentication
-- API token-based auth
+```
+### File Organization
+#### Config: /src/config/
+#### Core: /src/core/
+#### Handlers: /src/handlers/
+#### Services: /src/services/
+#### Utils: /src/utils/
+### 📊 Monitoring
+- Basic logging (INFO/ERROR)
+- Admin alerts for errors
+- Health checks via API
+### 🛠️ Tech Stack
+- Component	Tool
+- Framework	Aiogram 3.x
+- Runtime	Python 3.11
+- Cache	Redis 7.x
+- HTTP Client	aiohttp
+- Container	Docker
+### 🔒 Security
+- Environment secrets
+- Input validation
 - Session encryption
-- Input validation & sanitization
+### 📝 License
+MIT License - see LICENSE
 
----
+### 🤝 Contributing
+- Fork the repo
+- Create a feature branch
+- Submit a PR
+- Follow PEP 8, test changes, and document functions.
 
-## 📝 License
+### 📞 Support
+- Issues: GitHub Issues
+- GitHub: [@Amirelvx11].com/Amirelvx11)
+### 🙏 Acknowledgments
+- Aiogram
+- Redis
+- Docker
 
-MIT License - see [LICENSE](LICENSE)
-
----
-
-## 🤝 Contributing
-
-We welcome contributions!
-
-1. **Fork** this repo
-2. **Create branch**: `git checkout -b feature/awesome-feature`
-3. **Commit**: `git commit -m 'Add awesome feature'`
-4. **Push**: `git push origin feature/awesome-feature`
-5. **PR**: Open a Pull Request
-
-### Standards
-- Follow PEP 8
-- Write clear commit messages
-- Document functions
-- Test before PR
-
----
-
-## 📞 Support
-
-- **Issues**: [GitHub Issues](https://github.com/Amirelvx11/Hamon-E-Commerce-telegram-bot/issues)
-- **GitHub**: [@Amirelvx11](https://github.com/Amirelvx11)
-- **Telegram**: [@amir11](https://t.me/amir11)
-
----
-
-## 🙏 Acknowledgments
-
-- [Aiogram](https://docs.aiogram.dev/) - Modern Telegram Bot framework
-- [Redis](https://redis.io/) - High-performance cache
-- [Docker](https://www.docker.com/) - Container platform
-
----
