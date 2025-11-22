@@ -1,11 +1,11 @@
 import os, sys
 import pytest
 from unittest.mock import MagicMock, AsyncMock
+from pathlib import Path
 from dotenv import load_dotenv
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
-load_dotenv(dotenv_path=".env.test")
+load_dotenv(Path(__file__).parent / ".env.test", override=True)
 
 @pytest.fixture(scope="session")
 def test_env_vars():
@@ -16,7 +16,7 @@ def test_env_vars():
         pytest.skip(f"Missing test env vars: {missing}")  
     token = os.getenv("TELEGRAM_BOT_TOKEN", "")
     if not any(x in token.lower() for x in ["test", "dummy", "fake", "mock"]):
-        pytest.exit("🚨 DANGER: Production token detected in tests! Use .env.test")
+        pytest.exit("DANGER: Production token detected in tests! Use .env.test")
     
     return {k: os.getenv(k) for k in required}
 
