@@ -22,3 +22,6 @@ redis==7.0.1
 typing-inspection==0.4.2
 typing_extensions==4.15.0
 yarl==1.22.0
+
+# See 'tests' directory to view what packages you need to run pytest.
+# tests modules requirements (tests/requirements-test.txt)
