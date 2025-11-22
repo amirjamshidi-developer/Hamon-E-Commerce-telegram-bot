@@ -213,6 +213,9 @@ class DeviceStatus(IntEnum):
     @classmethod
     def get_display(cls, value: int | str) -> str:
         """Safely resolve numeric or Persian textual status into 'icon name'."""
+        if value is None:
+            return "❓ نامشخص"
+    
         try:
             v = int(value)
             status = cls(v)
